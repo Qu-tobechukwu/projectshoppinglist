@@ -1,200 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout</title>
-  <script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js"></script>
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      max-width: 650px;
-      margin: auto;
-      padding: 20px;
-      background: #f5f5f5;
-    }
-    h2, h3 {
-      text-align: center;
-      color: #222;
-    }
-    .summary, .form-section {
-      background: white;
-      border-radius: 10px;
-      padding: 15px;
-      margin-top: 15px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    th, td {
-      padding: 8px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-    th {
-      background: #f1f1f1;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-    }
-    input, select {
-      width: 100%;
-      padding: 8px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      margin-top: 5px;
-    }
-    #payButton, #editButton {
-      margin-top: 20px;
-      width: 100%;
-      padding: 12px;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1em;
-      cursor: pointer;
-    }
-    #payButton {
-      background: #007bff;
-    }
-    #editButton {
-      background: #6c757d;
-    }
-    .total-section {
-      font-weight: bold;
-      margin-top: 10px;
-      font-size: 1.1em;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Checkout</h2>
-  <p style="text-align:center;">Order Number: <strong id="orderNumber"></strong></p>
+  <h1>Checkout</h1>
 
-  <!-- ✅ ORDER SUMMARY -->
-  <div class="summary">
-    <h3>Order Summary</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Flavour</th>
-          <th>Qty</th>
-          <th>Price (R)</th>
-        </tr>
-      </thead>
-      <tbody id="orderTable"></tbody>
-    </table>
-    <div class="total-section">
-      Subtotal: R<span id="orderTotal"></span>
-    </div>
-  </div>
+  <p><strong>Order Number:</strong> <span id="orderNumber"></span></p>
+  <p><strong>Your Shopping List:</strong></p>
+  <pre id="orderList"></pre>
 
-  <!-- ✅ CHECKOUT FORM -->
-  <div class="form-section">
-    <label for="name">Full Name:</label>
-    <input type="text" id="name" placeholder="Enter your full name" required />
+  <form id="checkoutForm">
+    <label for="studentName">Full Name:</label>
+    <input type="text" id="studentName" required>
 
-    <label for="phone">Phone Number (WhatsApp):</label>
-    <input type="tel" id="phone" placeholder="e.g. 082 123 4567" required />
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="tel" id="phoneNumber" placeholder="e.g. 0821234567" required>
 
-    <label for="delivery">Delivery Address:</label>
-    <select id="delivery">
-      <option value="Metanoia Residence">Metanoia Residence</option>
-      <option value="Huis Marais">Huis Marais</option>
-      <option value="Huis Neethling">Huis Neethling</option>
-      <option value="Huis Ten Bosch">Huis Ten Bosch</option>
-      <option value="Rooiplein Pickup">Pickup at Rooiplein Market</option>
+    <label for="deliveryAddress">Delivery Address:</label>
+    <select id="deliveryAddress" required>
+      <option value="">Select Residence</option>
+      <option>Huis ten Bosch</option>
+      <option>Metanoia</option>
+      <option>Helshoogte</option>
+      <option>Harmonie</option>
+      <option>Monica</option>
+      <option>Majuba</option>
+      <option>Goldfields</option>
+      <option>Pickup at Rooiplein Market</option>
     </select>
 
-    <label for="tip">Leave a Tip (R):</label>
-    <input type="number" id="tip" value="0" min="0" />
+    <label for="tip">Add a Tip (optional):</label>
+    <input type="number" id="tip" min="0" placeholder="R10">
 
-    <div class="total-section">
-      Final Total: R<span id="finalTotal"></span>
-    </div>
+    <button type="button" id="payButton">Pay with Yoco</button>
+  </form>
 
-    <button id="payButton">Pay with Yoco</button>
-    <button id="editButton">Edit My Order</button>
-  </div>
-
-  <script>
-    // 🧾 Load order details
-    const orderNumber = localStorage.getItem("orderNumber");
-    const orderList = JSON.parse(localStorage.getItem("orderList") || "[]");
-    const orderTotal = parseFloat(localStorage.getItem("orderTotal")) || 0;
-    document.getElementById("orderNumber").textContent = orderNumber;
-    document.getElementById("orderTotal").textContent = orderTotal.toFixed(2);
-
-    const tableBody = document.getElementById("orderTable");
-    orderList.forEach((item) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${item.itemName}</td>
-        <td>${item.flavour || "-"}</td>
-        <td>${item.qty}</td>
-        <td>${(item.price * item.qty).toFixed(2)}</td>
-      `;
-      tableBody.appendChild(row);
-    });
-
-    // 💰 Handle Tip + Final Total
-    const tipInput = document.getElementById("tip");
-    const finalTotalEl = document.getElementById("finalTotal");
-    function updateFinalTotal() {
-      const tip = parseFloat(tipInput.value) || 0;
-      finalTotalEl.textContent = (orderTotal + tip).toFixed(2);
-    }
-    tipInput.addEventListener("input", updateFinalTotal);
-    updateFinalTotal();
-
-    // 💳 Setup Yoco
-    const yoco = new window.YocoSDK({
-      publicKey: "pk_test_your_public_key_here" // Replace with your real Yoco key
-    });
-
-    document.getElementById("payButton").addEventListener("click", function () {
-      const name = document.getElementById("name").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const delivery = document.getElementById("delivery").value;
-      const tip = parseFloat(tipInput.value) || 0;
-      const finalTotal = orderTotal + tip;
-
-      if (!name || !phone) {
-        alert("Please enter your name and phone number.");
-        return;
-      }
-
-      localStorage.setItem("customerName", name);
-      localStorage.setItem("customerPhone", phone);
-      localStorage.setItem("delivery", delivery);
-      localStorage.setItem("tip", tip);
-      localStorage.setItem("finalTotal", finalTotal);
-
-      yoco.showPopup({
-        amountInCents: finalTotal * 100,
-        currency: "ZAR",
-        name: "Student Shopping Order",
-        description: "Order " + orderNumber,
-        callback: function (result) {
-          if (result.error) {
-            alert("Payment failed: " + result.error.message);
-          } else {
-            alert("Payment successful!");
-            window.location.href = "confirmation.html";
-          }
-        },
-      });
-    });
-
-    // 🔁 Edit My Order button
-    document.getElementById("editButton").addEventListener("click", function () {
-      window.location.href = "index.html"; // go back to list
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

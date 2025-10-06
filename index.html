@@ -1,20 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Grocery Order</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stellies Dinner Packs — Order</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Student Grocery Order Form</h1>
+  <div class="container">
+    <div class="header">
+      <div class="brand"><h1>Stellies Dinner Packs</h1></div>
+      <p class="small">Select what you want — choose flavours & quantities, then tap Finished.</p>
+    </div>
 
-  <form id="groceryForm">
-    <label for="name">Shopping List:</label>
-    <textarea id="shoppingList" rows="6" placeholder="Type your shopping list here..." required></textarea>
+    <div class="card topbar">
+      <div>
+        <div class="small">Your Cart Total</div>
+        <div class="totalBox">R <span id="total">0.00</span></div>
+      </div>
+      <div style="text-align:right;">
+        <button class="btn" id="finishBtn">Finished → Checkout</button>
+        <div style="height:6px"></div>
+        <button class="btn ghost" id="refreshProducts">Refresh items</button>
+      </div>
+    </div>
 
-    <button type="submit">Finished → Checkout</button>
-  </form>
+    <div id="productList" class="card">
+      <div class="small">Loading items…</div>
+    </div>
+
+    <div style="text-align:center; margin-top:10px;">
+      <small class="small">Tip: edit products or addresses in Google Sheets — they show here automatically.</small>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

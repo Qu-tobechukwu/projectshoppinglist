@@ -1,43 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Checkout — Stellies</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js"></script>
 </head>
 <body>
-  <h1>Checkout</h1>
+  <div class="container">
+    <div class="header"><div class="brand"><h1>Checkout</h1></div></div>
 
-  <p><strong>Order Number:</strong> <span id="orderNumber"></span></p>
-  <p><strong>Your Shopping List:</strong></p>
-  <pre id="orderList"></pre>
+    <div class="card">
+      <div class="small">Order Number: <strong id="orderNumber"></strong></div>
+      <table>
+        <thead><tr><th>Item</th><th>Flavour</th><th>Qty</th><th>R</th></tr></thead>
+        <tbody id="orderTable"></tbody>
+      </table>
+      <div class="small" style="margin-top:8px">Subtotal: R <span id="orderSubtotal">0.00</span></div>
+    </div>
 
-  <form id="checkoutForm">
-    <label for="studentName">Full Name:</label>
-    <input type="text" id="studentName" required>
+    <div class="card">
+      <label>Full name</label>
+      <input id="name" type="text" placeholder="Thandi M." />
+      <label>Phone (WhatsApp)</label>
+      <input id="phone" type="tel" placeholder="0821234567" />
+      <label>Delivery address</label>
+      <select id="delivery"></select>
+      <label>Tip (R)</label>
+      <input id="tip" type="number" min="0" value="0" />
+      <div style="margin-top:10px" class="small">Final total: <strong>R <span id="finalTotal">0.00</span></strong></div>
 
-    <label for="phoneNumber">Phone Number:</label>
-    <input type="tel" id="phoneNumber" placeholder="e.g. 0821234567" required>
-
-    <label for="deliveryAddress">Delivery Address:</label>
-    <select id="deliveryAddress" required>
-      <option value="">Select Residence</option>
-      <option>Huis ten Bosch</option>
-      <option>Metanoia</option>
-      <option>Helshoogte</option>
-      <option>Harmonie</option>
-      <option>Monica</option>
-      <option>Majuba</option>
-      <option>Goldfields</option>
-      <option>Pickup at Rooiplein Market</option>
-    </select>
-
-    <label for="tip">Add a Tip (optional):</label>
-    <input type="number" id="tip" min="0" placeholder="R10">
-
-    <button type="button" id="payButton">Pay with Yoco</button>
-  </form>
+      <div style="margin-top:12px; display:flex; gap:8px;">
+        <button class="btn" id="payButton">Pay with Yoco</button>
+        <button class="btn ghost" id="editButton">Edit My Order</button>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

@@ -1,39 +1,31 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Stellies Dinner Packs — Order</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stellies Dinner Packs</title>
   <link rel="stylesheet" href="style.css" />
+  <script defer src="main.js"></script>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="brand"><h1>Stellies Dinner Packs</h1></div>
-      <p class="small">Select what you want — choose flavours & quantities, then tap Finished.</p>
-    </div>
+  <header>
+    <h1>🍲 Stellies Dinner Packs</h1>
+    <p class="tagline">Warm meals for busy uni life — order, collect, enjoy!</p>
+  </header>
 
-    <div class="card topbar">
-      <div>
-        <div class="small">Your Cart Total</div>
-        <div class="totalBox">R <span id="total">0.00</span></div>
+  <main>
+    <section id="menu-section">
+      <h2>Choose Your Meals</h2>
+      <div id="menu-items" class="menu-grid">
+        <!-- Meals from Google Sheet will load here -->
       </div>
-      <div style="text-align:right;">
-        <button class="btn" id="finishBtn">Finished → Checkout</button>
-        <div style="height:6px"></div>
-        <button class="btn ghost" id="refreshProducts">Refresh items</button>
-      </div>
-    </div>
+    </section>
 
-    <div id="productList" class="card">
-      <div class="small">Loading items…</div>
-    </div>
+    <button id="go-checkout" class="primary-btn">Proceed to Checkout</button>
+  </main>
 
-    <div style="text-align:center; margin-top:10px;">
-      <small class="small">Tip: edit products or addresses in Google Sheets — they show here automatically.</small>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+  <footer>
+    <p>Made with ❤️ in Stellenbosch</p>
+  </footer>
 </body>
 </html>

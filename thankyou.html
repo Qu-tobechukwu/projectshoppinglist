@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You!</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Thank You! 🎉</h1>
+  <p>Your order has been received successfully.</p>
+  <p><strong>Order Number:</strong> <span id="finalOrderNumber"></span></p>
+  <p>We’ll message you when it’s ready.</p>
+
+  <a href="index.html">Submit Another Order</a>
+
+  <script>
+    document.getElementById("finalOrderNumber").textContent = localStorage.getItem("orderNumber") || "";
+  </script>
+</body>
+</html>

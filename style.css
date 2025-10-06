@@ -1,0 +1,115 @@
+/* Reset & base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #f9fafb;
+  color: #333;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Page titles */
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  color: #222;
+}
+
+/* Forms */
+form {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  max-width: 400px;
+  width: 100%;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+textarea,
+input,
+select {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #ddd;
+  border-radius: 0.6rem;
+  font-size: 0.95rem;
+  background-color: #fff;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #7b9eff;
+  box-shadow: 0 0 0 2px rgba(123, 158, 255, 0.2);
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  margin-top: 1.5rem;
+  background: #4a6cf7;
+  color: white;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #3958e6;
+}
+
+/* Preformatted order text */
+pre {
+  background: #f3f4f6;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Thank-you page */
+a {
+  color: #4a6cf7;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 1.5rem;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Responsiveness */
+@media (max-width: 480px) {
+  body {
+    padding: 1rem;
+  }
+  form {
+    padding: 1.2rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+}

@@ -1,142 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Shopping List</title>
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      max-width: 650px;
-      margin: auto;
-      padding: 20px;
-      background: #f9f9f9;
-    }
-    h1 {
-      text-align: center;
-    }
-    .total {
-      background: #222;
-      color: #fff;
-      padding: 15px;
-      text-align: center;
-      font-size: 1.2em;
-      margin-bottom: 20px;
-      border-radius: 8px;
-    }
-    .item {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 10px;
-      margin-bottom: 10px;
-    }
-    .flavour, .quantity {
-      margin-left: 25px;
-      margin-top: 5px;
-      display: block;
-    }
-    #finishBtn {
-      width: 100%;
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 1em;
-      cursor: pointer;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Grocery Order</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Student Shopping List</h1>
-  <div class="total">Total: R<span id="total">0.00</span></div>
+  <h1>Student Grocery Order Form</h1>
 
-  <div class="item">
-    <input type="checkbox" class="item-check" data-price="20" id="chips">
-    <label for="chips">Chips (R20 each)</label>
-    <select class="flavour">
-      <option value="">Choose flavour</option>
-      <option value="BBQ">BBQ</option>
-      <option value="Cheese">Cheese</option>
-      <option value="Sour Cream">Sour Cream</option>
-    </select>
-    <input type="number" class="quantity" min="1" value="1">
-  </div>
+  <form id="groceryForm">
+    <label for="name">Shopping List:</label>
+    <textarea id="shoppingList" rows="6" placeholder="Type your shopping list here..." required></textarea>
 
-  <div class="item">
-    <input type="checkbox" class="item-check" data-price="15" id="bread">
-    <label for="bread">Bread (R15 each)</label>
-    <input type="number" class="quantity" min="1" value="1">
-  </div>
+    <button type="submit">Finished → Checkout</button>
+  </form>
 
-  <div class="item">
-    <input type="checkbox" class="item-check" data-price="25" id="juice">
-    <label for="juice">Juice (R25 each)</label>
-    <select class="flavour">
-      <option value="">Choose flavour</option>
-      <option value="Apple">Apple</option>
-      <option value="Orange">Orange</option>
-      <option value="Mango">Mango</option>
-    </select>
-    <input type="number" class="quantity" min="1" value="1">
-  </div>
-
-  <button id="finishBtn">Finished</button>
-
-  <script>
-    const checkboxes = document.querySelectorAll(".item-check");
-    const totalEl = document.getElementById("total");
-
-    function calculateTotal() {
-      let total = 0;
-      checkboxes.forEach((box) => {
-        if (box.checked) {
-          const parent = box.closest(".item");
-          const price = parseFloat(box.dataset.price);
-          const qty = parseInt(parent.querySelector(".quantity").value) || 1;
-          total += price * qty;
-        }
-      });
-      totalEl.textContent = total.toFixed(2);
-    }
-
-    checkboxes.forEach((box) => {
-      box.addEventListener("change", calculateTotal);
-      const parent = box.closest(".item");
-      parent.querySelector(".quantity").addEventListener("input", calculateTotal);
-    });
-
-    document.getElementById("finishBtn").addEventListener("click", function () {
-      let order = [];
-      checkboxes.forEach((box) => {
-        if (box.checked) {
-          const parent = box.closest(".item");
-          const itemName = parent.querySelector("label").textContent;
-          const flavour = parent.querySelector(".flavour") ? parent.querySelector(".flavour").value : "";
-          const qty = parent.querySelector(".quantity").value;
-          const price = parseFloat(box.dataset.price);
-          order.push({ itemName, flavour, qty, price });
-        }
-      });
-
-      if (order.length === 0) {
-        alert("Please select at least one item.");
-        return;
-      }
-
-      // Generate order number
-      let count = localStorage.getItem("orderCount") || 0;
-      count++;
-      localStorage.setItem("orderCount", count);
-      const orderNumber = "ORD-" + String(count).padStart(3, "0");
-
-      localStorage.setItem("orderNumber", orderNumber);
-      localStorage.setItem("orderList", JSON.stringify(order));
-      localStorage.setItem("orderTotal", totalEl.textContent);
-
-      window.location.href = "checkout.html";
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

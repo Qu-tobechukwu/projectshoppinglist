@@ -1,43 +1,48 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Checkout — Stellies</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout | Stellies Dinner Packs</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js"></script>
+  <script defer src="main.js"></script>
 </head>
 <body>
-  <div class="container">
-    <div class="header"><div class="brand"><h1>Checkout</h1></div></div>
+  <header>
+    <h1>Checkout</h1>
+  </header>
 
-    <div class="card">
-      <div class="small">Order Number: <strong id="orderNumber"></strong></div>
-      <table>
-        <thead><tr><th>Item</th><th>Flavour</th><th>Qty</th><th>R</th></tr></thead>
-        <tbody id="orderTable"></tbody>
-      </table>
-      <div class="small" style="margin-top:8px">Subtotal: R <span id="orderSubtotal">0.00</span></div>
-    </div>
+  <main>
+    <section id="order-summary">
+      <h2>Your Order</h2>
+      <ul id="order-list"></ul>
+      <p class="total">Total: <strong id="order-total">R0</strong></p>
+    </section>
 
-    <div class="card">
-      <label>Full name</label>
-      <input id="name" type="text" placeholder="Thandi M." />
-      <label>Phone (WhatsApp)</label>
-      <input id="phone" type="tel" placeholder="0821234567" />
-      <label>Delivery address</label>
-      <select id="delivery"></select>
-      <label>Tip (R)</label>
-      <input id="tip" type="number" min="0" value="0" />
-      <div style="margin-top:10px" class="small">Final total: <strong>R <span id="finalTotal">0.00</span></strong></div>
+    <section id="delivery-form">
+      <h2>Delivery Details</h2>
+      <form id="checkout-form">
+        <label>Name: <input type="text" id="customer-name" required /></label>
+        <label>Phone: <input type="tel" id="customer-phone" required /></label>
 
-      <div style="margin-top:12px; display:flex; gap:8px;">
-        <button class="btn" id="payButton">Pay with Yoco</button>
-        <button class="btn ghost" id="editButton">Edit My Order</button>
+        <label>Delivery Address:</label>
+        <select id="delivery-address" required></select>
+
+        <label>Tip (optional): <input type="number" id="tip" placeholder="R0" /></label>
+        <label>Notes (optional): <textarea id="notes"></textarea></label>
+
+        <button type="submit" class="primary-btn">Submit Order</button>
+      </form>
+
+      <div class="yoco-placeholder">
+        <button class="yoco-btn">🪙 Pay Securely with Yoco</button>
+        <small>(Add your public Yoco key later)</small>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
 
-  <script src="script.js"></script>
+  <footer>
+    <p><a href="index.html">← Back to Menu</a></p>
+  </footer>
 </body>
 </html>

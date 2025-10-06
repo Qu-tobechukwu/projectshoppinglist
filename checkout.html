@@ -48,16 +48,21 @@
       border: 1px solid #ccc;
       margin-top: 5px;
     }
-    #payButton {
+    #payButton, #editButton {
       margin-top: 20px;
       width: 100%;
       padding: 12px;
-      background: #007bff;
       color: white;
       border: none;
       border-radius: 8px;
       font-size: 1em;
       cursor: pointer;
+    }
+    #payButton {
+      background: #007bff;
+    }
+    #editButton {
+      background: #6c757d;
     }
     .total-section {
       font-weight: bold;
@@ -114,6 +119,7 @@
     </div>
 
     <button id="payButton">Pay with Yoco</button>
+    <button id="editButton">Edit My Order</button>
   </div>
 
   <script>
@@ -148,7 +154,7 @@
 
     // 💳 Setup Yoco
     const yoco = new window.YocoSDK({
-      publicKey: "pk_test_your_public_key_here" // Replace with your Yoco public key
+      publicKey: "pk_test_your_public_key_here" // Replace with your real Yoco key
     });
 
     document.getElementById("payButton").addEventListener("click", function () {
@@ -169,7 +175,6 @@
       localStorage.setItem("tip", tip);
       localStorage.setItem("finalTotal", finalTotal);
 
-      // 🧾 Payment popup
       yoco.showPopup({
         amountInCents: finalTotal * 100,
         currency: "ZAR",
@@ -184,6 +189,11 @@
           }
         },
       });
+    });
+
+    // 🔁 Edit My Order button
+    document.getElementById("editButton").addEventListener("click", function () {
+      window.location.href = "index.html"; // go back to list
     });
   </script>
 </body>

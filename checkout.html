@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -9,48 +9,56 @@
 </head>
 <body>
   <div class="container">
-    <div class="brand"><h1>Checkout</h1></div>
+    <header class="header">
+      <img src="logo.png" alt="Stellies Dinner Packs Logo" />
+    </header>
 
-    <div class="card">
-      <div class="small">Order Number: <strong id="orderNumber"></strong></div>
-      <table>
-        <thead><tr><th>Item</th><th>Flavour</th><th>Qty</th><th>R</th></tr></thead>
-        <tbody id="orderTable"></tbody>
-      </table>
-      <div class="small" style="margin-top:8px">Subtotal: R <span id="orderSubtotal">0.00</span></div>
-    </div>
+    <section style="margin-top:14px;">
+      <div class="summary-card">
+        <div class="small">Order Number: <strong id="orderNumber"></strong></div>
 
-    <div class="card">
-      <label class="small">Full name</label>
-      <input id="name" type="text" placeholder="Thandi M." />
+        <table class="summary-table" aria-hidden="false">
+          <thead><tr><th>Item</th><th>Flavour</th><th>Qty</th><th>R</th></tr></thead>
+          <tbody id="orderTable"></tbody>
+        </table>
 
-      <label class="small">Phone (WhatsApp)</label>
-      <input id="phone" type="tel" placeholder="0821234567" />
-
-      <label class="small">Email (optional, for confirmation)</label>
-      <input id="email" type="email" placeholder="you@example.com" />
-
-      <label class="small">Delivery address</label>
-      <select id="delivery"></select>
-
-      <div class="form-row">
-        <div class="form-col">
-          <label class="small">Tip (R)</label>
-          <input id="tip" type="number" min="0" value="0" />
-        </div>
-        <div class="form-col">
-          <label class="small">Notes (optional)</label>
-          <input id="notes" type="text" placeholder="Leave instructions..." />
-        </div>
+        <div class="summary-total">Subtotal: R <span id="orderSubtotal">0.00</span></div>
       </div>
 
-      <div style="margin-top:10px" class="small">Final total: <strong>R <span id="finalTotal">0.00</span></strong></div>
+      <div style="height:12px"></div>
 
-      <div style="margin-top:12px; display:flex; gap:10px;">
-        <button class="btn" id="payButton">Pay with Yoco</button>
-        <button class="btn ghost" id="editButton">Edit My Order</button>
+      <div class="summary-card">
+        <label class="small">Full name</label>
+        <input id="name" type="text" placeholder="Thandi M." />
+
+        <label class="small" style="margin-top:8px;">Phone (WhatsApp)</label>
+        <input id="phone" type="tel" placeholder="0821234567" />
+
+        <label class="small" style="margin-top:8px;">Email (optional)</label>
+        <input id="email" type="email" placeholder="you@example.com" />
+
+        <label class="small" style="margin-top:8px;">Delivery address</label>
+        <select id="delivery"></select>
+
+        <div class="form-row" style="margin-top:8px;">
+          <div class="form-col">
+            <label class="small">Tip (R)</label>
+            <input id="tip" type="number" min="0" value="0" />
+          </div>
+          <div class="form-col">
+            <label class="small">Notes (optional)</label>
+            <input id="notes" type="text" placeholder="e.g. Leave at reception"/>
+          </div>
+        </div>
+
+        <div style="margin-top:12px" class="small">Final total: <strong>R <span id="finalTotal">0.00</span></strong></div>
+
+        <div style="margin-top:12px; display:flex; gap:10px;">
+          <button id="payButton" class="btn">Pay with Yoco</button>
+          <button id="editButton" class="btn ghost">Edit My Order</button>
+        </div>
       </div>
-    </div>
+    </section>
   </div>
 
   <script src="script.js"></script>

@@ -1,5 +1,5 @@
 :root{
-  --terracotta: #ac2a13;
+  --terracotta: #ac2a13;    /* exact color you requested */
   --terracotta-dark: #922310;
   --cream: #fff7f3;
   --brown: #3e2b24;
@@ -28,15 +28,14 @@ body{
 
 /* header / banner */
 .header {
-  background:var(--terracotta);
-  border-radius:12px;
-  padding:36px 18px;
+  background:var(--terracotta);           /* banner is solid red */
+  border-radius:8px;
+  padding:30px 18px;
   text-align:center;
   box-shadow:0 8px 28px rgba(0,0,0,0.08);
   margin-bottom:18px;
 }
 .header img{ max-width:160px; height:auto; display:block; margin:0 auto; }
-.header .tag { color: rgba(255,255,255,0.95); margin-top:10px; font-weight:600; letter-spacing:0.2px; }
 
 /* main layout: two columns */
 .main-grid{
@@ -66,13 +65,14 @@ body{
   background:#e9e9e9;
   border-radius:12px;
   padding:14px;
-  min-height:140px;
+  min-height:120px;
   display:flex;
   align-items:center;
   justify-content:center;
   color:#111;
   font-weight:700;
 }
+.sponsor-box img{ max-width:100%; max-height:100%; object-fit:contain; border-radius:8px; }
 
 /* top controls / total & buttons */
 .top-controls{
@@ -88,47 +88,59 @@ body{
   padding:10px 14px;
   border-radius:12px;
   font-weight:800;
+  font-size:1rem;
   box-shadow:0 6px 14px rgba(172,42,19,0.12);
 }
 
 /* product rectangle—rounded container with two columns inside */
 .product-row{
   display:grid;
-  grid-template-columns: 1fr 130px;
+  grid-template-columns: 1fr 160px;
   gap:12px;
-  align-items:center;
+  align-items:start;
   border-radius:14px;
   padding:12px;
   border:1px solid rgba(0,0,0,0.04);
   margin-bottom:12px;
   background:linear-gradient(180deg, #fff 0%, #fffaf8 100%);
   box-shadow: 0 6px 12px rgba(0,0,0,0.03);
+  transition: transform .12s ease, box-shadow .12s ease;
 }
+.product-row:hover { transform: translateY(-4px); box-shadow:0 10px 25px rgba(0,0,0,0.06); }
 
 /* left area with item info */
 .prod-left { display:flex; gap:12px; align-items:flex-start; }
-.checkbox-w { flex:0 0 26px; }
+.checkbox-w { flex:0 0 26px; margin-top:6px; }
 .checkbox-w input[type="checkbox"] { width:20px;height:20px; accent-color: var(--terracotta); }
 
 /* name & meta */
-.item-name{ font-weight:700; color:var(--brown); margin-bottom:6px; }
+.item-name{ font-weight:800; color:var(--brown); margin-bottom:6px; }
 .item-meta{ font-size:0.92rem; color:var(--muted); }
 
 /* right area with price and controls */
 .prod-right{ text-align:right; display:flex; flex-direction:column; gap:8px; align-items:flex-end; }
-.price { color:var(--terracotta); font-weight:800; font-size:1.02rem; }
+.price { color:var(--terracotta); font-weight:900; font-size:1.05rem; }
 .controls { display:flex; gap:8px; align-items:center; }
 
+/* flavour area (collapsible) */
+.flavour-list { margin-top:10px; padding-top:10px; border-top:1px dashed #f5f0ef; display:none; }
+.flavour-row { display:flex; gap:10px; align-items:center; margin-bottom:8px; }
+.flv-checkbox{ width:18px; height:18px; accent-color:var(--terracotta); }
+.flv-qty { width:80px }
+
 /* small input styles */
-select, input[type="number"] { padding:8px 10px; border-radius:10px; border:1px solid #eee; background:#fff; min-width:80px; }
-.qty { width:78px; }
+select, input[type="number"], input[type="text"], input[type="tel"], input[type="email"], textarea {
+  padding:8px 10px; border-radius:10px; border:1px solid #eee; min-width:80px; font-size:0.95rem;
+  background: #fff;
+}
+textarea { min-height:72px; resize:vertical; }
 
 /* CTA bottom */
 .bottom-cta{ display:flex; gap:12px; margin-top:10px; }
 .btn{ background:var(--terracotta); color:#fff; border:none; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer; box-shadow:0 6px 14px rgba(172,42,19,0.12); }
 .btn.ghost{ background:transparent; color:var(--terracotta); border:1px solid rgba(172,42,19,0.14); box-shadow:none; }
 
-/* checkout & order summary styles (used in checkout.html) */
+/* checkout & order summary styles */
 .summary-card { background:var(--card); border-radius:14px; padding:14px; box-shadow:0 6px 18px rgba(0,0,0,0.04); }
 .summary-table { width:100%; border-collapse:collapse; margin-top:8px; }
 .summary-table th, .summary-table td { padding:8px 6px; border-bottom:1px solid #faf6f4; text-align:left; }
@@ -141,4 +153,6 @@ select, input[type="number"] { padding:8px 10px; border-radius:10px; border:1px 
 @media (max-width:960px){
   .main-grid{ grid-template-columns: 1fr; }
   .sponsor-col{ order:2; }
+  .product-row { grid-template-columns: 1fr; }
+  .prod-right { align-items:flex-start; text-align:left; }
 }

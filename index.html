@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -8,23 +8,44 @@
 </head>
 <body>
   <div class="container">
-    <div class="brand"><h1>Stellies Dinner Packs</h1></div>
-    <p class="small">Select items, choose flavours (if any), set quantities — tap Finished to checkout.</p>
+    <!-- header with centered logo -->
+    <header class="header">
+      <!-- put your logo file as logo.png in the repo root; change src if different -->
+      <img src="logo.png" alt="Stellies Dinner Packs Logo" />
+      <!-- optional tagline removed (per your choice). Add if desired -->
+    </header>
 
-    <div class="card topbar">
-      <div>
-        <div class="small">Your Cart Total</div>
-        <div class="totalBox">R <span id="total">0.00</span></div>
-      </div>
-      <div style="text-align:right;">
-        <button class="btn" id="finishBtn">Finished → Checkout</button>
-        <div style="height:8px"></div>
-        <button class="btn ghost" id="refreshProducts">Refresh items</button>
-      </div>
-    </div>
+    <div class="main-grid">
+      <!-- LEFT: menu -->
+      <section class="menu-card">
+        <div class="top-controls">
+          <div>
+            <div class="small">Your Cart Total</div>
+            <div class="total-pill">R <span id="total">0.00</span></div>
+          </div>
+          <div style="text-align:right;">
+            <button id="finishBtn" class="btn">Finished → Checkout</button>
+            <div style="height:8px"></div>
+            <button id="refreshProducts" class="btn ghost">Refresh items</button>
+          </div>
+        </div>
 
-    <div id="productList" class="card">
-      <div class="small">Loading items…</div>
+        <div id="productList">
+          <div class="small">Loading items…</div>
+        </div>
+
+        <div class="bottom-cta" style="margin-top:6px;">
+          <button id="viewOrder" class="btn ghost">View Order</button>
+          <div style="flex:1"></div>
+        </div>
+      </section>
+
+      <!-- RIGHT: sponsored column -->
+      <aside class="sponsor-col">
+        <div class="sponsor-box">SPONSORED STUFF</div>
+        <div class="sponsor-box">SPONSORED STUFF</div>
+        <!-- future: pull sponsor entries from Google Sheet if desired -->
+      </aside>
     </div>
   </div>
 

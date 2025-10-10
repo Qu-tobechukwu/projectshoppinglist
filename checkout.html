@@ -3,9 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Checkout — Stellies Dinner Packs</title>
+  <title>Order Received — Stellies</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js"></script>
 </head>
 <body>
   <div class="container">
@@ -13,54 +12,20 @@
       <img src="logo.png" alt="Stellies Dinner Packs Logo" />
     </header>
 
-    <section style="margin-top:14px;">
-      <div class="summary-card">
-        <div class="small">Order Number: <strong id="orderNumber"></strong></div>
-
-        <table class="summary-table">
-          <thead><tr><th>Item</th><th>Flavour</th><th>Qty</th><th>R</th></tr></thead>
-          <tbody id="orderTable"></tbody>
-        </table>
-
-        <div class="summary-total">Subtotal: R <span id="orderSubtotal">0.00</span></div>
-      </div>
-
-      <div style="height:12px"></div>
-
-      <div class="summary-card">
-        <label class="small">Full name</label>
-        <input id="name" type="text" placeholder="Thandi M." />
-
-        <label class="small" style="margin-top:8px;">Phone (WhatsApp)</label>
-        <input id="phone" type="tel" placeholder="0821234567" />
-
-        <label class="small" style="margin-top:8px;">Email (optional)</label>
-        <input id="email" type="email" placeholder="you@example.com" />
-
-        <label class="small" style="margin-top:8px;">Delivery address</label>
-        <select id="delivery"></select>
-
-        <div class="form-row" style="margin-top:8px;">
-          <div class="form-col">
-            <label class="small">Tip (R)</label>
-            <input id="tip" type="number" min="0" value="0" />
-          </div>
-          <div class="form-col">
-            <label class="small">Notes (optional)</label>
-            <input id="notes" type="text" placeholder="e.g. Leave at reception"/>
-          </div>
-        </div>
-
-        <div style="margin-top:12px" class="small">Final total: <strong>R <span id="finalTotal">0.00</span></strong></div>
-
-        <div style="margin-top:12px; display:flex; gap:10px;">
-          <button id="payButton" class="btn">Pay with Yoco</button>
-          <button id="editButton" class="btn ghost">Edit My Order</button>
-        </div>
-      </div>
-    </section>
+    <div class="menu-card thanks">
+      <h2>🎉 Order Confirmed</h2>
+      <p class="small">Thanks — we received your order. We’ll message you when it’s ready.</p>
+      <p style="margin-top:8px;"><strong>Order number:</strong> <span id="finalOrder"></span></p>
+      <p><strong>Delivery:</strong> <span id="finalDelivery"></span></p>
+      <p><strong>Total Paid:</strong> R <span id="finalPaid"></span></p>
+      <div style="margin-top:14px;"><a href="index.html" class="btn">Place another order</a></div>
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    document.getElementById('finalOrder').textContent = localStorage.getItem('orderNumber') || '';
+    document.getElementById('finalDelivery').textContent = localStorage.getItem('delivery') || '';
+    document.getElementById('finalPaid').textContent = localStorage.getItem('finalTotal') || '0.00';
+  </script>
 </body>
 </html>

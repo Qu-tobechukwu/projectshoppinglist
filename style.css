@@ -1,158 +1,209 @@
-:root{
-  --terracotta: #ac2a13;    /* exact color you requested */
-  --terracotta-dark: #922310;
-  --cream: #fff7f3;
-  --brown: #3e2b24;
-  --muted: #77615b;
-  --card: #ffffff;
-  --radius: 18px;
+/** Public Code.gs - Stellies ordering backend (public webapp)
+ *  - GET ?action=products  -> returns products JSON
+ *  - GET ?action=addresses -> returns addresses JSON
+ *  - GET ?action=sponsors  -> returns sponsors active now (max 10)
+ *  - POST                 -> accept order payload, append to Orders sheet, send emails
+ *
+ * Deployment: Deploy as Web App (Execute as: Me; Who has access: Anyone, even anonymous)
+ */
+
+// === CONFIG - keep your existing IDs ===
+const PRODUCTS_SPREADSHEET_ID = "1-ZXAahTTVrhfS-EI5d9e4_EeJHoX1jsHlvLEsaGCRhc";
+const ADDRESSES_SPREADSHEET_ID = "1lw4l01Qyc_5lAYTql7zKLhGF4DVD-1cxEFyK7dCi2TQ";
+const ORDERS_SPREADSHEET_ID    = "1b6CkJ9OcvDKQpFpSO2VNxqi2ZAciezPWSrQBGE3n08M";
+
+const PRODUCTS_SHEET_NAME = "Products";
+const ADDRESSES_SHEET_NAME = "Addresses";
+const ORDERS_SHEET_NAME = "Orders";
+const SPONSORS_SHEET_NAME = "Sponsors";
+
+const ADMIN_EMAIL = "info@stelliesdinnerpacks.com"; // email to receive admin notifications
+
+function doGet(e) {
+  const action = (e && e.parameter && e.parameter.action) ? e.parameter.action : '';
+  const out = ContentService.createTextOutput();
+  out.setMimeType(ContentService.MimeType.JSON);
+
+  try {
+    if (action === "products") {
+      const products = readProducts();
+      out.setContent(JSON.stringify({ success: true, products }));
+    } else if (action === "addresses") {
+      const addresses = readAddresses();
+      out.setContent(JSON.stringify({ success: true, addresses }));
+    } else if (action === "sponsors") {
+      const sponsors = readSponsors();
+      out.setContent(JSON.stringify({ success: true, sponsors }));
+    } else {
+      out.setContent(JSON.stringify({ success: false, message: "Invalid action. Use ?action=products|addresses|sponsors or POST order." }));
+    }
+  } catch (err) {
+    out.setContent(JSON.stringify({ success: false, message: err.toString() }));
+  }
+  return out;
 }
 
-/* Reset & base */
-*{box-sizing:border-box;margin:0;padding:0;font-family:"Poppins",system-ui,-apple-system,"Segoe UI",Roboto,Arial;}
-body{
-  background:var(--cream);
-  color:var(--brown);
-  padding:18px;
-  display:flex;
-  justify-content:center;
-  min-height:100vh;
+function doPost(e) {
+  const out = ContentService.createTextOutput();
+  out.setMimeType(ContentService.MimeType.JSON);
+  try {
+    if (!e || !e.postData || !e.postData.contents) {
+      out.setContent(JSON.stringify({ success: false, message: "No post data" }));
+      return out;
+    }
+    const payload = JSON.parse(e.postData.contents);
+    const orderNumber = appendOrder(payload);
+    out.setContent(JSON.stringify({ success: true, message: "Order saved", orderNumber }));
+    return out;
+  } catch (err) {
+    out.setContent(JSON.stringify({ success: false, message: err.toString() }));
+    return out;
+  }
 }
 
-/* container */
-.container{
-  width:100%;
-  max-width:1100px;
-  margin:8px;
+/* Read Products from Products spreadsheet
+Expect header row:
+Item,Price,HasFlavours,Flavours,BulkThreshold,BulkDiscountPercent
+*/
+function readProducts() {
+  const ss = SpreadsheetApp.openById(PRODUCTS_SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(PRODUCTS_SHEET_NAME);
+  if (!sheet) throw new Error("Products sheet not found");
+  const rows = sheet.getDataRange().getValues();
+  if (rows.length <= 1) return [];
+  const headers = rows.shift();
+  return rows.map(r => {
+    return {
+      item: String(r[0] || "").trim(),
+      price: Number(r[1] || 0),
+      hasFlavours: String(r[2] || "").toUpperCase() === "TRUE",
+      flavours: String(r[3] || "").split(",").map(s => s.trim()).filter(Boolean),
+      bulkThreshold: Number(r[4] || 0),
+      bulkDiscountPercent: Number(r[5] || 0)
+    };
+  });
 }
 
-/* header / banner */
-.header {
-  background:var(--terracotta);           /* banner is solid red */
-  border-radius:8px;
-  padding:30px 18px;
-  text-align:center;
-  box-shadow:0 8px 28px rgba(0,0,0,0.08);
-  margin-bottom:18px;
-}
-.header img{ max-width:160px; height:auto; display:block; margin:0 auto; }
-
-/* main layout: two columns */
-.main-grid{
-  display:grid;
-  grid-template-columns: 1fr 320px;
-  gap:18px;
-  align-items:start;
+/* Read Addresses sheet (single-column list) */
+function readAddresses() {
+  const ss = SpreadsheetApp.openById(ADDRESSES_SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(ADDRESSES_SHEET_NAME);
+  if (!sheet) throw new Error("Addresses sheet not found");
+  const rows = sheet.getDataRange().getValues();
+  if (rows.length <= 1) return [];
+  rows.shift();
+  return rows.map(r => String(r[0] || "").trim()).filter(Boolean);
 }
 
-/* left column (menu) */
-.menu-card{
-  background:var(--card);
-  border-radius:14px;
-  padding:14px;
-  box-shadow:0 8px 18px rgba(0,0,0,0.05);
+/* Read Sponsors from Products spreadsheet tab 'Sponsors'
+Expected header: AdImage,AdLink,StartDate,EndDate,Priority,Title,Alt
+Filter by current date and return up to 10 sorted by Priority asc
+*/
+function readSponsors() {
+  const ss = SpreadsheetApp.openById(PRODUCTS_SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(SPONSORS_SHEET_NAME);
+  if (!sheet) return [];
+  const rows = sheet.getDataRange().getValues();
+  if (rows.length <= 1) return [];
+  const headers = rows.shift();
+  const today = new Date();
+  const sponsors = rows.map(r => {
+    return {
+      image: String(r[0] || "").trim(),
+      link: String(r[1] || "").trim(),
+      start: r[2] ? new Date(r[2]) : null,
+      end:   r[3] ? new Date(r[3]) : null,
+      priority: Number(r[4] || 0),
+      title: String(r[5] || "").trim(),
+      alt: String(r[6] || "").trim()
+    };
+  }).filter(s => {
+    // show if no dates set OR today between start & end if specified
+    if (!s.start && !s.end) return true;
+    if (s.start && s.end) return s.start <= today && today <= s.end;
+    if (s.start && !s.end) return s.start <= today;
+    if (!s.start && s.end) return today <= s.end;
+    return false;
+  }).sort((a,b) => (a.priority||0) - (b.priority||0)).slice(0,10);
+
+  // strip Date objects to ISO strings for JSON
+  return sponsors.map(s => ({
+    image: s.image, link: s.link, title: s.title, alt: s.alt, priority: s.priority,
+    start: s.start ? s.start.toISOString().slice(0,10) : "", end: s.end ? s.end.toISOString().slice(0,10) : ""
+  }));
 }
 
-/* right column (sponsored) */
-.sponsor-col{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
+/* Append order to Orders sheet and send emails.
+Rows appended:
+OrderNumber, Name, Phone, Email, Delivery, Tip, Notes, Items, Total, Timestamp, PaymentToken, Packed, PackedTimestamp
+*/
+function appendOrder(payload) {
+  const ss = SpreadsheetApp.openById(ORDERS_SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(ORDERS_SHEET_NAME);
+  if (!sheet) throw new Error("Orders sheet not found");
 
-/* sponsored box */
-.sponsor-box{
-  background:#e9e9e9;
-  border-radius:12px;
-  padding:14px;
-  min-height:120px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#111;
-  font-weight:700;
-}
-.sponsor-box img{ max-width:100%; max-height:100%; object-fit:contain; border-radius:8px; }
+  const orderNumber = payload.orderNumber || ("SDP-" + Math.floor(1000 + Math.random() * 9000));
+  const name = payload.name || "";
+  const phone = payload.phone || "";
+  const email = payload.email || "";
+  const delivery = payload.delivery || "";
+  const tip = Number(payload.tip || 0);
+  const notes = payload.notes || "";
+  const paymentToken = payload.paymentToken || "";
+  const total = Number(payload.total || 0);
 
-/* top controls / total & buttons */
-.top-controls{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin-bottom:12px;
-}
-.total-pill{
-  background:var(--terracotta);
-  color:#fff;
-  padding:10px 14px;
-  border-radius:12px;
-  font-weight:800;
-  font-size:1rem;
-  box-shadow:0 6px 14px rgba(172,42,19,0.12);
-}
+  const items = (payload.items || []).map(i => {
+    const f = i.flavour ? ` (${i.flavour})` : "";
+    return `${i.itemName}${f} x${i.qty} - R${Number(i.price||0).toFixed(2)}`;
+  }).join("; ");
 
-/* product rectangle—rounded container with two columns inside */
-.product-row{
-  display:grid;
-  grid-template-columns: 1fr 160px;
-  gap:12px;
-  align-items:start;
-  border-radius:14px;
-  padding:12px;
-  border:1px solid rgba(0,0,0,0.04);
-  margin-bottom:12px;
-  background:linear-gradient(180deg, #fff 0%, #fffaf8 100%);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.03);
-  transition: transform .12s ease, box-shadow .12s ease;
-}
-.product-row:hover { transform: translateY(-4px); box-shadow:0 10px 25px rgba(0,0,0,0.06); }
+  const timestamp = new Date();
+  const packed = false;
+  const packedTimestamp = "";
 
-/* left area with item info */
-.prod-left { display:flex; gap:12px; align-items:flex-start; }
-.checkbox-w { flex:0 0 26px; margin-top:6px; }
-.checkbox-w input[type="checkbox"] { width:20px;height:20px; accent-color: var(--terracotta); }
+  // Append (match column order described above)
+  sheet.appendRow([orderNumber, name, phone, email, delivery, tip, notes, items, total, timestamp, paymentToken, packed, packedTimestamp]);
 
-/* name & meta */
-.item-name{ font-weight:800; color:var(--brown); margin-bottom:6px; }
-.item-meta{ font-size:0.92rem; color:var(--muted); }
+  // Send emails
+  const subjectAdmin = `New Order: ${orderNumber} — Stellies Dinner Packs`;
+  const bodyAdmin = [
+    `Order Number: ${orderNumber}`,
+    `Time: ${timestamp}`,
+    `Name: ${name}`,
+    `Phone: ${phone}`,
+    `Email: ${email}`,
+    `Delivery: ${delivery}`,
+    `Tip: R${tip}`,
+    `Notes: ${notes}`,
+    `Total: R${total}`,
+    ``,
+    `Items:`,
+    items,
+    ``,
+    `-- Stellies Dinner Packs`
+  ].join('\n');
 
-/* right area with price and controls */
-.prod-right{ text-align:right; display:flex; flex-direction:column; gap:8px; align-items:flex-end; }
-.price { color:var(--terracotta); font-weight:900; font-size:1.05rem; }
-.controls { display:flex; gap:8px; align-items:center; }
+  MailApp.sendEmail(ADMIN_EMAIL, subjectAdmin, bodyAdmin);
 
-/* flavour area (collapsible) */
-.flavour-list { margin-top:10px; padding-top:10px; border-top:1px dashed #f5f0ef; display:none; }
-.flavour-row { display:flex; gap:10px; align-items:center; margin-bottom:8px; }
-.flv-checkbox{ width:18px; height:18px; accent-color:var(--terracotta); }
-.flv-qty { width:80px }
+  if (email && email.indexOf('@') !== -1) {
+    const subjectCust = `Your Stellies Order: ${orderNumber}`;
+    const bodyCust = [
+      `Hi ${name || 'Customer'},`,
+      ``,
+      `Thanks for ordering with Stellies Dinner Packs!`,
+      ``,
+      `Order number: ${orderNumber}`,
+      `Total: R${total}`,
+      ``,
+      `We will message you on WhatsApp when your order is ready.`,
+      ``,
+      `Order details:`,
+      items,
+      ``,
+      `— Stellies Dinner Packs`
+    ].join('\n');
+    MailApp.sendEmail(email, subjectCust, bodyCust);
+  }
 
-/* small input styles */
-select, input[type="number"], input[type="text"], input[type="tel"], input[type="email"], textarea {
-  padding:8px 10px; border-radius:10px; border:1px solid #eee; min-width:80px; font-size:0.95rem;
-  background: #fff;
-}
-textarea { min-height:72px; resize:vertical; }
-
-/* CTA bottom */
-.bottom-cta{ display:flex; gap:12px; margin-top:10px; }
-.btn{ background:var(--terracotta); color:#fff; border:none; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer; box-shadow:0 6px 14px rgba(172,42,19,0.12); }
-.btn.ghost{ background:transparent; color:var(--terracotta); border:1px solid rgba(172,42,19,0.14); box-shadow:none; }
-
-/* checkout & order summary styles */
-.summary-card { background:var(--card); border-radius:14px; padding:14px; box-shadow:0 6px 18px rgba(0,0,0,0.04); }
-.summary-table { width:100%; border-collapse:collapse; margin-top:8px; }
-.summary-table th, .summary-table td { padding:8px 6px; border-bottom:1px solid #faf6f4; text-align:left; }
-.summary-total { font-weight:900; color:var(--terracotta); font-size:1.05rem; margin-top:10px; }
-
-/* thank you */
-.thanks { text-align:center; padding:28px; }
-
-/* responsive */
-@media (max-width:960px){
-  .main-grid{ grid-template-columns: 1fr; }
-  .sponsor-col{ order:2; }
-  .product-row { grid-template-columns: 1fr; }
-  .prod-right { align-items:flex-start; text-align:left; }
+  return orderNumber;
 }

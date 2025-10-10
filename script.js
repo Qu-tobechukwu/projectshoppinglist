@@ -1,73 +1,78 @@
 /* script.js
- - Uses your Apps Script endpoint (action=products / action=addresses)
+ - Loads products & addresses from your Apps Script endpoint
  - Manages cart in localStorage
- - Sends POST order payload to Apps Script
+ - Posts orders to Apps Script
  - Yoco placeholder ready
 */
 
-// ---------- CONFIG ----------
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwxP_vLG1PXl4l4_eKi_DTdK1duFwQiscXDDNqkFVcpdIuR_x212lHUp2rQJahWJKRS/exec";
 const YOCO_PUBLIC_KEY = "pk_test_your_public_key_here"; // replace when ready
 
-// state
 let products = [];
-let cart = []; // { itemName, flavour, qty, price }
 let addresses = [];
+let cart = [];
 
-// ---------- Utilities ----------
-function formatR(v) { return Number(v || 0).toFixed(2); }
-function saveCart() { localStorage.setItem("stellies_cart", JSON.stringify(cart)); }
-function loadCart() { cart = JSON.parse(localStorage.getItem("stellies_cart") || "[]"); }
-function genOrderNumber() {
-  let count = Number(localStorage.getItem("stellies_order_count") || 0);
-  count++; localStorage.setItem("stellies_order_count", count);
-  return "SDP-" + String(count).padStart(4, "0");
+// helpers
+function formatR(v){ return Number(v||0).toFixed(2); }
+function saveCart(){ localStorage.setItem("stellies_cart", JSON.stringify(cart)); }
+function loadCart(){ cart = JSON.parse(localStorage.getItem("stellies_cart") || "[]"); }
+function genOrderNumber(){
+  let count = Number(localStorage.getItem("stellies_order_count") || 0); count++; localStorage.setItem("stellies_order_count", count);
+  return "SDP-" + String(count).padStart(4,"0");
 }
 
-// ---------- Fetch products & addresses ----------
-async function fetchProducts() {
+// FETCH products
+async function fetchProducts(){
   const res = await fetch(APPS_SCRIPT_URL + "?action=products");
   const json = await res.json();
-  if (!json.success) throw new Error(json.message || "Failed to load products");
+  if(!json.success) throw new Error(json.message||"No products");
   products = json.products;
   return products;
 }
-async function fetchAddresses() {
+
+// FETCH addresses
+async function fetchAddresses(){
   const res = await fetch(APPS_SCRIPT_URL + "?action=addresses");
   const json = await res.json();
-  if (!json.success) throw new Error(json.message || "Failed to load addresses");
+  if(!json.success) throw new Error(json.message||"No addresses");
   addresses = json.addresses;
   return addresses;
 }
 
-// ---------- Render product list on index.html ----------
-async function renderProducts() {
+/* ---------- RENDER PRODUCTS (index.html) ---------- */
+async function renderProducts(){
   const container = document.getElementById("productList");
-  if (!container) return;
+  if(!container) return;
   container.innerHTML = "<div class='small'>Loading items…</div>";
 
-  try {
+  try{
     await fetchProducts();
     container.innerHTML = "";
     products.forEach((p, idx) => {
-      const div = document.createElement("div");
-      div.className = "product";
-      div.innerHTML = `
-        <div class="checkbox"><input type="checkbox" id="p${idx}" data-idx="${idx}" /></div>
-        <div class="name">${p.item}</div>
-        <div class="controls">
-          ${p.hasFlavours ? `<select id="flavour-${idx}"><option value="">Choose</option>${p.flavours.map(f=>`<option>${f}</option>`).join('')}</select>` : `<span class="small">No flavour</span>`}
-          <input id="qty-${idx}" type="number" min="1" value="1" />
-          <div style="min-width:70px; text-align:right; font-weight:700;">R ${formatR(p.price)}</div>
+      const row = document.createElement("div");
+      row.className = "product-row";
+      row.innerHTML = `
+        <div class="prod-left">
+          <div class="checkbox-w"><input type="checkbox" id="p${idx}" data-idx="${idx}" /></div>
+          <div>
+            <div class="item-name">${p.item}</div>
+            <div class="item-meta">${p.category || ""}</div>
+          </div>
+        </div>
+        <div class="prod-right">
+          ${p.hasFlavours ? `<select id="flavour-${idx}"><option value="">Choose</option>${p.flavours.map(f=>`<option>${f}</option>`).join('')}</select>` : `<div style="height:34px"></div>`}
+          <div class="controls">
+            <input id="qty-${idx}" class="qty" type="number" min="1" value="1" />
+            <div class="price">R ${formatR(p.price)}</div>
+          </div>
         </div>
       `;
-      container.appendChild(div);
+      container.appendChild(row);
 
-      const checkbox = div.querySelector(`#p${idx}`);
-      const qtyInput = div.querySelector(`#qty-${idx}`);
-      const flavourSelect = div.querySelector(`#flavour-${idx}`);
+      const checkbox = row.querySelector(`#p${idx}`);
+      const qtyInput = row.querySelector(`#qty-${idx}`);
+      const flavourSelect = row.querySelector(`#flavour-${idx}`);
 
-      // restore existing if in cart
       checkbox.addEventListener("change", () => {
         const product = products[idx];
         if (checkbox.checked) {
@@ -77,19 +82,17 @@ async function renderProducts() {
             qty: Number(qtyInput.value) || 1,
             price: Number(product.price) || 0
           };
-          // replace if exists
           cart = cart.filter(c => c.itemName !== item.itemName);
           cart.push(item);
         } else {
           cart = cart.filter(c => c.itemName !== product.item);
         }
-        saveCart();
-        updateTotalUI();
+        saveCart(); updateTotalUI();
       });
 
       qtyInput.addEventListener("input", () => {
         if (checkbox.checked) {
-          cart = cart.map(c => c.itemName === products[idx].item ? {...c, qty: Number(qtyInput.value) || 1} : c);
+          cart = cart.map(c => c.itemName === products[idx].item ? {...c, qty: Number(qtyInput.value)||1} : c);
           saveCart(); updateTotalUI();
         }
       });
@@ -107,13 +110,12 @@ async function renderProducts() {
     // restore UI from cart
     restoreCartUI();
     updateTotalUI();
-  } catch (err) {
+  }catch(err){
+    container.innerHTML = `<div class="small" style="color:#c22">Could not load products. Check Apps Script URL.</div>`;
     console.error(err);
-    container.innerHTML = `<div class="small" style="color:#c22">Could not load products. Check Apps Script URL and deployments.</div>`;
   }
 }
 
-// restore checkboxes/values from cart
 function restoreCartUI(){
   loadCart();
   cart.forEach(item => {
@@ -129,15 +131,14 @@ function restoreCartUI(){
   });
 }
 
-// ---------- Totals ----------
-function updateTotalUI() {
+function updateTotalUI(){
   const totalEl = document.getElementById("total");
-  const sum = cart.reduce((acc,c)=> acc + (Number(c.price) * Number(c.qty)), 0);
+  const sum = cart.reduce((acc,c)=> acc + (c.price*c.qty), 0);
   if (totalEl) totalEl.textContent = formatR(sum);
 }
 
-// ---------- Finish button behavior ----------
-document.addEventListener("click", function(e){
+/* ---------- Button handlers ---------- */
+document.addEventListener("click", (e) => {
   if (e.target && e.target.id === "finishBtn") {
     loadCart();
     if (cart.length === 0) { alert("Please select at least one item."); return; }
@@ -149,12 +150,14 @@ document.addEventListener("click", function(e){
     window.location.href = "checkout.html";
   } else if (e.target && e.target.id === "refreshProducts") {
     renderProducts();
+  } else if (e.target && e.target.id === "viewOrder") {
+    window.location.href = "checkout.html";
   } else if (e.target && e.target.id === "editButton") {
     window.location.href = "index.html";
   }
 });
 
-// ---------- Checkout page init ----------
+/* ---------- Checkout init ---------- */
 async function checkoutInit(){
   loadCart();
   const orderNumber = localStorage.getItem("orderNumber") || genOrderNumber();
@@ -167,9 +170,9 @@ async function checkoutInit(){
   const orderTable = document.getElementById("orderTable");
   if (orderTable) {
     orderTable.innerHTML = "";
-    orderList.forEach(i => {
+    orderList.forEach(i=> {
       const row = document.createElement("tr");
-      row.innerHTML = `<td>${i.itemName}</td><td>${i.flavour || "-"}</td><td>${i.qty}</td><td>${formatR(i.price * i.qty)}</td>`;
+      row.innerHTML = `<td>${i.itemName}</td><td>${i.flavour || "-"}</td><td>${i.qty}</td><td>R ${formatR(i.price*i.qty)}</td>`;
       orderTable.appendChild(row);
     });
   }
@@ -198,14 +201,11 @@ async function checkoutInit(){
   // tip handling
   const tipInput = document.getElementById("tip");
   const finalTotalEl = document.getElementById("finalTotal");
-  function updateFinal() {
-    const tip = Number(tipInput.value || 0);
-    finalTotalEl.textContent = formatR(subtotal + tip);
-  }
+  function updateFinal(){ const tip = Number(tipInput.value || 0); finalTotalEl.textContent = formatR(subtotal + tip); }
   if (tipInput) tipInput.addEventListener("input", updateFinal);
   updateFinal();
 
-  // Pay button
+  // pay button
   const payBtn = document.getElementById("payButton");
   if (!payBtn) return;
   payBtn.addEventListener("click", async () => {
@@ -221,16 +221,15 @@ async function checkoutInit(){
 
     if (!name || !phone || !delivery) { alert("Please fill name, phone and delivery address."); return; }
 
-    // Save locally
+    // save locally
     localStorage.setItem("customerName", name);
     localStorage.setItem("customerPhone", phone);
     localStorage.setItem("delivery", delivery);
     localStorage.setItem("tip", tip);
     localStorage.setItem("finalTotal", formatR(finalTotal));
 
-    // If Yoco SDK not loaded or no public key, skip payment step (testing)
+    // If Yoco not configured, skip payment (testing)
     if (typeof window.YocoSDK === "undefined" || YOCO_PUBLIC_KEY === "pk_test_your_public_key_here") {
-      // Post order without payment token
       try {
         await postOrder({ orderNumber: orderNumberNow, name, phone, email, delivery, tip, notes, items: orderListNow, total: finalTotal, paymentToken: "" });
         window.location.href = "thankyou.html";
@@ -240,7 +239,7 @@ async function checkoutInit(){
       return;
     }
 
-    // Yoco payment flow
+    // Yoco flow
     const yoco = new window.YocoSDK({ publicKey: YOCO_PUBLIC_KEY });
     yoco.showPopup({
       amountInCents: Math.round(finalTotal * 100),
@@ -264,21 +263,20 @@ async function checkoutInit(){
   });
 }
 
-// ---------- Post order to Apps Script ----------
-async function postOrder(payload) {
+/* ---------- Post order ---------- */
+async function postOrder(payload){
   const res = await fetch(APPS_SCRIPT_URL, {
     method: "POST",
-    headers: { "Content-Type":"application/json" },
+    headers: {"Content-Type":"application/json"},
     body: JSON.stringify(payload)
   });
   const json = await res.json();
   if (!json.success) throw new Error(json.message || "Failed to save order");
-  // clear cart
   localStorage.removeItem("stellies_cart");
   return json;
 }
 
-// ---------- On DOM ready: initialize appropriate page ----------
+/* ---------- On DOM load ---------- */
 document.addEventListener("DOMContentLoaded", async () => {
   if (document.getElementById("productList")) {
     loadCart();

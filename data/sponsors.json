@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "image": "images/sponsor_juicebar.png",
+    "link": "https://juicebarstellies.com",
+    "startDate": "2025-10-01",
+    "endDate": "2025-12-31",
+    "priority": 1
+  },
+  {
+    "id": 2,
+    "image": "images/sponsor_bakery.png",
+    "link": "https://bakeshop.co.za",
+    "startDate": "2025-10-05",
+    "endDate": "2025-11-15",
+    "priority": 2
+  }
+]

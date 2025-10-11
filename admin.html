@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Stellies Admin — Orders</title>
+  <style>
+    :root{--terracotta:#ac2a13;--cream:#fff7f3;--brown:#3e2b24;}
+    body{font-family:Poppins,Arial;margin:16px;background:var(--cream);color:var(--brown);}
+    header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+    header img{height:48px;border-radius:6px;}
+    .btn{background:var(--terracotta);color:#fff;border:none;padding:8px 10px;border-radius:8px;cursor:pointer;}
+    .btn.ghost{background:transparent;border:1px solid rgba(172,42,19,0.12);color:var(--terracotta)}
+    table{width:100%;border-collapse:collapse;margin-top:12px;}
+    th,td{padding:8px;border-bottom:1px solid #f4efec;text-align:left;vertical-align:top;}
+    th{font-weight:700;color:#666;}
+    tr:hover td{background:#fffaf8;}
+    .filters{display:flex;gap:8px;align-items:center;margin-top:8px;}
+    .small{color:#666;font-size:0.9rem;}
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://via.placeholder.com/140x56.png?text=Stellies" alt="logo" />
+    <div><h2 style="margin:0;color:var(--terracotta)">Stellies Admin — Orders</h2><div class="small">Admin-only dashboard</div></div>
+  </header>
+
+  <div class="filters">
+    <input id="search" placeholder="Search name, phone, order #" style="padding:8px;border-radius:8px;border:1px solid #eee;min-width:260px;" />
+    <label class="small">From <input type="date" id="from" /></label>
+    <label class="small">To <input type="date" id="to" /></label>
+    <label class="small">Show:
+      <select id="showFilter">
+        <option value="all">All</option>
+        <option value="unpacked">Unpacked</option>
+        <option value="packed">Packed</option>
+        <option value="delivered">Delivered</option>
+      </select>
+    </label>
+    <button class="btn" id="refresh">Refresh</button>
+    <button class="btn ghost" id="export">Export CSV</button>
+  </div>
+
+  <div id="summary" style="margin-top:12px;"></div>
+
+  <table id="ordersTable">
+    <thead><tr><th>Order #</th><th>Name</th><th>Phone</th><th>Delivery</th><th>Items</th><th>Total (R)</th><th>Time</th><th>Packed</th><th>Delivered</th><th>Action</th></tr></thead>
+    <tbody id="ordersBody"><tr><td colspan="10">Loading…</td></tr></tbody>
+  </table>
+
+  <script>
+    function toText(v){ return v===null||v===undefined?'':String(v); }
+
+    function refresh(){
+      document.getElementById('ordersBody').innerHTML = '<tr><td colspan="10">Loading…</td></tr>';
+      google.script.run.withSuccessHandler(render).getOrders();
+      google.script.run.withSuccessHandler(s=>{ document.getElementById('summary').innerHTML = `<div class="small">Orders: ${s.totalOrders} · Revenue: R${Number(s.totalRevenue).toFixed(2)} · Packed: ${s.packedCount} · Delivered: ${s.deliveredCount||0}</div>`; }).getSummary();
+    }
+
+    function render(data){
+      window._orders = data || [];
+      applyFilters();
+    }
+
+    function applyFilters(){
+      const q = (document.getElementById('search').value||'').toLowerCase().trim();
+      const from = document.getElementById('from').value;
+      const to = document.getElementById('to').value;
+      const show = document.getElementById('showFilter').value;
+      let rows = (window._orders||[]).slice();
+      if(q) rows = rows.filter(r=> JSON.stringify(r).toLowerCase().includes(q));
+      if(from){ const fts=new Date(from+'T00:00:00').getTime(); rows = rows.filter(r=>{ const t = r.Timestamp? new Date(r.Timestamp).getTime():0; return t>=fts; }); }
+      if(to){ const tts=new Date(to+'T23:59:59').getTime(); rows = rows.filter(r=>{ const t = r.Timestamp? new Date(r.Timestamp).getTime():0; return t<=tts; }); }
+      if(show==='unpacked') rows = rows.filter(r=> String(r.Packed || '').toUpperCase() !== 'TRUE');
+      if(show==='packed') rows = rows.filter(r=> String(r.Packed || '').toUpperCase() === 'TRUE');
+      if(show==='delivered') rows = rows.filter(r=> String(r.Delivered || '').toUpperCase() === 'TRUE');
+      const tbody = document.getElementById('ordersBody'); tbody.innerHTML = '';
+      if(rows.length===0){ tbody.innerHTML = '<tr><td colspan="10">No orders</td></tr>'; return; }
+      rows.forEach(o=>{
+        const tr = document.createElement('tr');
+        const orderNum = toText(o.OrderNumber || o.orderNumber || o['OrderNumber']);
+        const name = toText(o.Name || o.name);
+        const phone = toText(o.Phone || o.phone);
+        const delivery = toText(o.Delivery || o.delivery);
+        const items = toText(o.Items || o.items);
+        const total = Number(o.Total || o.total || 0) || 0;
+        const time = o.Timestamp ? new Date(o.Timestamp).toLocaleString() : '';
+        const packed = String(o.Packed||'').toUpperCase() === 'TRUE' ? (o.PackedTimestamp ? `✅ ${new Date(o.PackedTimestamp).toLocaleString()}` : '✅') : '';
+        const delivered = String(o.Delivered||'').toUpperCase() === 'TRUE' ? (o.DeliveredTimestamp ? `🚚 ${new Date(o.DeliveredTimestamp).toLocaleString()}` : '🚚') : '';
+        tr.innerHTML = `<td style="font-weight:800">${orderNum}</td>
+          <td>${name}</td><td>${phone}</td><td>${delivery}</td><td style="white-space:pre-wrap;max-width:240px;">${items}</td>
+          <td>R ${total.toFixed(2)}</td><td>${time}</td><td>${packed}</td><td>${delivered}</td>
+          <td>
+            <button class="btn" onclick="markPacked('${orderNum}', this)">Mark packed</button>
+            <button class="btn ghost" onclick="markDelivered('${orderNum}', this)">Mark delivered</button>
+          </td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function markPacked(orderNumber, btn){
+      btn.disabled = true; btn.textContent = "Marking...";
+      google.script.run.withSuccessHandler(res=>{
+        if(res && res.success){ btn.textContent = "Done"; refresh(); } else { alert(res.message||'Failed'); btn.disabled=false; btn.textContent='Mark packed'; }
+      }).markPacked(orderNumber);
+    }
+
+    function markDelivered(orderNumber, btn){
+      btn.disabled = true; btn.textContent = "Marking...";
+      google.script.run.withSuccessHandler(res=>{
+        if(res && res.success){ btn.textContent = "Done"; refresh(); } else { alert(res.message||'Failed'); btn.disabled=false; btn.textContent='Mark delivered'; }
+      }).markDelivered(orderNumber);
+    }
+
+    function exportCsv(){
+      const rows = window._orders || [];
+      if(rows.length===0){ alert('No orders'); return; }
+      const headers = Object.keys(rows[0]);
+      const csv = [headers.join(',')];
+      rows.forEach(r=>{
+        csv.push(headers.map(h=>`"${(r[h]||'').toString().replace(/"/g,'""')}"`).join(','));
+      });
+      const data = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv.join('\n'));
+      const a=document.createElement('a'); a.href=data; a.download='stellies-orders.csv'; document.body.appendChild(a); a.click(); a.remove();
+    }
+
+    document.getElementById('refresh').addEventListener('click', refresh);
+    document.getElementById('export').addEventListener('click', exportCsv);
+    document.getElementById('search').addEventListener('input', applyFilters);
+    document.getElementById('from').addEventListener('change', applyFilters);
+    document.getElementById('to').addEventListener('change', applyFilters);
+    document.getElementById('showFilter').addEventListener('change', applyFilters);
+
+    refresh();
+  </script>
+</body>
+</html>

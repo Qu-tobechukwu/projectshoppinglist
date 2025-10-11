@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Vanilla Dream",
+    "price": 45,
+    "description": "Smooth Madagascan vanilla with a creamy finish.",
+    "flavours": ["Original", "Caramel Swirl", "Berry Drizzle"],
+    "discountThreshold": 3,
+    "discountPercent": 10,
+    "image": "images/vanilla.png"
+  },
+  {
+    "id": 2,
+    "name": "Chocolate Swirl",
+    "price": 50,
+    "description": "Rich Belgian cocoa ripple with milk chocolate chunks.",
+    "flavours": ["Classic", "Dark Choc", "Hazelnut"],
+    "discountThreshold": 3,
+    "discountPercent": 10,
+    "image": "images/chocolate.png"
+  },
+  {
+    "id": 3,
+    "name": "Strawberry Bliss",
+    "price": 48,
+    "description": "Fresh local strawberries folded into velvety cream.",
+    "flavours": ["Classic", "Berry Burst", "Yoghurt Blend"],
+    "discountThreshold": 4,
+    "discountPercent": 15,
+    "image": "images/strawberry.png"
+  }
+]

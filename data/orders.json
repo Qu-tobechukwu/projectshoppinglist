@@ -1,0 +1,14 @@
+[
+  {
+    "id": "ORD1001",
+    "customerName": "Lerato M.",
+    "phone": "0821234567",
+    "items": [
+      { "productId": 1, "flavour": "Original", "quantity": 2 },
+      { "productId": 2, "flavour": "Hazelnut", "quantity": 1 }
+    ],
+    "total": 135,
+    "status": "packed",
+    "date": "2025-10-11T14:22:00Z"
+  }
+]

@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Checkout — Stellies Dinner Packs</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js"></script>
@@ -10,7 +10,13 @@
 <body>
   <div class="container">
     <header class="header">
-      <img src="logo.png" alt="Stellies Dinner Packs Logo" />
+      <a href="index.html"><img src="logo.png" alt="Stellies Logo" id="logoImg" /></a>
+      <div class="tagline">Affordable campus treats, packed with love ❤️</div>
+      <nav class="top-menu">
+        <a href="index.html">Home</a>
+        <a href="merch.html">Merch</a>
+        <a href="checkout.html" class="active">Checkout</a>
+      </nav>
     </header>
 
     <section style="margin-top:14px;">
@@ -22,26 +28,19 @@
           <tbody id="orderTable"></tbody>
         </table>
 
-        <div id="discountBreakdown" style="margin-top:8px;"></div>
-
         <div class="summary-total">Subtotal: R <span id="orderSubtotal">0.00</span></div>
-        <div class="summary-total" style="margin-top:6px">Total Savings: R <span id="totalSavings">0.00</span></div>
+        <div id="discountBreakdown" class="small" style="white-space:pre-wrap; margin-top:8px;"></div>
+        <div style="margin-top:8px" class="small">Tip: R <span id="checkoutTip">0.00</span></div>
+        <div class="summary-total" style="margin-top:8px">Final total: R <span id="orderFinal">0.00</span></div>
       </div>
 
       <div style="height:12px"></div>
 
       <div class="summary-card">
-        <label class="small">Full name</label>
-        <input id="name" type="text" placeholder="Thandi M." />
-
-        <label class="small" style="margin-top:8px;">Phone (WhatsApp)</label>
-        <input id="phone" type="tel" placeholder="0821234567" />
-
-        <label class="small" style="margin-top:8px;">Email (optional)</label>
-        <input id="email" type="email" placeholder="you@example.com" />
-
-        <label class="small" style="margin-top:8px;">Delivery address</label>
-        <select id="delivery"></select>
+        <label class="small">Full name</label><input id="name" type="text" placeholder="Thandi M." />
+        <label class="small" style="margin-top:8px;">Phone (WhatsApp)</label><input id="phone" type="tel" placeholder="0821234567" />
+        <label class="small" style="margin-top:8px;">Email (optional)</label><input id="email" type="email" placeholder="you@example.com" />
+        <label class="small" style="margin-top:8px;">Delivery address</label><select id="delivery"></select>
 
         <div class="form-row" style="margin-top:8px;">
           <div class="form-col">
@@ -53,8 +52,6 @@
             <input id="notes" type="text" placeholder="e.g. Leave at reception"/>
           </div>
         </div>
-
-        <div style="margin-top:12px" class="small">Final total: <strong>R <span id="finalTotal">0.00</span></strong></div>
 
         <div style="margin-top:12px; display:flex; gap:10px;">
           <button id="payButton" class="btn">Pay with Yoco</button>

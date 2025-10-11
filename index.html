@@ -3,41 +3,58 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Stellies Dinner Packs — Order</title>
+  <title>Stellies Dinner Packs — Delivery</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <header class="header">
-      <img src="logo.png" alt="Stellies Dinner Packs Logo" />
+      <a href="index.html" id="homeLink"><img src="logo.png" alt="Stellies Dinner Packs Logo" id="logoImg" /></a>
+      <div class="tagline">Affordable campus treats, packed with love ❤️</div>
+      <nav class="top-menu">
+        <a href="index.html">Home</a>
+        <a href="merch.html">Merch</a>
+        <a href="checkout.html">Checkout</a>
+      </nav>
     </header>
 
     <div class="main-grid">
+      <!-- LEFT: menu -->
       <section class="menu-card">
         <div class="top-controls">
           <div>
             <div class="small">Your Cart Total</div>
             <div class="total-pill">R <span id="total">0.00</span></div>
           </div>
+
           <div style="text-align:right;">
             <button id="finishBtn" class="btn">Finished → Checkout</button>
+            <button id="resetCart" class="btn ghost">Reset Cart</button>
+            <button id="repeatOrder" class="btn ghost">Repeat Last Order</button>
             <div style="height:8px"></div>
             <button id="refreshProducts" class="btn ghost">Refresh items</button>
           </div>
         </div>
 
-        <div id="productList">
+        <div id="productList" class="product-list">
           <div class="small">Loading items…</div>
         </div>
 
-        <div class="bottom-cta" style="margin-top:6px;">
+        <div class="pagination" style="display:flex; gap:10px; margin-top:10px; align-items:center;">
+          <button id="prevPage" class="btn ghost">Previous</button>
+          <div id="pageInfo" class="small">Page 1</div>
+          <button id="nextPage" class="btn ghost">Next</button>
+        </div>
+
+        <div class="bottom-cta" style="margin-top:12px;">
           <button id="viewOrder" class="btn ghost">View Order</button>
           <div style="flex:1"></div>
         </div>
       </section>
 
+      <!-- RIGHT: sponsored column -->
       <aside class="sponsor-col" id="sponsorCol">
-        <div class="sponsor-box">Sponsored content</div>
+        <!-- sponsors loaded by script.js -->
       </aside>
     </div>
   </div>

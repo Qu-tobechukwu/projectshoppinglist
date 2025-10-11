@@ -28,5 +28,95 @@
     "discountThreshold": 4,
     "discountPercent": 15,
     "image": "images/strawberry.png"
+  },
+  {
+    "id": 4,
+    "name": "Mango Tango",
+    "price": 46,
+    "description": "Sun-ripened mangoes blended into tropical cream.",
+    "flavours": ["Mango", "Chili Mango"],
+    "discountThreshold": 0,
+    "discountPercent": 0,
+    "image": "images/mango.png"
+  },
+  {
+    "id": 5,
+    "name": "Cookies & Cream",
+    "price": 52,
+    "description": "Cookie pieces mixed in dense cream — student favorite.",
+    "flavours": ["Classic"],
+    "discountThreshold": 2,
+    "discountPercent": 5,
+    "image": "images/cookies.png"
+  },
+  {
+    "id": 6,
+    "name": "Salted Caramel",
+    "price": 49,
+    "description": "Buttery caramel with a hint of sea salt.",
+    "flavours": ["Classic", "With Nuts"],
+    "discountThreshold": 3,
+    "discountPercent": 8,
+    "image": "images/caramel.png"
+  },
+  {
+    "id": 7,
+    "name": "Mint Choc",
+    "price": 47,
+    "description": "Cool mint ice cream studded with dark chocolate.",
+    "flavours": ["Mint", "Double Choc"],
+    "discountThreshold": 0,
+    "discountPercent": 0,
+    "image": "images/mint.png"
+  },
+  {
+    "id": 8,
+    "name": "Lemon Zing",
+    "price": 44,
+    "description": "Zesty lemon sorbet — light and refreshing.",
+    "flavours": ["Classic"],
+    "discountThreshold": 0,
+    "discountPercent": 0,
+    "image": "images/lemon.png"
+  },
+  {
+    "id": 9,
+    "name": "Peanut Butter Crunch",
+    "price": 53,
+    "description": "Peanut butter base with crunchy peanut pieces.",
+    "flavours": ["Classic"],
+    "discountThreshold": 2,
+    "discountPercent": 7,
+    "image": "images/peanut.png"
+  },
+  {
+    "id": 10,
+    "name": "Affogato Cup (Limited)",
+    "price": 60,
+    "description": "Vanilla plus a shot of espresso — serve warm.",
+    "flavours": ["Classic"],
+    "discountThreshold": 0,
+    "discountPercent": 0,
+    "image": "images/affogato.png"
+  },
+  {
+    "id": 11,
+    "name": "Berry Medley",
+    "price": 46,
+    "description": "Mixed berries with tangy finish.",
+    "flavours": ["Classic"],
+    "discountThreshold": 3,
+    "discountPercent": 10,
+    "image": "images/berry.png"
+  },
+  {
+    "id": 12,
+    "name": "Chai Latte",
+    "price": 48,
+    "description": "Spiced chai folded into creamy ice-cream.",
+    "flavours": ["Classic"],
+    "discountThreshold": 0,
+    "discountPercent": 0,
+    "image": "images/chai.png"
   }
 ]

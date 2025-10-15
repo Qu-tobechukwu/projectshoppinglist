@@ -1,99 +1,140 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Stellies — Admin</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Stellies Admin</title>
+  <link rel="stylesheet" href="style.css"/>
   <style>
-    .admin-header { display:flex; gap:12px; align-items:center; margin-bottom:12px; }
-    .admin-tools{ display:flex; gap:8px; align-items:center; margin-bottom:12px; }
-    .admin-table { width:100%; border-collapse:collapse; }
-    .admin-table th, .admin-table td { padding:8px; border-bottom:1px solid #f4efec; text-align:left; }
+    .admin-box{ max-width:1100px; margin:18px auto; }
+    .pw-wrap{ display:flex; gap:8px; align-items:center; margin-bottom:12px; }
+    .hidden{ display:none; }
+    .admin-tools{ display:flex; gap:8px; margin-bottom:12px; align-items:center; }
+    table{ width:100%; border-collapse:collapse; }
+    th,td{ padding:8px; border-bottom:1px solid #f4efec; text-align:left; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="admin-header">
-      <img src="logo.png" style="height:56px" alt="logo" />
-      <div>
-        <h2 style="margin:0;color:#ac2a13">Stellies Admin</h2>
-        <div class="small">Static orders + pending local orders</div>
+  <div class="container admin-box">
+    <header class="header centered" style="margin-bottom:12px">
+      <div class="logo-wrap"><img src="assets/logo.png" alt="logo" style="height:56px" /></div>
+      <div class="center-title"><div class="site-name">Stellies Dinner Packs — Admin</div><div class="tagline small">Admin (password required)</div></div>
+      <div class="nav-wrap"></div>
+    </header>
+
+    <div id="pwPanel" class="menu-card">
+      <div class="pw-wrap">
+        <input id="adminPw" type="password" placeholder="Admin password" style="padding:10px;border-radius:8px;border:1px solid #eee;"/>
+        <button id="unlockBtn" class="btn">Unlock</button>
+        <button id="clearLocal" class="btn ghost">Clear local pending</button>
       </div>
+      <div class="small">This is a client-side password gate for convenience. For true security use server authentication.</div>
     </div>
 
-    <div class="admin-tools">
-      <button id="refreshAdmin" class="btn">Refresh</button>
-      <button id="exportOrders" class="btn ghost">Export CSV</button>
-      <label class="small">Show:
-        <select id="adminFilter">
-          <option value="all">All</option>
-          <option value="pending">Pending (local)</option>
-          <option value="static">Static file</option>
-        </select>
-      </label>
-    </div>
+    <div id="adminUI" class="hidden">
+      <div class="admin-tools">
+        <button id="refreshAdmin" class="btn">Refresh</button>
+        <button id="exportOrders" class="btn ghost">Download CSV</button>
+        <label class="small">Show:
+          <select id="adminFilter">
+            <option value="all">All</option>
+            <option value="static">Static file</option>
+            <option value="pending">Pending (local)</option>
+          </select>
+        </label>
+      </div>
 
-    <table class="admin-table" id="adminTable">
-      <thead><tr><th>Order #</th><th>Name</th><th>Phone</th><th>Delivery</th><th>Items</th><th>R Total</th><th>Date</th></tr></thead>
-      <tbody id="adminBody"><tr><td colspan="7">Loading…</td></tr></tbody>
-    </table>
+      <div class="summary small" id="summary"></div>
+
+      <table id="ordersTable">
+        <thead><tr><th>Order #</th><th>Name</th><th>Phone</th><th>Delivery</th><th>Items</th><th>Total (R)</th><th>Date</th></tr></thead>
+        <tbody id="ordersBody"><tr><td colspan="7">Loading…</td></tr></tbody>
+      </table>
+    </div>
   </div>
 
-  <script>
-    async function loadStaticOrders(){
-      try {
-        const r = await fetch('./data/orders.json');
-        return await r.json();
-      } catch(err){
-        return [];
-      }
+<script>
+  // SHA256 hex helper
+  async function sha256hex(str){
+    const utf8 = new TextEncoder().encode(str);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+
+  const ADMIN_HASH = '3e27a72c2be1dda475aee02ad2c34e9257b3d4170c053994efa16effe4deccbf';
+
+  document.getElementById('unlockBtn').addEventListener('click', async ()=>{
+    const pw = document.getElementById('adminPw').value || '';
+    const h = await sha256hex(pw);
+    if(h === ADMIN_HASH){
+      document.getElementById('pwPanel').classList.add('hidden');
+      document.getElementById('adminUI').classList.remove('hidden');
+      loadAdmin();
+    } else {
+      alert('Incorrect password');
     }
-    function loadLocalPending(){
-      return JSON.parse(localStorage.getItem('stellies_pending_orders') || '[]');
-    }
-    function renderAdmin(){
-      Promise.all([loadStaticOrders()]).then(([staticOrders])=>{
-        const pending = loadLocalPending();
-        const filter = document.getElementById('adminFilter').value;
-        let rows = [];
-        if(filter==='all'){ rows = staticOrders.concat(pending); }
-        else if(filter==='pending'){ rows = pending; }
-        else rows = staticOrders;
-        const body = document.getElementById('adminBody');
-        body.innerHTML = '';
-        if(rows.length===0){ body.innerHTML = '<tr><td colspan="7">No orders</td></tr>'; return; }
-        rows.forEach(o=>{
-          const itemsStr = (o.items||[]).map(it=>`${it.quantity}x ${it.productId}${it.flavour? ' ('+it.flavour+')':''}`).join('; ');
-          const tr = document.createElement('tr');
-          tr.innerHTML = `<td style="font-weight:800">${o.id||o.orderNumber||''}</td>
-            <td>${o.customerName||o.name||''}</td>
-            <td>${o.phone||o.phone||''}</td>
-            <td>${o.delivery||o.delivery||''}</td>
-            <td style="white-space:pre-wrap;max-width:320px;">${itemsStr}</td>
-            <td>R ${Number(o.total||0).toFixed(2)}</td>
-            <td>${new Date(o.date||o.timestamp||'').toLocaleString()}</td>`;
-          body.appendChild(tr);
-        });
+  });
+
+  document.getElementById('clearLocal').addEventListener('click', ()=>{
+    if(confirm('Clear local pending orders?')){ localStorage.removeItem('stellies_pending_orders'); alert('Local pending cleared'); }
+  });
+
+  async function loadStatic(){
+    try{
+      const r = await fetch('./data/orders.json'); if(!r.ok) return [];
+      return await r.json();
+    } catch(e){ return []; }
+  }
+  function loadPending(){
+    return JSON.parse(localStorage.getItem('stellies_pending_orders')||'[]');
+  }
+
+  function renderAdmin(){
+    Promise.all([loadStatic()]).then(([staticOrders])=>{
+      const pending = loadPending();
+      const filter = document.getElementById('adminFilter').value;
+      let rows = [];
+      if(filter==='all') rows = staticOrders.concat(pending);
+      else if(filter==='pending') rows = pending;
+      else rows = staticOrders;
+      const tbody = document.getElementById('ordersBody'); tbody.innerHTML = '';
+      if(rows.length===0){ tbody.innerHTML = '<tr><td colspan="7">No orders</td></tr>'; return; }
+      rows.forEach(o=>{
+        const itemsStr = (o.items||[]).map(it => `${it.quantity}× ${it.productId}${it.flavour? ' ('+it.flavour+')':''}`).join('; ');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td style="font-weight:800">${o.id||o.orderNumber||''}</td>
+                        <td>${o.customerName||o.name||''}</td>
+                        <td>${o.phone||''}</td>
+                        <td>${o.delivery||''}</td>
+                        <td style="white-space:pre-wrap;max-width:320px;">${itemsStr}</td>
+                        <td>R ${Number(o.total||0).toFixed(2)}</td>
+                        <td>${o.date? new Date(o.date).toLocaleString() : ''}</td>`;
+        tbody.appendChild(tr);
       });
-    }
-    document.getElementById('refreshAdmin').addEventListener('click', renderAdmin);
-    document.getElementById('adminFilter').addEventListener('change', renderAdmin);
-    document.getElementById('exportOrders').addEventListener('click', ()=>{
-      // export combined
-      Promise.all([loadStaticOrders()]).then(([staticOrders])=>{
-        const pending = loadLocalPending();
-        const rows = staticOrders.concat(pending);
-        if(rows.length===0){ alert('No orders to export'); return; }
-        const headers = Object.keys(rows[0]);
-        const csv = [headers.join(',')];
-        rows.forEach(r=>{
-          csv.push(headers.map(h => `"${(r[h]||'').toString().replace(/"/g,'""')}"`).join(','));
-        });
-        const uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv.join('\n'));
-        const a = document.createElement('a'); a.href = uri; a.download = 'stellies-orders.csv'; a.click();
-      });
+      const totalOrders = rows.length;
+      const revenue = rows.reduce((s, r) => s + Number(r.total||0), 0);
+      document.getElementById('summary').textContent = `Orders: ${totalOrders} · Revenue: R${revenue.toFixed(2)}`;
     });
-    renderAdmin();
-  </script>
+  }
+
+  async function loadAdmin(){ renderAdmin(); }
+
+  document.getElementById('refreshAdmin').addEventListener('click', renderAdmin);
+  document.getElementById('adminFilter').addEventListener('change', renderAdmin);
+
+  document.getElementById('exportOrders').addEventListener('click', async ()=>{
+    const staticOrders = await (async()=>{ try{ const r = await fetch('./data/orders.json'); return r.ok?await r.json():[] }catch(e){return[]}})();
+    const pending = loadPending();
+    const rows = staticOrders.concat(pending);
+    if(rows.length===0){ alert('No orders'); return; }
+    const keys = Object.keys(rows[0]);
+    const csv = [keys.join(',')];
+    rows.forEach(r=>{
+      csv.push(keys.map(k=>`"${(r[k]||'').toString().replace(/"/g,'""')}"`).join(','));
+    });
+    const uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv.join('\n'));
+    const a = document.createElement('a'); a.href = uri; a.download = 'stellies-orders.csv'; a.click();
+  });
+</script>
 </body>
 </html>

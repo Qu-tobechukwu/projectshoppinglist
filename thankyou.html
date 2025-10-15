@@ -3,15 +3,25 @@
 <head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>Order Received — Stellies</title><link rel="stylesheet" href="style.css" /></head>
 <body>
   <div class="container">
-    <header class="header"><a href="index.html"><img src="logo.png" alt="Stellies Logo" id="logoImg" /></a><div class="tagline">Affordable campus treats, packed with love ❤️</div></header>
-    <div class="menu-card thanks">
-      <h2>🎉 Order Confirmed</h2>
-      <p class="small">Thanks — we received your order. We’ll message you when it’s ready.</p>
-      <p style="margin-top:8px;"><strong>Order number:</strong> <span id="finalOrder"></span></p>
-      <p><strong>Delivery:</strong> <span id="finalDelivery"></span></p>
-      <p><strong>Total Paid:</strong> R <span id="finalPaid"></span></p>
-      <div style="margin-top:14px;"><a href="index.html" class="btn">Place another order</a></div>
-    </div>
+    <header class="header centered">
+      <div class="logo-wrap"><a href="index.html"><img id="logoImg" src="assets/logo.png" alt="Stellies"></a></div>
+      <div class="center-title">
+        <div class="site-name">Stellies Dinner Packs</div>
+        <div class="tagline">Affordable campus treats, packed with love ❤️</div>
+      </div>
+      <div class="nav-wrap"><nav class="top-menu"><a href="index.html">Home</a><a href="merch.html">Merch</a><a href="checkout.html">Checkout</a></nav></div>
+    </header>
+
+    <main style="padding:12px">
+      <div class="menu-card thanks">
+        <h2>🎉 Order Confirmed</h2>
+        <p class="small">Thanks — we received your order. We’ll message you when it’s ready.</p>
+        <p style="margin-top:8px;"><strong>Order number:</strong> <span id="finalOrder"></span></p>
+        <p><strong>Delivery:</strong> <span id="finalDelivery"></span></p>
+        <p><strong>Total Paid:</strong> R <span id="finalPaid"></span></p>
+        <div style="margin-top:14px;"><a href="index.html" class="btn">Place another order</a></div>
+      </div>
+    </main>
   </div>
 
   <script>

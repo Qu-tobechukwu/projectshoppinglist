@@ -1,24 +1,24 @@
 [
   {
     "id": 1,
-    "name": "Stellies Ice-Cream T-shirt",
+    "name": "Stellies T-shirt",
     "price": 180,
     "description": "Soft cotton tee in cream with red logo print.",
-    "sizes": ["S", "M", "L", "XL"],
-    "image": "images/merch_tshirt.png"
+    "sizes": ["S","M","L","XL"],
+    "image": "assets/merch_tshirt.png"
   },
   {
     "id": 2,
-    "name": "Limited Edition Tote Bag",
+    "name": "Limited Tote Bag",
     "price": 120,
     "description": "Canvas tote with 'Scoop Local Love' embroidery.",
-    "image": "images/merch_tote.png"
+    "image": "assets/merch_tote.png"
   },
   {
     "id": 3,
     "name": "Red Beanie",
     "price": 100,
     "description": "Cozy winter beanie with embroidered ice-cream logo.",
-    "image": "images/merch_beanie.png"
+    "image": "assets/merch_beanie.png"
   }
 ]

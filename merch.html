@@ -8,26 +8,31 @@
 </head>
 <body>
   <div class="container">
-    <header class="header">
-      <a href="index.html"><img src="logo.png" alt="Stellies Logo" id="logoImg" /></a>
-      <div class="tagline">Affordable campus treats, packed with love ❤️</div>
-      <nav class="top-menu">
-        <a href="index.html">Home</a>
-        <a href="merch.html" class="active">Merch</a>
-        <a href="checkout.html">Checkout</a>
-      </nav>
+    <header class="header centered">
+      <div class="logo-wrap">
+        <a href="index.html"><img id="logoImg" src="assets/logo.png" alt="Stellies"></a>
+      </div>
+      <div class="center-title">
+        <div class="site-name">Stellies Dinner Packs</div>
+        <div class="tagline">Affordable campus treats, packed with love ❤️</div>
+      </div>
+      <div class="nav-wrap">
+        <nav class="top-menu">
+          <a href="index.html">Home</a>
+          <a href="merch.html" class="active">Merch</a>
+          <a href="checkout.html">Checkout</a>
+        </nav>
+        <div class="cart-pill">R <span id="total">0.00</span></div>
+      </div>
     </header>
 
-    <section class="menu-card">
-      <h2 style="margin-bottom:12px">Merch — Support Stellies</h2>
-      <div id="merchList" class="merch-list">
-        <div class="small">Loading merch…</div>
-      </div>
-
-      <div style="margin-top:12px">
-        <button class="btn" onclick="location.href='index.html'">Back to food</button>
-      </div>
-    </section>
+    <main style="padding:12px">
+      <section class="menu-card">
+        <h2 style="margin-bottom:12px">Merch — Support Stellies</h2>
+        <div id="merchList" class="merch-list"><div class="small">Loading merch…</div></div>
+        <div style="margin-top:12px"><button class="btn" onclick="location.href='index.html'">Back to food</button></div>
+      </section>
+    </main>
   </div>
 
   <script src="script.js"></script>

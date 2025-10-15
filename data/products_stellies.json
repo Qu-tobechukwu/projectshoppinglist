@@ -7,7 +7,7 @@
     "flavours": ["Original", "Caramel Swirl", "Berry Drizzle"],
     "discountThreshold": 3,
     "discountPercent": 10,
-    "image": "images/vanilla.png"
+    "image": "assets/vanilla.png"
   },
   {
     "id": 2,
@@ -17,7 +17,7 @@
     "flavours": ["Classic", "Dark Choc", "Hazelnut"],
     "discountThreshold": 3,
     "discountPercent": 10,
-    "image": "images/chocolate.png"
+    "image": "assets/chocolate.png"
   },
   {
     "id": 3,
@@ -27,7 +27,7 @@
     "flavours": ["Classic", "Berry Burst", "Yoghurt Blend"],
     "discountThreshold": 4,
     "discountPercent": 15,
-    "image": "images/strawberry.png"
+    "image": "assets/strawberry.png"
   },
   {
     "id": 4,
@@ -37,7 +37,7 @@
     "flavours": ["Mango", "Chili Mango"],
     "discountThreshold": 0,
     "discountPercent": 0,
-    "image": "images/mango.png"
+    "image": "assets/mango.png"
   },
   {
     "id": 5,
@@ -47,7 +47,7 @@
     "flavours": ["Classic"],
     "discountThreshold": 2,
     "discountPercent": 5,
-    "image": "images/cookies.png"
+    "image": "assets/cookies.png"
   },
   {
     "id": 6,
@@ -57,7 +57,7 @@
     "flavours": ["Classic", "With Nuts"],
     "discountThreshold": 3,
     "discountPercent": 8,
-    "image": "images/caramel.png"
+    "image": "assets/caramel.png"
   },
   {
     "id": 7,
@@ -67,7 +67,7 @@
     "flavours": ["Mint", "Double Choc"],
     "discountThreshold": 0,
     "discountPercent": 0,
-    "image": "images/mint.png"
+    "image": "assets/mint.png"
   },
   {
     "id": 8,
@@ -77,7 +77,7 @@
     "flavours": ["Classic"],
     "discountThreshold": 0,
     "discountPercent": 0,
-    "image": "images/lemon.png"
+    "image": "assets/lemon.png"
   },
   {
     "id": 9,
@@ -87,7 +87,7 @@
     "flavours": ["Classic"],
     "discountThreshold": 2,
     "discountPercent": 7,
-    "image": "images/peanut.png"
+    "image": "assets/peanut.png"
   },
   {
     "id": 10,
@@ -97,7 +97,7 @@
     "flavours": ["Classic"],
     "discountThreshold": 0,
     "discountPercent": 0,
-    "image": "images/affogato.png"
+    "image": "assets/affogato.png"
   },
   {
     "id": 11,
@@ -107,7 +107,7 @@
     "flavours": ["Classic"],
     "discountThreshold": 3,
     "discountPercent": 10,
-    "image": "images/berry.png"
+    "image": "assets/berry.png"
   },
   {
     "id": 12,
@@ -117,6 +117,6 @@
     "flavours": ["Classic"],
     "discountThreshold": 0,
     "discountPercent": 0,
-    "image": "images/chai.png"
+    "image": "assets/chai.png"
   }
 ]

@@ -45,4 +45,27 @@
         <label class="small">Full name</label><input id="name" type="text" placeholder="Thandi M." />
         <label class="small" style="margin-top:8px;">Phone (WhatsApp)</label><input id="phone" type="tel" placeholder="0821234567" />
         <label class="small" style="margin-top:8px;">Email (optional)</label><input id="email" type="email" placeholder="you@example.com" />
-        <label class="small" style="margin-top:8px;">Delivery address</label
+        <label class="small" style="margin-top:8px;">Delivery address</label><select id="delivery"></select>
+
+        <div class="form-row" style="margin-top:8px;">
+          <div class="form-col">
+            <label class="small">Tip (R)</label>
+            <input id="tip" type="number" min="0" value="0" />
+          </div>
+          <div class="form-col">
+            <label class="small">Notes (optional)</label>
+            <input id="notes" type="text" placeholder="e.g. Leave at reception"/>
+          </div>
+        </div>
+
+        <div style="margin-top:12px; display:flex; gap:10px;">
+          <button id="payButton" class="btn">Pay with Yoco</button>
+          <button id="editButton" class="btn ghost">Edit My Order</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

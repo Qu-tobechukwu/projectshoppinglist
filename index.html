@@ -8,22 +8,32 @@
 </head>
 <body>
   <div class="container">
-    <header class="header">
-      <a href="index.html" id="homeLink"><img src="logo.png" alt="Stellies Dinner Packs Logo" id="logoImg" /></a>
-      <div class="tagline">Affordable campus treats, packed with love ❤️</div>
-      <nav class="top-menu">
-        <a href="index.html" class="active">Home</a>
-        <a href="merch.html">Merch</a>
-        <a href="checkout.html">Checkout</a>
-      </nav>
+    <header class="header centered">
+      <div class="logo-wrap">
+        <a href="index.html"><img id="logoImg" src="assets/logo.png" alt="Stellies Dinner Packs" /></a>
+      </div>
+
+      <div class="center-title">
+        <div class="site-name">Stellies Dinner Packs</div>
+        <div class="tagline">Affordable campus treats, packed with love ❤️</div>
+      </div>
+
+      <div class="nav-wrap">
+        <nav class="top-menu">
+          <a href="index.html" class="active">Home</a>
+          <a href="merch.html">Merch</a>
+          <a href="checkout.html">Checkout</a>
+        </nav>
+        <div class="cart-pill">R <span id="total">0.00</span></div>
+      </div>
     </header>
 
-    <div class="main-grid">
+    <main class="main-grid">
       <section class="menu-card">
         <div class="top-controls">
           <div>
             <div class="small">Your Cart Total</div>
-            <div class="total-pill">R <span id="total">0.00</span></div>
+            <div class="total-pill">R <span id="totalTop">0.00</span></div>
           </div>
 
           <div style="text-align:right;">
@@ -35,9 +45,7 @@
           </div>
         </div>
 
-        <div id="productList" class="product-list">
-          <div class="small">Loading items…</div>
-        </div>
+        <div id="productList" class="product-list"><div class="small">Loading items…</div></div>
 
         <div class="pagination" style="display:flex; gap:10px; margin-top:10px; align-items:center;">
           <button id="prevPage" class="btn ghost">Previous</button>
@@ -51,10 +59,8 @@
         </div>
       </section>
 
-      <aside class="sponsor-col" id="sponsorCol">
-        <!-- sponsors loaded by script.js -->
-      </aside>
-    </div>
+      <aside class="sponsor-col" id="sponsorCol"></aside>
+    </main>
   </div>
 
   <script src="script.js"></script>

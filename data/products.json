@@ -9,5 +9,10 @@
     {"id":7,"name":"Comfort Soup Set","price":80,"description":"Hearty soup base & toppings.","flavours":["Tomato","Lentil","Butternut"],"discountThreshold":2,"discountPercent":5,"image":"https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=1200&auto=format&fit=crop"},
     {"id":8,"name":"Snack Pack (Student Faves)","price":55,"description":"Mixed snacks to power study sessions.","flavours":[],"discountThreshold":0,"discountPercent":0,"image":"https://images.unsplash.com/photo-1499636136210-6f4ee915583e?q=80&w=1200&auto=format&fit=crop"}
   ],
-  "addresses":["Irene Residence","Metanoia Residence","Wilgenhof Residence","Rooiplein Market (Pickup)"]
+  "addresses": [
+    "Irene Residence",
+    "Metanoia Residence",
+    "Wilgenhof Residence",
+    "Rooiplein Market (Pickup)"
+  ]
 }

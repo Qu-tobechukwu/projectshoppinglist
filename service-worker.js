@@ -1,56 +1,51 @@
-// service-worker.js
-const CACHE_NAME = 'stellies-cache-v1';
-const ASSETS_TO_CACHE = [
+const CACHE_NAME = 'eden-cache-v1';
+const CORE_ASSETS = [
   '/',
   '/index.html',
-  '/menu.html',
   '/merch.html',
   '/checkout.html',
-  '/success.html',
-  '/assets/logo.svg',
-  '/styles.css',
+  '/thankyou.html',
+  '/style.css',
   '/script.js',
-  '/data/food.json',
-  '/data/merch.json'
+  '/manifest.json',
+  '/assets/logo.svg',
+  '/data/products.json'
 ];
 
-// Install event – cache everything
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      console.log('[Service Worker] Caching assets');
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(CORE_ASSETS))
   );
+  self.skipWaiting();
 });
 
-// Activate event – clean up old caches
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(key => key !== CACHE_NAME)
-            .map(key => caches.delete(key))
-      )
-    )
+    caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))))
   );
   self.clients.claim();
 });
 
-// Fetch event – serve from cache first
 self.addEventListener('fetch', event => {
+  const req = event.request;
+  // try cache first for core assets
   event.respondWith(
-    caches.match(event.request).then(cachedResponse => {
-      return (
-        cachedResponse ||
-        fetch(event.request).then(response => {
-          return caches.open(CACHE_NAME).then(cache => {
-            // Clone response so both browser & cache can use it
-            cache.put(event.request, response.clone());
-            return response;
-          });
-        })
-      );
+    caches.match(req).then(cached => {
+      if(cached) {
+        // fetch in background to update cache
+        fetch(req).then(res => {
+          if(res && res.status === 200) caches.open(CACHE_NAME).then(c => c.put(req, res.clone()));
+        }).catch(()=>{});
+        return cached;
+      }
+      return fetch(req).then(res => {
+        // cache API/json responses
+        if(req.method === 'GET' && req.destination !== 'document') {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
+        }
+        return res;
+      }).catch(()=> caches.match('/index.html'));
     })
   );
 });

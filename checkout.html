@@ -1,66 +1,60 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Checkout — Eden Crates</title>
-  <link rel="icon" href="assets/logo.svg" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Golden Grove</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="header">
-    <div class="header-inner container">
-      <a href="index.html" class="logo-link"><img src="assets/logo.svg" alt="Eden Crates" class="logo"></a>
-      <div class="brand"><div class="brand-title">Eden Crates</div></div>
-      <div class="header-right"><div class="cart-pill">R <span id="topTotalC">0.00</span></div></div>
-    </div>
-  </header>
+  <header><h1>Checkout</h1></header>
 
-  <main class="container checkout">
-    <section class="summary">
-      <div class="muted">Order number</div>
-      <div class="order-no" id="orderNumber"></div>
+  <form id="checkout-form">
+    <input name="name" placeholder="Your Name" required>
+    <input name="phone" placeholder="Phone (+27...)" required>
+    <input name="email" placeholder="Email">
+    <input name="delivery" placeholder="Delivery Address" required>
+    <input name="tip" type="number" placeholder="Optional Tip (R)">
+    <textarea name="notes" placeholder="Notes (e.g. allergies)"></textarea>
 
-      <table class="order-table" aria-live="polite">
-        <thead><tr><th>Item</th><th>Flavour</th><th>Qty</th><th>R</th></tr></thead>
-        <tbody id="orderTable"></tbody>
-      </table>
+    <h3>Cart Summary</h3>
+    <ul id="cart-summary"></ul>
+    <p id="total"></p>
 
-      <div class="summary-line">Subtotal: R <strong id="orderSubtotal">0.00</strong></div>
-      <div class="summary-line">Discounts: R <strong id="orderDiscount">0.00</strong></div>
-      <div class="summary-line">Tip: R <strong id="orderTip">0.00</strong></div>
-      <div class="summary-total">Total: R <strong id="orderTotal">0.00</strong></div>
-    </section>
+    <button type="submit">Confirm Order</button>
+  </form>
 
-    <section class="details">
-      <h3>Delivery & contact</h3>
-      <label class="muted">Full name</label>
-      <input id="name" type="text" placeholder="Thandi M." />
+  <script>
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const list = document.getElementById('cart-summary');
+    const totalEl = document.getElementById('total');
+    let total = 0;
+    list.innerHTML = cart.map(item => {
+      total += item.price;
+      return `<li>${item.name} - R${item.price}</li>`;
+    }).join('');
+    totalEl.textContent = `Total: R${total}`;
 
-      <label class="muted">Phone (WhatsApp)</label>
-      <input id="phone" type="tel" placeholder="0821234567" />
+    document.getElementById('checkout-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const form = Object.fromEntries(new FormData(e.target).entries());
+      form.items = cart;
+      form.total = total;
 
-      <label class="muted">Email (optional)</label>
-      <input id="email" type="email" placeholder="you@example.com" />
+      const res = await fetch('/.netlify/functions/order', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(form)
+      });
 
-      <label class="muted">Delivery address</label>
-      <select id="delivery"></select>
-
-      <label class="muted">Tip (R)</label>
-      <input id="tip" type="number" min="0" value="0" />
-
-      <label class="muted">Notes</label>
-      <input id="notes" type="text" placeholder="Leave at reception" />
-
-      <div style="margin-top:12px">
-        <button id="payButton" class="btn primary">Pay & Place Order</button>
-        <button id="editButton" class="btn ghost">Edit Order</button>
-      </div>
-    </section>
-  </main>
-
-  <script src="app.js" defer></script>
+      const data = await res.json();
+      if (data.success) {
+        localStorage.removeItem('cart');
+        location.href = 'thankyou.html';
+      } else {
+        alert('Error: ' + data.error);
+      }
+    };
+  </script>
 </body>
 </html>

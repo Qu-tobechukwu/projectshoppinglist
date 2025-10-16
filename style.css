@@ -1,143 +1,97 @@
-/* GOLDEN GROVE LUXE THEME — monochrome + forest gold elegance */
+/* Golden Grove Luxe theme
+   - Monochrome/cream background with forest green + warm gold accents
+   - Playfair Display headings, Inter body
+   - Elegant spacing, subtle shadows
+*/
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;600&display=swap');
 
-:root {
-  --bg: #f9f8f4;
-  --text: #1e1e1e;
-  --accent: #2f3e34;
-  --gold: #d8b04c;
-  --light: #ffffff;
-  --shadow: rgba(0, 0, 0, 0.05);
+:root{
+  --cream:#f9f8f4;
+  --panel:#fffefc;
+  --leaf:#2f6f4e;
+  --gold:#d8b04c;
+  --char:#1e1e1e;
+  --muted:#6b6b6b;
+  --shadow: rgba(30,30,30,0.06);
+  --radius:14px;
+  --maxw:1100px;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--cream);font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:var(--char);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.container{max-width:var(--maxw);margin:0 auto;padding:16px}
+
+/* header */
+.header{background:var(--leaf);color:white;padding:16px;border-bottom:1px solid rgba(0,0,0,0.04);position:sticky;top:0;z-index:40}
+.header-inner{display:flex;align-items:center;gap:12px;justify-content:space-between}
+.logo{height:64px}
+.brand{flex:1;text-align:center}
+.brand-title{font-family:"Playfair Display",serif;margin:0;color:#fff;font-size:1.2rem}
+.brand-tag{color:var(--gold);font-weight:500;margin-top:6px;font-size:0.95rem}
+
+/* cart pill */
+.cart-pill{background:rgba(216,176,76,0.08);padding:6px 10px;border-radius:14px;font-weight:600;color:var(--char);border:1px solid rgba(0,0,0,0.03)}
+
+/* hero */
+.hero{text-align:center;padding:22px 0}
+.hero-title{font-family:"Playfair Display",serif;margin:0;font-size:1.4rem;color:var(--char)}
+.hero-sub{color:var(--muted);margin-top:8px}
+
+/* controls */
+.controls{display:flex;flex-direction:column;gap:12px;margin:10px 0}
+.cart-summary{display:flex;flex-direction:column}
+.grand{font-weight:600;color:var(--leaf);font-size:1.05rem}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* products grid */
+.products-grid{display:grid;grid-template-columns:1fr;gap:12px;padding-bottom:20px}
+.card{background:var(--panel);border-radius:var(--radius);overflow:hidden;box-shadow:0 8px 24px var(--shadow);border:1px solid rgba(0,0,0,0.03);transition:transform .18s ease}
+.card:hover{transform:translateY(-6px)}
+.card-image{width:100%;height:200px;object-fit:cover;display:block;border-bottom:1px solid rgba(0,0,0,0.02)}
+.card-body{padding:14px}
+.card-title{font-family:"Playfair Display",serif;font-size:1.05rem;margin:0;color:var(--char)}
+.card-desc{color:var(--muted);margin-top:8px}
+.card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:8px}
+.price{font-weight:700;color:var(--leaf)}
+
+/* flavour list */
+.flavour-list{margin-top:10px;padding-top:10px;border-top:1px dashed rgba(0,0,0,0.04)}
+.flavour-row{display:flex;gap:8px;align-items:center}
+.flv-qty{width:80px;padding:6px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)}
+
+/* merch & checkout */
+.merch-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:720px){ .merch-grid{grid-template-columns:repeat(2,1fr)} }
+.checkout{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:980px){ .checkout{grid-template-columns:1fr 360px} }
+
+/* pagination & sponsors */
+.pagination{display:flex;justify-content:center;gap:12px;margin:14px 0}
+.sponsor-col{display:none}
+.sponsors-mobile{display:block}
+@media(min-width:960px){
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+  .sponsor-col{display:block;position:fixed;right:20px;top:140px;width:300px}
+  .sponsors-mobile{display:none}
 }
 
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  line-height: 1.7;
-  padding-bottom: 4rem;
-}
+/* footer */
+.footer{display:flex;flex-direction:column;gap:10px;padding:18px;background:linear-gradient(180deg,#fffdf9,#fff6f1);border-top:1px solid rgba(0,0,0,0.03);margin-top:20px}
+.footer-left{flex:1}
+.footer-explainer{color:var(--muted);max-width:720px}
+.footer-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
 
-/* HEADER */
-header {
-  background-color: var(--accent);
-  color: var(--light);
-  text-align: center;
-  padding: 1.8rem 1rem;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  box-shadow: 0 4px 20px var(--shadow);
-}
+/* buttons */
+.btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:600;transition:transform .12s ease,box-shadow .12s ease}
+.btn.primary{background:linear-gradient(90deg,var(--gold),#e6d29b);color:var(--leaf)}
+.btn.ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);color:var(--char)}
+.btn.small{padding:8px 10px;font-size:0.9rem}
 
-header img {
-  height: 60px;
-  display: block;
-  margin: 0 auto 0.5rem;
-}
-
-header h1 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 600;
-  font-size: 1.8rem;
-  letter-spacing: 0.5px;
-}
-
-header p {
-  font-size: 1rem;
-  color: var(--gold);
-  margin-top: 0.3rem;
-}
-
-/* MAIN SECTION */
-main {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  text-align: center;
-}
-
-main h2 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 600;
-  color: var(--accent);
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid var(--gold);
-  display: inline-block;
-  padding-bottom: 0.3rem;
-}
-
-.product-card {
-  background: var(--light);
-  box-shadow: 0 3px 10px var(--shadow);
-  border-radius: 20px;
-  padding: 1.2rem;
-  margin: 1rem auto;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 20px var(--shadow);
-}
-
-.product-card img {
-  width: 100%;
-  border-radius: 16px;
-  margin-bottom: 0.8rem;
-}
-
-button {
-  background-color: var(--accent);
-  color: var(--light);
-  border: none;
-  padding: 0.7rem 1.2rem;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 500;
-  margin-top: 0.6rem;
-  transition: all 0.25s ease;
-}
-
-button:hover {
-  background-color: var(--gold);
-  color: var(--accent);
-}
-
-/* FOOTER */
-footer {
-  text-align: center;
-  padding: 2rem 1rem;
-  border-top: 1px solid var(--gold);
-  margin-top: 3rem;
-  color: var(--accent);
-}
-
-footer p {
-  font-size: 0.9rem;
-  margin: 0.3rem 0;
-}
-
-.install-btn {
-  background-color: var(--gold);
-  color: var(--accent);
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  font-weight: 600;
-  border: none;
-  margin-top: 1rem;
-  transition: 0.25s;
-}
-
-.install-btn:hover {
-  background-color: var(--accent);
-  color: var(--light);
-}
+/* small util */
+.muted{color:var(--muted)}
+.small{font-size:0.9rem}
+.install-banner{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:rgba(47,111,78,0.05);position:fixed;bottom:12px;left:12px;right:12px;border-radius:10px;z-index:1000;box-shadow:0 6px 20px var(--shadow)}
+.splash-logo{width:120px;margin:18px auto 8px;display:block}
+.splash-title{font-family:"Playfair Display",serif;font-size:2rem;color:var(--leaf);text-align:center;margin-bottom:8px}

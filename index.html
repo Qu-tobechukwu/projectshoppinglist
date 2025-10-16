@@ -4,65 +4,69 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Stellies Dinner Packs — Delivery</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <header class="header centered">
-      <div class="logo-wrap">
-        <a href="index.html"><img id="logoImg" src="assets/logo.png" alt="Stellies Dinner Packs" /></a>
+  <header class="top-banner">
+    <div class="banner-inner">
+      <div class="logo-block">
+        <a href="index.html"><img src="assets/logo.png" alt="Stellies Dinner Packs" class="site-logo" /></a>
+        <div class="tagline">Good food, good friends, good vibes.</div>
       </div>
 
-      <div class="center-title">
-        <div class="site-name">Stellies Dinner Packs</div>
-        <div class="tagline">Affordable campus treats, packed with love ❤️</div>
-      </div>
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="merch.html" class="nav-link">Merch</a>
+        <a href="checkout.html" class="nav-link">Checkout</a>
+        <a href="admin.html" class="nav-link">Admin</a>
+      </nav>
 
-      <div class="nav-wrap">
-        <nav class="top-menu">
-          <a href="index.html" class="active">Home</a>
-          <a href="merch.html">Merch</a>
-          <a href="checkout.html">Checkout</a>
-        </nav>
-        <div class="cart-pill">R <span id="total">0.00</span></div>
-      </div>
-    </header>
+      <div class="cart-pill">R <span id="topTotal">0.00</span></div>
+    </div>
+  </header>
 
-    <main class="main-grid">
-      <section class="menu-card">
-        <div class="top-controls">
+  <main class="container">
+    <section class="content-grid">
+      <section class="left-col">
+        <div class="controls-row">
           <div>
-            <div class="small">Your Cart Total</div>
-            <div class="total-pill">R <span id="totalTop">0.00</span></div>
+            <div class="muted">Cart total</div>
+            <div class="big-total">R <span id="total">0.00</span></div>
           </div>
-
-          <div style="text-align:right;">
-            <button id="finishBtn" class="btn">Finished → Checkout</button>
+          <div class="action-buttons">
+            <button id="finishBtn" class="btn primary">Finished → Checkout</button>
             <button id="resetCart" class="btn ghost">Reset Cart</button>
             <button id="repeatOrder" class="btn ghost">Repeat Last Order</button>
-            <div style="height:8px"></div>
-            <button id="refreshProducts" class="btn ghost">Refresh items</button>
           </div>
         </div>
 
-        <div id="productList" class="product-list"><div class="small">Loading items…</div></div>
-
-        <div class="pagination" style="display:flex; gap:10px; margin-top:10px; align-items:center;">
-          <button id="prevPage" class="btn ghost">Previous</button>
-          <div id="pageInfo" class="small">Page 1</div>
-          <button id="nextPage" class="btn ghost">Next</button>
+        <div id="products" class="cards-wrap">
+          <!-- product cards injected here -->
         </div>
 
-        <div class="bottom-cta" style="margin-top:12px;">
-          <button id="viewOrder" class="btn ghost">View Order</button>
-          <div style="flex:1"></div>
+        <div class="pagination-row">
+          <button id="prevPage" class="btn ghost">Previous</button>
+          <div class="page-info" id="pageInfo">Page 1</div>
+          <button id="nextPage" class="btn ghost">Next</button>
         </div>
       </section>
 
-      <aside class="sponsor-col" id="sponsorCol"></aside>
-    </main>
-  </div>
+      <aside class="right-col" id="sponsorCol">
+        <!-- sponsors injected here -->
+      </aside>
+    </section>
 
-  <script src="script.js"></script>
+    <footer class="site-footer">
+      <div>© <span id="year"></span> Stellies Dinner Packs — Made in Stellenbosch ❤️</div>
+      <div class="muted small">Designed with love • Wine-red luxury theme</div>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

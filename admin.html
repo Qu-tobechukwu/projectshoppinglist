@@ -4,19 +4,21 @@
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Admin — Stellies</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css" />
 <style>
   .admin-wrap{max-width:1100px;margin:18px auto;padding:12px}
   .hidden{display:none}
   table{width:100%;border-collapse:collapse}
-  th,td{padding:8px;border-bottom:1px solid rgba(0,0,0,0.06); color:#111}
+  th,td{padding:8px;border-bottom:1px solid rgba(0,0,0,0.06); color:var(--char)}
 </style>
 </head>
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="index.html"><img src="assets/logo.png" class="logo" alt="Stellies" /></a>
+        <a href="index.html"><img src="assets/logo.svg" class="logo" alt="Stellies" /></a>
         <div class="tagline">Admin access</div>
         <hr class="gold-divider" />
       </div>
@@ -37,14 +39,18 @@
     <div id="adminUI" class="hidden">
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
         <button id="refreshAdmin" class="btn">Refresh</button>
-        <button id="exportCSV" class="btn ghost">Download CSV</button>
+        <button id="exportCSV" class="btn ghost">Download CSV (static + pending)</button>
         <label class="muted">Show:
-          <select id="adminFilter"><option value="all">All</option><option value="static">Static file</option><option value="pending">Pending local</option></select>
+          <select id="adminFilter">
+            <option value="all">All</option>
+            <option value="static">Static</option>
+            <option value="pending">Pending</option>
+          </select>
         </label>
       </div>
 
       <div id="summary" class="muted"></div>
-      <table id="ordersTable">
+      <table id="ordersTable" aria-live="polite">
         <thead><tr><th>Order #</th><th>Name</th><th>Phone</th><th>Delivery</th><th>Items</th><th>Total (R)</th><th>Date</th><th>Packed</th></tr></thead>
         <tbody id="ordersBody"><tr><td colspan="8">Loading…</td></tr></tbody>
       </table>
@@ -76,24 +82,23 @@
     if(confirm('Clear pending orders in this browser?')){ localStorage.removeItem('stellies_pending_orders'); alert('Cleared'); }
   });
 
-  // load static + pending and render
   async function loadStaticOrders(){
-    try{ const r = await fetch('./data/products.json'); if(!r.ok) return []; const j = await r.json(); return j.orders || []; } catch(e){ return []; }
+    // static orders file is empty by default; for live orders we use the Netlify function.
+    try{ const r = await fetch('/data/products.json'); if(!r.ok) return []; const j = await r.json(); return j.orders || []; } catch(e){ return []; }
   }
 
   function loadPending(){ return JSON.parse(localStorage.getItem('stellies_pending_orders')||'[]'); }
 
   async function loadOrders(){
-    // try to load from backend (if available)
-    const BACKEND = ''; // optional: set backend here to fetch live orders endpoint
+    // try Netlify backend list
+    let backend = ''; // set the list endpoint here if you want: e.g. '/.netlify/functions/order?action=list'
     let backendOrders = [];
-    if(BACKEND){
-      try{ const r = await fetch(BACKEND + '?action=list'); if(r.ok) backendOrders = await r.json(); } catch(e){ console.warn(e); }
+    if(backend){
+      try{ const r = await fetch(backend); if(r.ok) backendOrders = await r.json(); } catch(e){ console.warn(e); }
     }
     const staticOrders = await loadStaticOrders();
     const pending = loadPending();
-    const combined = backendOrders.concat(staticOrders).concat(pending);
-    renderOrders(combined);
+    renderOrders(backendOrders.concat(staticOrders).concat(pending));
   }
 
   function renderOrders(rows){

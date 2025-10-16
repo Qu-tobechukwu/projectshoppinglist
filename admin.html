@@ -2,136 +2,136 @@
 <html>
 <head>
   <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Stellies Admin</title>
-  <link rel="stylesheet" href="style.css"/>
+  <title>Admin — Stellies</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
   <style>
-    .admin-box{ max-width:1100px; margin:18px auto; }
-    .pw-wrap{ display:flex; gap:8px; align-items:center; margin-bottom:12px; }
-    .hidden{ display:none; }
-    .admin-tools{ display:flex; gap:8px; margin-bottom:12px; align-items:center; }
+    .admin-wrap { max-width:1100px; margin:20px auto; }
+    .login-panel { margin-bottom:16px; }
+    .hidden { display:none; }
     table{ width:100%; border-collapse:collapse; }
-    th,td{ padding:8px; border-bottom:1px solid #f4efec; text-align:left; }
+    th,td{ padding:8px; border-bottom:1px solid rgba(255,255,255,0.06); text-align:left; color:#fff; }
+    .muted-light { color:rgba(255,255,255,0.75); }
   </style>
 </head>
 <body>
-  <div class="container admin-box">
-    <header class="header centered" style="margin-bottom:12px">
-      <div class="logo-wrap"><img src="assets/logo.png" alt="logo" style="height:56px" /></div>
-      <div class="center-title"><div class="site-name">Stellies Dinner Packs — Admin</div><div class="tagline small">Admin (password required)</div></div>
-      <div class="nav-wrap"></div>
-    </header>
-
-    <div id="pwPanel" class="menu-card">
-      <div class="pw-wrap">
-        <input id="adminPw" type="password" placeholder="Admin password" style="padding:10px;border-radius:8px;border:1px solid #eee;"/>
-        <button id="unlockBtn" class="btn">Unlock</button>
-        <button id="clearLocal" class="btn ghost">Clear local pending</button>
+  <header class="top-banner">
+    <div class="banner-inner">
+      <div class="logo-block">
+        <a href="index.html"><img src="assets/logo.png" alt="Stellies" class="site-logo" /></a>
+        <div class="tagline">Admin (password required)</div>
       </div>
-      <div class="small">This is a client-side password gate for convenience. For true security use server authentication.</div>
+
+      <nav class="main-nav"><a href="index.html" class="nav-link">Home</a><a href="merch.html" class="nav-link">Merch</a><a href="checkout.html" class="nav-link">Checkout</a></nav>
+      <div class="cart-pill">Admin</div>
+    </div>
+  </header>
+
+  <main class="container admin-wrap">
+    <div id="login" class="menu-card login-panel">
+      <div class="muted">Enter admin password to continue</div>
+      <div style="margin-top:8px; display:flex; gap:8px;">
+        <input id="pw" type="password" placeholder="Password" />
+        <button id="unlock" class="btn">Unlock</button>
+        <button id="clearPending" class="btn ghost">Clear local pending</button>
+      </div>
+      <div class="muted small" style="margin-top:8px">Client-side gate — for production use server auth (I can help).</div>
     </div>
 
     <div id="adminUI" class="hidden">
-      <div class="admin-tools">
-        <button id="refreshAdmin" class="btn">Refresh</button>
-        <button id="exportOrders" class="btn ghost">Download CSV</button>
-        <label class="small">Show:
-          <select id="adminFilter">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
+        <button id="refresh" class="btn">Refresh</button>
+        <button id="export" class="btn ghost">Download CSV</button>
+        <label class="muted-light">Show:
+          <select id="filter">
             <option value="all">All</option>
-            <option value="static">Static file</option>
             <option value="pending">Pending (local)</option>
+            <option value="static">Static (data/orders.json)</option>
           </select>
         </label>
       </div>
 
-      <div class="summary small" id="summary"></div>
+      <div id="summary" class="muted-light"></div>
 
       <table id="ordersTable">
         <thead><tr><th>Order #</th><th>Name</th><th>Phone</th><th>Delivery</th><th>Items</th><th>Total (R)</th><th>Date</th></tr></thead>
-        <tbody id="ordersBody"><tr><td colspan="7">Loading…</td></tr></tbody>
+        <tbody id="ordersBody"><tr><td colspan="7" class="muted-light">Loading…</td></tr></tbody>
       </table>
     </div>
-  </div>
+  </main>
 
 <script>
-  // SHA256 hex helper
-  async function sha256hex(str){
-    const utf8 = new TextEncoder().encode(str);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b=>b.toString(16).padStart(2,'0')).join('');
+  // simple SHA-256 helper
+  async function sha256hex(s){
+    const data = new TextEncoder().encode(s);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,'0')).join('');
   }
 
-  const ADMIN_HASH = '3e27a72c2be1dda475aee02ad2c34e9257b3d4170c053994efa16effe4deccbf';
+  // password hash for 'stellieslux'
+  const ADMIN_HASH = 'd2540ec95092c538d6609cfeab564112b4e3dbe6123a24ce63c3e5a33ad9942b';
 
-  document.getElementById('unlockBtn').addEventListener('click', async ()=>{
-    const pw = document.getElementById('adminPw').value || '';
-    const h = await sha256hex(pw);
+  document.getElementById('unlock').addEventListener('click', async ()=>{
+    const v = document.getElementById('pw').value || '';
+    const h = await sha256hex(v);
     if(h === ADMIN_HASH){
-      document.getElementById('pwPanel').classList.add('hidden');
+      document.getElementById('login').classList.add('hidden');
       document.getElementById('adminUI').classList.remove('hidden');
       loadAdmin();
-    } else {
-      alert('Incorrect password');
-    }
+    } else { alert('Incorrect password'); }
   });
 
-  document.getElementById('clearLocal').addEventListener('click', ()=>{
-    if(confirm('Clear local pending orders?')){ localStorage.removeItem('stellies_pending_orders'); alert('Local pending cleared'); }
+  document.getElementById('clearPending').addEventListener('click', ()=>{
+    if(confirm('Clear pending orders stored in this browser?')){ localStorage.removeItem('stellies_pending_orders'); alert('Cleared'); }
   });
 
   async function loadStatic(){
-    try{
-      const r = await fetch('./data/orders.json'); if(!r.ok) return [];
-      return await r.json();
-    } catch(e){ return []; }
+    try { const r = await fetch('./data/orders.json'); if(!r.ok) return []; return await r.json(); } catch(e){ return []; }
   }
-  function loadPending(){
-    return JSON.parse(localStorage.getItem('stellies_pending_orders')||'[]');
-  }
+  function loadPending(){ return JSON.parse(localStorage.getItem('stellies_pending_orders')||'[]'); }
 
-  function renderAdmin(){
-    Promise.all([loadStatic()]).then(([staticOrders])=>{
-      const pending = loadPending();
-      const filter = document.getElementById('adminFilter').value;
-      let rows = [];
-      if(filter==='all') rows = staticOrders.concat(pending);
-      else if(filter==='pending') rows = pending;
-      else rows = staticOrders;
-      const tbody = document.getElementById('ordersBody'); tbody.innerHTML = '';
-      if(rows.length===0){ tbody.innerHTML = '<tr><td colspan="7">No orders</td></tr>'; return; }
-      rows.forEach(o=>{
-        const itemsStr = (o.items||[]).map(it => `${it.quantity}× ${it.productId}${it.flavour? ' ('+it.flavour+')':''}`).join('; ');
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td style="font-weight:800">${o.id||o.orderNumber||''}</td>
-                        <td>${o.customerName||o.name||''}</td>
-                        <td>${o.phone||''}</td>
-                        <td>${o.delivery||''}</td>
-                        <td style="white-space:pre-wrap;max-width:320px;">${itemsStr}</td>
-                        <td>R ${Number(o.total||0).toFixed(2)}</td>
-                        <td>${o.date? new Date(o.date).toLocaleString() : ''}</td>`;
-        tbody.appendChild(tr);
-      });
-      const totalOrders = rows.length;
-      const revenue = rows.reduce((s, r) => s + Number(r.total||0), 0);
-      document.getElementById('summary').textContent = `Orders: ${totalOrders} · Revenue: R${revenue.toFixed(2)}`;
-    });
-  }
-
-  async function loadAdmin(){ renderAdmin(); }
-
-  document.getElementById('refreshAdmin').addEventListener('click', renderAdmin);
-  document.getElementById('adminFilter').addEventListener('change', renderAdmin);
-
-  document.getElementById('exportOrders').addEventListener('click', async ()=>{
-    const staticOrders = await (async()=>{ try{ const r = await fetch('./data/orders.json'); return r.ok?await r.json():[] }catch(e){return[]}})();
+  async function loadAdmin(){
+    const staticOrders = await loadStatic();
     const pending = loadPending();
+    renderRows(staticOrders.concat(pending));
+  }
+
+  function renderRows(rows){
+    const body = document.getElementById('ordersBody'); body.innerHTML = '';
+    if(!rows || rows.length===0){ body.innerHTML = '<tr><td colspan="7" class="muted-light">No orders</td></tr>'; document.getElementById('summary').textContent='Orders: 0'; return; }
+    rows.forEach(o=>{
+      const items = (o.items||[]).map(it=> `${it.qty}× ${it.itemName}${it.flavour? ' ('+it.flavour+')':''}`).join('; ');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td style="font-weight:700">${o.orderNumber||o.id||''}</td>
+                      <td>${o.name||o.customerName||''}</td>
+                      <td>${o.phone||''}</td>
+                      <td>${o.delivery||''}</td>
+                      <td style="white-space:pre-wrap;max-width:360px;">${items}</td>
+                      <td>R ${Number(o.total||0).toFixed(2)}</td>
+                      <td>${o.timestamp? new Date(o.timestamp).toLocaleString(): (o.date? new Date(o.date).toLocaleString():'')}</td>`;
+      body.appendChild(tr);
+    });
+    const total = rows.reduce((s,r)=> s + Number(r.total||0), 0);
+    document.getElementById('summary').textContent = `Orders: ${rows.length} · Revenue: R${total.toFixed(2)}`;
+  }
+
+  document.getElementById('refresh').addEventListener('click', loadAdmin);
+  document.getElementById('filter').addEventListener('change', async ()=>{
+    const f = document.getElementById('filter').value;
+    if(f==='all'){ loadAdmin(); return; }
+    const staticOrders = await loadStatic();
+    const pending = loadPending();
+    if(f==='static') renderRows(staticOrders);
+    if(f==='pending') renderRows(pending);
+  });
+
+  document.getElementById('export').addEventListener('click', async ()=>{
+    const staticOrders = await loadStatic(); const pending = loadPending();
     const rows = staticOrders.concat(pending);
-    if(rows.length===0){ alert('No orders'); return; }
+    if(rows.length===0){ alert('No orders to export'); return; }
     const keys = Object.keys(rows[0]);
     const csv = [keys.join(',')];
-    rows.forEach(r=>{
-      csv.push(keys.map(k=>`"${(r[k]||'').toString().replace(/"/g,'""')}"`).join(','));
-    });
+    rows.forEach(r => csv.push(keys.map(k=>`"${(r[k]||'').toString().replace(/"/g,'""')}"`).join(',')));
     const uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv.join('\n'));
     const a = document.createElement('a'); a.href = uri; a.download = 'stellies-orders.csv'; a.click();
   });

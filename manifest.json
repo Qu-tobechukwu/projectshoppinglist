@@ -1,15 +1,12 @@
 {
-  "name": "Golden Grove",
   "short_name": "GoldenGrove",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#fdfcf6",
-  "theme_color": "#3a5a40",
+  "name": "Golden Grove — Beautiful meals, made easy",
   "icons": [
-    {
-      "src": "https://i.imgur.com/5n4z4sO.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+    { "src": "/assets/logo.svg", "sizes": "192x192", "type": "image/svg+xml" },
+    { "src": "/assets/logo.svg", "sizes": "512x512", "type": "image/svg+xml" }
+  ],
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#fff9f2",
+  "theme_color": "#2f6f4e"
 }

@@ -13,7 +13,7 @@ const TWILIO_TOKEN = process.env.TWILIO_AUTH_TOKEN || '';
 const TWILIO_FROM = process.env.TWILIO_FROM || '';
 
 async function getSheetsClient(){
-  if(!SERVICE_ACCOUNT_EMAIL || !SERVICE_ACCOUNT_KEY) throw new Error('Google service account not configured (SERVICE_ACCOUNT_EMAIL/GOOGLE_PRIVATE_KEY)');
+  if(!SERVICE_ACCOUNT_EMAIL || !SERVICE_ACCOUNT_KEY) throw new Error('Google service account not configured');
   const scopes = ['https://www.googleapis.com/auth/spreadsheets'];
   const jwt = new google.auth.JWT(SERVICE_ACCOUNT_EMAIL, null, SERVICE_ACCOUNT_KEY, scopes);
   await jwt.authorize();
@@ -76,21 +76,17 @@ async function markPackedInSheet(orderNumber, packer){
   for(let i=1;i<rows.length;i++){
     if(rows[i][idx] == orderNumber){
       const rowNumber = i+1;
-      const vals = [];
-      vals[packedIdx] = packer || 'admin';
-      vals[packedTsIdx] = (new Date()).toISOString();
-      // write individual cells
       await sheets.spreadsheets.values.update({
         spreadsheetId: SPREADSHEET_ID,
         range: `Stellies Orders!${String.fromCharCode(65+packedIdx)}${rowNumber}`,
         valueInputOption: 'USER_ENTERED',
-        requestBody: { values: [[vals[packedIdx]]] }
+        requestBody: { values: [['Yes']] }
       });
       await sheets.spreadsheets.values.update({
         spreadsheetId: SPREADSHEET_ID,
         range: `Stellies Orders!${String.fromCharCode(65+packedTsIdx)}${rowNumber}`,
         valueInputOption: 'USER_ENTERED',
-        requestBody: { values: [[vals[packedTsIdx]]] }
+        requestBody: { values: [[(new Date()).toISOString()]] }
       });
       return true;
     }
@@ -125,18 +121,17 @@ exports.handler = async function(event, context) {
       return { statusCode:200, body: JSON.stringify({ success:ok }) };
     }
 
-    // process payment with YOCO here if YOCO_SECRET and payload.paymentToken exist
+    // Placeholder: YOCO server-side charge (implement when you add keys)
     let paymentToken = '';
     if(YOCO_SECRET && payload.paymentToken){
-      // PLACEHOLDER: implement actual Yoco charge per Yoco docs, using YOCO_SECRET
-      // Example (pseudocode): POST to Yoco payments endpoint with amountInCents and token
+      // PSEUDOCODE: call Yoco secret endpoint to charge amount
       paymentToken = payload.paymentToken;
     }
 
     // append order to google sheet
     const orderNumber = await appendOrderToSheet(payload, paymentToken);
 
-    // send SMS
+    // send SMS via Twilio (if configured)
     if(TWILIO_SID && TWILIO_TOKEN && TWILIO_FROM && payload.phone){
       const msg = `Hi ${payload.name || ''}, your Golden Grove order ${orderNumber} is confirmed! We'll message when it's ready.`;
       await sendSms(payload.phone, msg);

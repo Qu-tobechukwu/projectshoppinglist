@@ -1,52 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Golden Grove 🍃</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Golden Grove — Beautiful meals, made easy</title>
+<link rel="icon" href="assets/logo.svg">
+<link rel="manifest" href="/manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <header>
-    <h1>Golden Grove</h1>
-    <p class="tagline">Nourish your week beautifully — fresh, affordable, divine.</p>
+  <div id="sw-banner" class="install-banner" hidden>
+    <div>Install Golden Grove for quick ordering</div>
+    <div>
+      <button id="installPromptBtn" class="btn primary">Install</button>
+      <button id="dismissInstall" class="btn ghost">Dismiss</button>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="header-inner container">
+      <a href="index.html" class="logo-link"><img src="assets/logo.svg" alt="Golden Grove" class="logo"></a>
+      <div class="brand">
+        <div class="brand-title">Golden Grove</div>
+        <div class="brand-tag">Beautiful meals, made easy</div>
+      </div>
+      <div class="header-right">
+        <div class="cart-pill">R <span id="topTotal">0.00</span></div>
+      </div>
+    </div>
   </header>
 
-  <main id="product-list"></main>
+  <main class="container main">
+    <section class="hero">
+      <h1 class="hero-title">Meal packs & weekly essentials — curated for students</h1>
+      <p class="hero-sub">Freshly bundled, practical & elevated. Save time, eat beautifully.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#products">Browse Packs</a>
+        <a class="btn ghost" href="merch.html">Merch</a>
+      </div>
+    </section>
 
-  <footer>
-    <button id="checkout-btn">Proceed to Checkout</button>
+    <section class="controls">
+      <div class="cart-summary">
+        <div class="muted">Cart total</div>
+        <div class="grand">R <span id="total">0.00</span></div>
+      </div>
+
+      <div class="actions">
+        <button id="finishBtn" class="btn primary">Finished — Checkout</button>
+        <button id="resetCart" class="btn ghost">Reset</button>
+        <button id="repeatOrder" class="btn ghost">Repeat Last</button>
+      </div>
+    </section>
+
+    <section id="products" class="products-grid" aria-live="polite">
+      <!-- product cards injected by app.js -->
+    </section>
+
+    <div id="sponsorsMobile" class="sponsors-mobile" aria-hidden="false"></div>
+
+    <div class="pagination">
+      <button id="prevPage" class="btn ghost">Prev</button>
+      <div id="pageInfo" class="muted">Page 1</div>
+      <button id="nextPage" class="btn ghost">Next</button>
+    </div>
+  </main>
+
+  <aside id="sponsorCol" class="sponsor-col" aria-hidden="true"></aside>
+
+  <footer class="footer container">
+    <div class="footer-left">
+      <div class="footer-brand">Golden Grove</div>
+      <div class="footer-explainer">Golden Grove curates meal boxes and weekly essentials so students can eat well, save time, and spend less — delivered with care and a gentle, elevated touch.</div>
+    </div>
+
+    <div class="footer-right">
+      <button id="installFooter" class="btn primary small" hidden>📱 Add Golden Grove to Home Screen</button>
+      <div class="muted small">© <span id="year"></span> Golden Grove</div>
+    </div>
   </footer>
 
-  <script>
-    async function loadProducts() {
-      const res = await fetch('products.json');
-      const products = await res.json();
-      const container = document.getElementById('product-list');
-      container.innerHTML = products.map(p => `
-        <div class="product">
-          <img src="${p.image}" alt="${p.name}">
-          <div>
-            <h3>${p.name}</h3>
-            <p>${p.description}</p>
-            <p class="price">R${p.price}</p>
-            <button onclick="addToCart('${p.name}', ${p.price})">Add</button>
-          </div>
-        </div>
-      `).join('');
-    }
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js').then(()=>console.log('SW registered')).catch(e=>console.warn('SW failed',e));
+  }
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    function addToCart(name, price) {
-      cart.push({ name, price });
-      localStorage.setItem('cart', JSON.stringify(cart));
-      alert('Added to cart 🌿');
-    }
-
-    document.getElementById('checkout-btn').onclick = () => location.href = 'checkout.html';
-    loadProducts();
-  </script>
+<script src="/app.js" defer></script>
 </body>
 </html>

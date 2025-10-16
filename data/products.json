@@ -1,5 +1,13 @@
-[
-  {"name":"Avocado Toast Kit","price":35,"description":"Fresh avos, bread, spice mix","image":"https://source.unsplash.com/featured/?avocado"},
-  {"name":"Smoothie Pack","price":45,"description":"Banana, spinach, seeds, protein","image":"https://source.unsplash.com/featured/?smoothie"},
-  {"name":"Veggie Wrap","price":30,"description":"Healthy wrap with hummus and greens","image":"https://source.unsplash.com/featured/?wrap"}
-]
+{
+  "food": [
+    {"id":1,"name":"Weeknight Dinner Pack (2p)","price":120,"description":"Pasta, sauce & seasonal veg — 2 dinners.","flavours":[],"discountThreshold":2,"discountPercent":5,"image":"https://images.unsplash.com/photo-1543353071-087092ec393c?q=80&w=1200&auto=format&fit=crop"},
+    {"id":2,"name":"Student Essentials Box","price":220,"description":"Breakfast & staples for the week.","flavours":[],"discountThreshold":0,"discountPercent":0,"image":"https://images.unsplash.com/photo-1506084868230-bb9d95c24759?q=80&w=1200&auto=format&fit=crop"},
+    {"id":3,"name":"Comfort Curry Pack (3 meals)","price":150,"description":"All ingredients for three curry meals.","flavours":["Mild","Medium","Hot"],"discountThreshold":3,"discountPercent":10,"image":"https://images.unsplash.com/photo-1543352634-2f0a6baf0f20?q=80&w=1200&auto=format&fit=crop"},
+    {"id":4,"name":"Batch Roast & Sides","price":140,"description":"Protein + roasted veg for lunches.","flavours":["Chicken","Beef","Veg"],"discountThreshold":2,"discountPercent":8,"image":"https://images.unsplash.com/photo-1508253578933-a97f1a6f4f48?q=80&w=1200&auto=format&fit=crop"},
+    {"id":5,"name":"Salad Kit (2 bowls)","price":95,"description":"Greens, dressing & seeds.","flavours":[],"discountThreshold":0,"discountPercent":0,"image":"https://images.unsplash.com/photo-1542444459-db2c3e8d0a3d?q=80&w=1200&auto=format&fit=crop"},
+    {"id":6,"name":"Breakfast Trio Pack","price":70,"description":"Granola, fruit & yoghurt sachets.","flavours":[],"discountThreshold":3,"discountPercent":7,"image":"https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1200&auto=format&fit=crop"},
+    {"id":7,"name":"Comfort Soup Set","price":80,"description":"Hearty soup base & toppings.","flavours":["Tomato","Lentil","Butternut"],"discountThreshold":2,"discountPercent":5,"image":"https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=1200&auto=format&fit=crop"},
+    {"id":8,"name":"Snack Pack (Student Faves)","price":55,"description":"Mixed snacks to power study sessions.","flavours":[],"discountThreshold":0,"discountPercent":0,"image":"https://images.unsplash.com/photo-1499636136210-6f4ee915583e?q=80&w=1200&auto=format&fit=crop"}
+  ],
+  "addresses":["Irene Residence","Metanoia Residence","Wilgenhof Residence","Rooiplein Market (Pickup)"]
+}

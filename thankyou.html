@@ -1,24 +1,24 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Thanks — Eden Pantry</title>
-<link rel="icon" href="assets/logo.svg" />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thanks — Eden Crates</title>
+  <link rel="icon" href="assets/logo.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="header">
-    <div class="header-inner">
-      <a class="logo-link" href="index.html"><img src="assets/logo.svg" alt="Eden Pantry" class="logo" /></a>
-      <div class="brand"><h1 class="brand-title">Eden Pantry</h1></div>
+    <div class="header-inner container">
+      <a href="index.html" class="logo-link"><img src="assets/logo.svg" alt="Eden Crates" class="logo"></a>
+      <div class="brand"><div class="brand-title">Eden Crates</div></div>
     </div>
   </header>
 
   <main class="container thanks">
     <div class="card thanks-card">
       <h2>✨ Order Confirmed</h2>
-      <p class="muted">Thank you — we received your order. We'll message you when it's ready for collection/delivery.</p>
+      <p class="muted">Thanks — we received your order. We'll message you when it's ready for collection or delivery.</p>
       <p><strong>Order #</strong> <span id="finalOrder"></span></p>
       <p><strong>Delivery</strong> <span id="finalDelivery"></span></p>
       <p><strong>Total</strong> R <span id="finalTotal">0.00</span></p>
@@ -26,10 +26,10 @@
     </div>
   </main>
 
-<script>
-  document.getElementById('finalOrder').textContent = localStorage.getItem('orderNumber') || '';
-  document.getElementById('finalDelivery').textContent = localStorage.getItem('delivery') || '';
-  document.getElementById('finalTotal').textContent = localStorage.getItem('finalTotal') || '0.00';
-</script>
+  <script>
+    document.getElementById('finalOrder').textContent = localStorage.getItem('orderNumber') || '';
+    document.getElementById('finalDelivery').textContent = localStorage.getItem('delivery') || '';
+    document.getElementById('finalTotal').textContent = localStorage.getItem('finalTotal') || '0.00';
+  </script>
 </body>
 </html>

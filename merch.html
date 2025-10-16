@@ -1,20 +1,20 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Eden Pantry — Merch</title>
-<link rel="icon" href="assets/logo.svg" />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Eden Crates — Merch</title>
+  <link rel="icon" href="assets/logo.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="header">
-    <div class="header-inner">
-      <a class="logo-link" href="index.html"><img src="assets/logo.svg" alt="Eden Pantry" class="logo" /></a>
+    <div class="header-inner container">
+      <a href="index.html" class="logo-link"><img src="assets/logo.svg" alt="Eden Crates" class="logo"></a>
       <div class="brand">
-        <h1 class="brand-title">Eden Pantry</h1>
-        <div class="brand-tag">Curated meal boxes for heavenly student living.</div>
+        <div class="brand-title">Eden Crates</div>
+        <div class="brand-tag">Heavenly meal boxes for earth-side living</div>
       </div>
       <div class="header-right">
         <div class="cart-pill">R <span id="topTotalM">0.00</span></div>
@@ -24,11 +24,13 @@
 
   <main class="container">
     <section class="merch-grid" id="merchWrap">
-      <!-- merch injected -->
+      <!-- merch cards injected by app.js -->
     </section>
-    <div style="margin:18px 0"><a class="btn ghost" href="index.html">Back to Packs</a></div>
+    <div style="margin:18px 0">
+      <a href="index.html" class="btn ghost">Back to Packs</a>
+    </div>
   </main>
 
-<script src="script.js"></script>
+  <script src="app.js" defer></script>
 </body>
 </html>

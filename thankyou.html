@@ -1,17 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thank You | Golden Grove</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thanks — Golden Grove</title>
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="thankyou">
-    <h1>Thank You 🌿</h1>
-    <p>Your order has been received! You’ll get a WhatsApp or SMS confirmation shortly.</p>
-    <p>Add Golden Grove to your home screen for faster access next time 🍯</p>
-    <button onclick="location.href='index.html'">Back Home</button>
-  </div>
+  <header class="header">
+    <div class="header-inner container">
+      <a href="index.html" class="logo-link"><img src="assets/logo.svg" alt="Golden Grove" class="logo"></a>
+      <div class="brand"><div class="brand-title">Golden Grove</div></div>
+    </div>
+  </header>
+
+  <main class="container thanks">
+    <div class="card thanks-card">
+      <h2>✨ Order Confirmed</h2>
+      <p class="muted">Thank you — we received your order. We'll message you when it's ready for collection or delivery.</p>
+      <p><strong>Order #</strong> <span id="finalOrder"></span></p>
+      <p><strong>Delivery</strong> <span id="finalDelivery"></span></p>
+      <p><strong>Total</strong> R <span id="finalTotal">0.00</span></p>
+      <a href="index.html" class="btn">Place another order</a>
+    </div>
+  </main>
+
+<script>
+  document.getElementById('finalOrder').textContent = localStorage.getItem('orderNumber') || '';
+  document.getElementById('finalDelivery').textContent = localStorage.getItem('delivery') || '';
+  document.getElementById('finalTotal').textContent = localStorage.getItem('finalTotal') || '0.00';
+</script>
 </body>
 </html>

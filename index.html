@@ -1,20 +1,22 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Golden Grove — Beautiful meals, made easy</title>
-<link rel="icon" href="assets/logo.svg">
-<link rel="manifest" href="/manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Golden Grove — Beautiful meals, made easy</title>
+  <link rel="icon" href="assets/logo.svg">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2f6f4e">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div id="sw-banner" class="install-banner" hidden>
-    <div>Install Golden Grove for quick ordering</div>
+  <!-- PWA install banner (mobile) -->
+  <div id="install-banner" class="install-banner" hidden>
+    <div>Install Golden Grove for faster ordering</div>
     <div>
-      <button id="installPromptBtn" class="btn primary">Install</button>
-      <button id="dismissInstall" class="btn ghost">Dismiss</button>
+      <button id="installPromptBtn" class="btn primary small">Install</button>
+      <button id="dismissInstall" class="btn ghost small">Dismiss</button>
     </div>
   </div>
 
@@ -69,21 +71,25 @@
 
   <aside id="sponsorCol" class="sponsor-col" aria-hidden="true"></aside>
 
-  <footer>
-  <p><strong>Golden Grove</strong></p>
-  <p>Curating meal boxes and weekly essentials so students can eat well, save time, and spend less — with care and elegance.</p>
-  <button class="install-btn">Install App</button>
-  <p>© 2025 Golden Grove</p>
-</footer>
+  <footer class="footer container">
+    <div class="footer-left">
+      <div class="footer-brand">Golden Grove</div>
+      <div class="footer-explainer">Golden Grove curates meal boxes and weekly essentials so students can eat well, save time, and spend less — delivered with care and a gentle, elevated touch.</div>
+    </div>
 
+    <div class="footer-right">
+      <button id="installFooter" class="btn primary small" hidden>📱 Add Golden Grove to Home Screen</button>
+      <div class="muted small">© <span id="year"></span> Golden Grove</div>
+    </div>
+  </footer>
 
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js').then(()=>console.log('SW registered')).catch(e=>console.warn('SW failed',e));
-  }
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').then(()=>console.log('SW registered')).catch(e=>console.warn('SW failed',e));
+    }
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 
-<script src="/app.js" defer></script>
+  <script src="/app.js" defer></script>
 </body>
 </html>

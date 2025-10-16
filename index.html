@@ -1,40 +1,46 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Stellies Dinner Packs — Heavenly Menu</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stellies Dinner Packs — Heavenly Menu</title>
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="style.css" />
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#f9f5ee">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="index.html"><img src="assets/logo.png" alt="Stellies Dinner Packs" class="logo" /></a>
+        <a href="index.html" aria-label="Stellies Dinner Packs home">
+          <img src="assets/logo.svg" class="logo" alt="Stellies Dinner Packs" />
+        </a>
         <div class="tagline">A Taste So Divine, It Must Be Heaven’s Kitchen.</div>
         <hr class="gold-divider" />
       </div>
 
       <nav class="nav-row">
-        <button class="nav-toggle" id="navToggle">☰</button>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
         <div class="nav-links" id="navLinks">
           <a href="index.html" class="nav-link active">Home</a>
           <a href="merch.html" class="nav-link">Merch</a>
           <a href="checkout.html" class="nav-link">Checkout</a>
-          <a href="admin.html" class="nav-link">Admin</a>
         </div>
         <div class="cart-pill">R <span id="topTotal">0.00</span></div>
       </nav>
     </div>
   </header>
 
-  <main class="page container">
+  <main class="page container" id="app">
     <section class="controls">
-      <div class="cart-summary">
+      <div class="cart-summary" aria-live="polite">
         <div class="muted">Cart total</div>
         <div class="grand-total">R <span id="total">0.00</span></div>
       </div>
@@ -46,25 +52,26 @@
       </div>
     </section>
 
-    <section id="products" class="products">
+    <section id="products" class="products" aria-label="Products list">
       <!-- product cards injected here -->
+      <div class="muted">Loading menu…</div>
     </section>
 
-    <div class="pagination">
+    <div class="pagination" role="navigation" aria-label="Pagination">
       <button id="prevPage" class="btn ghost">Prev</button>
       <div id="pageInfo" class="muted">Page 1</div>
       <button id="nextPage" class="btn ghost">Next</button>
     </div>
   </main>
 
-  <aside id="sponsorCol" class="sponsors"></aside>
+  <aside id="sponsorCol" class="sponsors" aria-hidden="true"></aside>
 
   <footer class="footer">
     <div>© <span id="yr"></span> Stellies Dinner Packs — Made in Stellenbosch</div>
     <div class="muted small">Made with golden care ✨</div>
   </footer>
 
-<script src="script.js"></script>
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+  <script src="script.js" defer></script>
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>

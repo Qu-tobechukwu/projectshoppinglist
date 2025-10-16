@@ -1,6 +1,6 @@
 [
   {
-    "orderNumber":"EDC-0001",
+    "orderNumber":"GG-0001",
     "name":"Aneesa Dlamini",
     "phone":"0821234567",
     "email":"aneesa@example.com",
@@ -17,14 +17,14 @@
     "deliveredTimestamp":""
   },
   {
-    "orderNumber":"EDC-0002",
+    "orderNumber":"GG-0002",
     "name":"Thabo Nkosi",
     "phone":"0832345678",
     "email":"thabo@example.com",
     "delivery":"Rooiplein Market (Pickup)",
     "tip":0,
     "notes":"",
-    "items":[{"productId":1,"itemName":"Weeknight Dinner Pack (2p)","type":"food","flavour":"","qty":2,"price":120},{"productId":101,"itemName":"Eden Tote Bag","type":"merch","flavour":"","qty":1,"price":120}],
+    "items":[{"productId":1,"itemName":"Weeknight Dinner Pack (2p)","type":"food","flavour":"","qty":2,"price":120},{"productId":101,"itemName":"Golden Grove Tote","type":"merch","flavour":"","qty":1,"price":120}],
     "total":360,
     "timestamp":"2025-10-09T10:05:00Z",
     "paymentToken":"mock",

@@ -1,0 +1,26 @@
+{
+  "name": "Stellies Dinner Packs",
+  "short_name": "Stellies",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#fffdf7",
+  "theme_color": "#f9f5ee",
+  "description": "Heavenly student-friendly delivery — Stellies Dinner Packs",
+  "icons": [
+    {
+      "src": "/assets/logo.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    },
+    {
+      "src": "/assets/logo-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/assets/logo-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

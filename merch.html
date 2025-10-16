@@ -1,53 +1,41 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Stellies — Merch</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Stellies Merch</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="top-banner">
-    <div class="banner-inner">
-      <div class="logo-block">
-        <a href="index.html"><img src="assets/logo.png" alt="Stellies Dinner Packs" class="site-logo" /></a>
-        <div class="tagline">Good food, good friends, good vibes.</div>
+  <header class="tb">
+    <div class="tb-inner">
+      <div class="logo-area">
+        <a href="index.html"><img src="assets/logo.png" class="logo" alt="Stellies" /></a>
+        <div class="tagline">A Taste So Divine, It Must Be Heaven’s Kitchen.</div>
+        <hr class="gold-divider" />
       </div>
 
-      <nav class="main-nav">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="merch.html" class="nav-link active">Merch</a>
-        <a href="checkout.html" class="nav-link">Checkout</a>
-        <a href="admin.html" class="nav-link">Admin</a>
+      <nav class="nav-row">
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="merch.html" class="nav-link active">Merch</a>
+          <a href="checkout.html" class="nav-link">Checkout</a>
+          <a href="admin.html" class="nav-link">Admin</a>
+        </div>
+        <div class="cart-pill">R <span id="topTotalM">0.00</span></div>
       </nav>
-
-      <div class="cart-pill">R <span id="topTotal2">0.00</span></div>
     </div>
   </header>
 
   <main class="container">
-    <section class="content-grid single-col">
-      <section class="left-col fullwidth">
-        <h2 class="section-title">Merch — Support Stellies</h2>
-        <div id="merchWrap" class="merch-grid">
-          <!-- merch items injected -->
-        </div>
-
-        <div style="margin-top:20px">
-          <button class="btn" onclick="location.href='index.html'">Return to Menu</button>
-        </div>
-      </section>
+    <section class="merch-grid" id="merchWrap">
+      <!-- merch cards injected here -->
     </section>
 
-    <footer class="site-footer">
-      <div>© <span id="year2"></span> Stellies Dinner Packs — Made in Stellenbosch ❤️</div>
-      <div class="muted small">Mix merch & food in one order</div>
-    </footer>
+    <div style="margin:18px 0"><button class="btn" onclick="location.href='index.html'">Back to menu</button></div>
   </main>
 
-  <script src="app.js"></script>
-  <script>document.getElementById('year2').textContent = new Date().getFullYear();</script>
+<script src="script.js"></script>
 </body>
 </html>

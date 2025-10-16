@@ -1,37 +1,37 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Eden Pantry — Curated meal boxes for heavenly student living</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Eden Crates — Heavenly meal boxes for earth-side living</title>
 
-<link rel="icon" href="assets/logo.svg" />
-<link rel="manifest" href="manifest.json" />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#C6A76E"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="header">
-    <div class="header-inner">
-      <a class="logo-link" href="index.html"><img src="assets/logo.svg" alt="Eden Pantry" class="logo" /></a>
+    <div class="header-inner container">
+      <a href="index.html" class="logo-link"><img src="assets/logo.svg" alt="Eden Crates" class="logo"></a>
       <div class="brand">
-        <h1 class="brand-title">Eden Pantry</h1>
-        <div class="brand-tag">Curated meal boxes for heavenly student living.</div>
+        <div class="brand-title">Eden Crates</div>
+        <div class="brand-tag">Heavenly meal boxes for earth-side living</div>
       </div>
       <div class="header-right">
-        <nav class="nav-hidden" aria-hidden="true"><!-- admin removed from nav --></nav>
         <div class="cart-pill">R <span id="topTotal">0.00</span></div>
       </div>
     </div>
   </header>
 
-  <main class="main container">
+  <main class="container main">
     <section class="hero">
-      <h2 class="hero-title">Weekly value packs & meal kits — curated for students</h2>
-      <p class="hero-sub">Freshly bundled, balanced and budget-friendly — with a luxury touch.</p>
-      <div class="hero-cta">
+      <h1 class="hero-title">Curated weekly meal packs — balanced, affordable, and refined.</h1>
+      <p class="hero-sub">Everything students need for nourishing meals — prepared in thoughtful packs that save time and money without feeling cheap.</p>
+      <div class="hero-ctas">
         <a href="#products" class="btn primary">Browse Packs</a>
-        <button id="installBtn" class="btn ghost" hidden>Install App</button>
+        <a href="merch.html" class="btn ghost">Merch</a>
       </div>
     </section>
 
@@ -40,7 +40,6 @@
         <div class="muted">Cart total</div>
         <div class="grand">R <span id="total">0.00</span></div>
       </div>
-
       <div class="actions">
         <button id="finishBtn" class="btn primary">Finished — Checkout</button>
         <button id="resetCart" class="btn ghost">Reset</button>
@@ -48,12 +47,12 @@
       </div>
     </section>
 
-    <section id="products" class="products-grid">
-      <!-- product cards injected by script.js -->
+    <section id="products" class="products-grid" aria-live="polite">
+      <!-- product cards injected here -->
     </section>
 
-    <!-- mobile: sponsor banners between product blocks -->
-    <div id="sponsorsMobile" class="sponsors-mobile" aria-hidden="false"></div>
+    <!-- mobile sponsor banners -->
+    <div id="sponsorsMobile" class="sponsors-mobile"></div>
 
     <div class="pagination">
       <button id="prevPage" class="btn ghost">Prev</button>
@@ -62,21 +61,28 @@
     </div>
   </main>
 
-  <aside id="sponsorCol" class="sponsor-col" aria-hidden="false"><!-- desktop ad column injected --></aside>
+  <aside id="sponsorCol" class="sponsor-col" aria-hidden="true"></aside>
 
-  <footer class="footer">
+  <footer class="footer container">
     <div class="footer-left">
-      <div class="footer-brand">Eden Pantry</div>
-      <div class="footer-explainer">Eden Pantry curates meal packs and essentials so students can eat well, save time and cut costs on weekly cooking — delivered with care.</div>
+      <div class="footer-brand">Eden Crates</div>
+      <div class="footer-explainer">Eden Crates curates meal boxes and weekly essentials so students can eat well, save time, and spend less — delivered with care and a touch of luxury.</div>
     </div>
 
     <div class="footer-right">
-      <button id="installFooter" class="btn primary small">📱 Add Eden Pantry to Home Screen</button>
-      <div class="muted small">© <span id="year"></span> Eden Pantry — Made with care</div>
+      <button id="installFooter" class="btn primary small" hidden>📱 Add Eden Crates to Home Screen</button>
+      <div class="muted small">© <span id="year"></span> Eden Crates — Made with care</div>
     </div>
   </footer>
 
-<script src="script.js"></script>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <!-- register service worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').then(()=>console.log('SW registered')).catch(e=>console.warn('SW failed',e));
+    }
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <script src="app.js" defer></script>
 </body>
 </html>

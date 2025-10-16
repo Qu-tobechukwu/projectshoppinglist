@@ -1,48 +1,44 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Stellies Dinner Packs — Heavenly Menu</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Eden Pantry — Curated meal boxes for heavenly student living</title>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-
-  <!-- PWA -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#f9f5ee">
-  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-
-  <link rel="stylesheet" href="style.css" />
+<link rel="icon" href="assets/logo.svg" />
+<link rel="manifest" href="manifest.json" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="tb">
-    <div class="tb-inner">
-      <div class="logo-area">
-        <a href="index.html" aria-label="Stellies Dinner Packs home">
-          <img src="assets/logo.svg" class="logo" alt="Stellies Dinner Packs" />
-        </a>
-        <div class="tagline">A Taste So Divine, It Must Be Heaven’s Kitchen.</div>
-        <hr class="gold-divider" />
+  <header class="header">
+    <div class="header-inner">
+      <a class="logo-link" href="index.html"><img src="assets/logo.svg" alt="Eden Pantry" class="logo" /></a>
+      <div class="brand">
+        <h1 class="brand-title">Eden Pantry</h1>
+        <div class="brand-tag">Curated meal boxes for heavenly student living.</div>
       </div>
-
-      <nav class="nav-row">
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
-        <div class="nav-links" id="navLinks">
-          <a href="index.html" class="nav-link active">Home</a>
-          <a href="merch.html" class="nav-link">Merch</a>
-          <a href="checkout.html" class="nav-link">Checkout</a>
-        </div>
+      <div class="header-right">
+        <nav class="nav-hidden" aria-hidden="true"><!-- admin removed from nav --></nav>
         <div class="cart-pill">R <span id="topTotal">0.00</span></div>
-      </nav>
+      </div>
     </div>
   </header>
 
-  <main class="page container" id="app">
+  <main class="main container">
+    <section class="hero">
+      <h2 class="hero-title">Weekly value packs & meal kits — curated for students</h2>
+      <p class="hero-sub">Freshly bundled, balanced and budget-friendly — with a luxury touch.</p>
+      <div class="hero-cta">
+        <a href="#products" class="btn primary">Browse Packs</a>
+        <button id="installBtn" class="btn ghost" hidden>Install App</button>
+      </div>
+    </section>
+
     <section class="controls">
-      <div class="cart-summary" aria-live="polite">
+      <div class="cart-summary">
         <div class="muted">Cart total</div>
-        <div class="grand-total">R <span id="total">0.00</span></div>
+        <div class="grand">R <span id="total">0.00</span></div>
       </div>
 
       <div class="actions">
@@ -52,26 +48,35 @@
       </div>
     </section>
 
-    <section id="products" class="products" aria-label="Products list">
-      <!-- product cards injected here -->
-      <div class="muted">Loading menu…</div>
+    <section id="products" class="products-grid">
+      <!-- product cards injected by script.js -->
     </section>
 
-    <div class="pagination" role="navigation" aria-label="Pagination">
+    <!-- mobile: sponsor banners between product blocks -->
+    <div id="sponsorsMobile" class="sponsors-mobile" aria-hidden="false"></div>
+
+    <div class="pagination">
       <button id="prevPage" class="btn ghost">Prev</button>
       <div id="pageInfo" class="muted">Page 1</div>
       <button id="nextPage" class="btn ghost">Next</button>
     </div>
   </main>
 
-  <aside id="sponsorCol" class="sponsors" aria-hidden="true"></aside>
+  <aside id="sponsorCol" class="sponsor-col" aria-hidden="false"><!-- desktop ad column injected --></aside>
 
   <footer class="footer">
-    <div>© <span id="yr"></span> Stellies Dinner Packs — Made in Stellenbosch</div>
-    <div class="muted small">Made with golden care ✨</div>
+    <div class="footer-left">
+      <div class="footer-brand">Eden Pantry</div>
+      <div class="footer-explainer">Eden Pantry curates meal packs and essentials so students can eat well, save time and cut costs on weekly cooking — delivered with care.</div>
+    </div>
+
+    <div class="footer-right">
+      <button id="installFooter" class="btn primary small">📱 Add Eden Pantry to Home Screen</button>
+      <div class="muted small">© <span id="year"></span> Eden Pantry — Made with care</div>
+    </div>
   </footer>
 
-  <script src="script.js" defer></script>
-  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script src="script.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

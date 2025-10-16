@@ -1,0 +1,26 @@
+[
+  {
+    "id": 101,
+    "name": "Eden Tote Bag",
+    "price": 120,
+    "description": "Canvas tote with Eden emblem.",
+    "sizes": [],
+    "image": "https://images.unsplash.com/photo-1542239867-25f6f3a8f2c8?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"
+  },
+  {
+    "id": 102,
+    "name": "Eden Mug",
+    "price": 80,
+    "description": "Stoneware mug with subtle logo.",
+    "sizes": [],
+    "image": "https://images.unsplash.com/photo-1526658796816-d1b29e12a9b5?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"
+  },
+  {
+    "id": 103,
+    "name": "Eden T-shirt (Cream)",
+    "price": 180,
+    "description": "Soft tee with subtle Eden mark.",
+    "sizes": ["S","M","L","XL"],
+    "image": "https://images.unsplash.com/photo-1520975910853-7b1b5a9f8e6a?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"
+  }
+]

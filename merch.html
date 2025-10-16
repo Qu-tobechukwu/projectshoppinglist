@@ -1,36 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Eden Crates — Merch</title>
-  <link rel="icon" href="assets/logo.svg" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Golden Grove Merch</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="header">
-    <div class="header-inner container">
-      <a href="index.html" class="logo-link"><img src="assets/logo.svg" alt="Eden Crates" class="logo"></a>
-      <div class="brand">
-        <div class="brand-title">Eden Crates</div>
-        <div class="brand-tag">Heavenly meal boxes for earth-side living</div>
-      </div>
-      <div class="header-right">
-        <div class="cart-pill">R <span id="topTotalM">0.00</span></div>
-      </div>
-    </div>
-  </header>
+  <header><h1>Golden Grove Merch</h1></header>
+  <main id="merch-gallery"></main>
 
-  <main class="container">
-    <section class="merch-grid" id="merchWrap">
-      <!-- merch cards injected by app.js -->
-    </section>
-    <div style="margin:18px 0">
-      <a href="index.html" class="btn ghost">Back to Packs</a>
-    </div>
-  </main>
-
-  <script src="app.js" defer></script>
+  <script>
+    async function loadMerch() {
+      const res = await fetch('ads.json');
+      const ads = await res.json();
+      const container = document.getElementById('merch-gallery');
+      container.innerHTML = ads.map(a => `
+        <div class="ad">
+          <img src="${a.image}" alt="${a.title}">
+          <h3>${a.title}</h3>
+          <p>${a.caption}</p>
+        </div>
+      `).join('');
+    }
+    loadMerch();
+  </script>
 </body>
 </html>

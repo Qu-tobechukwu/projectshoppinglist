@@ -1,132 +1,22 @@
 {
   "food": [
-    {
-      "id": 1,
-      "name": "Vanilla Dream",
-      "price": 45,
-      "description": "Smooth Madagascan vanilla with a creamy finish.",
-      "flavours": ["Original", "Caramel Swirl", "Berry Drizzle"],
-      "discountThreshold": 3,
-      "discountPercent": 10,
-      "image": "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"
-    },
-    {
-      "id": 2,
-      "name": "Chocolate Swirl",
-      "price": 50,
-      "description": "Rich Belgian cocoa ripple with chocolate chunks.",
-      "flavours": ["Classic", "Dark Choc", "Hazelnut"],
-      "discountThreshold": 3,
-      "discountPercent": 10,
-      "image": "https://images.unsplash.com/photo-1604908176932-1d0443a1c7b5?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"
-    },
-    {
-      "id": 3,
-      "name": "Strawberry Bliss",
-      "price": 48,
-      "description": "Fresh local strawberries folded into velvety cream.",
-      "flavours": ["Classic", "Berry Burst", "Yoghurt Blend"],
-      "discountThreshold": 4,
-      "discountPercent": 15,
-      "image": "https://images.unsplash.com/photo-1563257767-9d41a0f6a2f3?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"
-    },
-    {
-      "id": 4,
-      "name": "Salted Caramel",
-      "price": 49,
-      "description": "Buttery caramel with a hint of sea salt.",
-      "flavours": ["Classic", "With Nuts"],
-      "discountThreshold": 3,
-      "discountPercent": 8,
-      "image": "https://images.unsplash.com/photo-1543353071-087092ec393c?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"
-    },
-    {
-      "id": 5,
-      "name": "Mango Tango",
-      "price": 46,
-      "description": "Sun-ripened mangoes blended into tropical cream.",
-      "flavours": ["Mango", "Chili Mango"],
-      "discountThreshold": 0,
-      "discountPercent": 0,
-      "image": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"
-    },
-    {
-      "id": 6,
-      "name": "Cookies & Cream",
-      "price": 52,
-      "description": "Cookie pieces mixed in dense cream — student favorite.",
-      "flavours": ["Classic"],
-      "discountThreshold": 2,
-      "discountPercent": 5,
-      "image": "https://images.unsplash.com/photo-1564758866811-6f3bc5f7d271?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"
-    },
-    {
-      "id": 7,
-      "name": "Mint Choc",
-      "price": 47,
-      "description": "Cool mint ice cream studded with dark chocolate.",
-      "flavours": ["Mint", "Double Choc"],
-      "discountThreshold": 0,
-      "discountPercent": 0,
-      "image": "https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"
-    },
-    {
-      "id": 8,
-      "name": "Lemon Zing",
-      "price": 44,
-      "description": "Zesty lemon sorbet — light and refreshing.",
-      "flavours": ["Classic"],
-      "discountThreshold": 0,
-      "discountPercent": 0,
-      "image": "https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"
-    }
+    {"id":1,"name":"Weeknight Dinner Pack (2p)","price":120,"description":"All you need for two tasty dinners — pasta, sauce, veg, & spice pack.","flavours":[],"discountThreshold":2,"discountPercent":5,"image":"https://images.unsplash.com/photo-1543352634-2f0a6baf0f20?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"},
+    {"id":2,"name":"Student Essentials Box","price":220,"description":"Staples & breakfast items for the week — oats, eggs, milk, and essentials.","flavours":[],"discountThreshold":0,"discountPercent":0,"image":"https://images.unsplash.com/photo-1506084868230-bb9d95c24759?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"},
+    {"id":3,"name":"Comfort Curry Pack (3 meals)","price":150,"description":"Spices, rice and veg for three warming curry meals.","flavours":["Mild","Medium","Hot"],"discountThreshold":3,"discountPercent":10,"image":"https://images.unsplash.com/photo-1543353071-087092ec393c?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"},
+    {"id":4,"name":"Batch Roast & Sides","price":140,"description":"Protein and roasted veg for quick week lunches.","flavours":["Chicken","Beef","Veg"],"discountThreshold":2,"discountPercent":8,"image":"https://images.unsplash.com/photo-1508253578933-a97f1a6f4f48?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"},
+    {"id":5,"name":"Salad Kit (2 bowls)","price":95,"description":"Fresh greens, dressing, seeds — assemble and go.","flavours":[],"discountThreshold":0,"discountPercent":0,"image":"https://images.unsplash.com/photo-1542444459-db2c3e8d0a3d?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"},
+    {"id":6,"name":"Breakfast Trio Pack","price":70,"description":"Quick breakfasts: granola, fruit, and yoghurt sachets.","flavours":[],"discountThreshold":3,"discountPercent":7,"image":"https://images.unsplash.com/photo-1495640452826-7f9f8b6a9f1f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"},
+    {"id":7,"name":"Comfort Soup Set","price":80,"description":"Hearty soup base & toppings, 4 servings.","flavours":["Tomato","Lentil","Butternut"],"discountThreshold":2,"discountPercent":5,"image":"https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"},
+    {"id":8,"name":"Snack Pack (Student Faves)","price":55,"description":"Variety of snacks — great add-on for study sessions.","flavours":[],"discountThreshold":0,"discountPercent":0,"image":"https://images.unsplash.com/photo-1499636136210-6f4ee915583e?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"}
   ],
   "merch": [
-    {
-      "id": 101,
-      "name": "Stellies T-shirt",
-      "price": 180,
-      "description": "Soft cotton tee in cream with red logo print.",
-      "sizes": ["S","M","L","XL"],
-      "image": "https://images.unsplash.com/photo-1520975910853-7b1b5a9f8e6a?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"
-    },
-    {
-      "id": 102,
-      "name": "Limited Tote",
-      "price": 120,
-      "description": "Canvas tote with 'Scoop Local Love' embroidery.",
-      "image": "https://images.unsplash.com/photo-1495121605193-b116b5b09b3a?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"
-    },
-    {
-      "id": 103,
-      "name": "Red Beanie",
-      "price": 100,
-      "description": "Cozy winter beanie with embroidered ice-cream logo.",
-      "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"
-    }
+    {"id":101,"name":"Eden Tote Bag","price":120,"description":"Canvas tote with Eden Pantry emblem.","sizes":[],"image":"https://images.unsplash.com/photo-1542239867-25f6f3a8f2c8?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"},
+    {"id":102,"name":"Eden Mug","price":80,"description":"Stoneware mug embossed with Eden logo.","sizes":[],"image":"https://images.unsplash.com/photo-1526658796816-d1b29e12a9b5?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"},
+    {"id":103,"name":"Eden T-shirt (Cream)","price":180,"description":"Soft tee with subtle Eden mark.","sizes":["S","M","L","XL"],"image":"https://images.unsplash.com/photo-1520975910853-7b1b5a9f8e6a?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3"}
   ],
   "sponsors": [
-    {
-      "id": 201,
-      "image": "https://images.unsplash.com/photo-1562059390-a761a084768e?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3",
-      "link": "https://juicebarstellies.example",
-      "startDate": "2025-10-01",
-      "endDate": "2026-01-01",
-      "priority": 1
-    },
-    {
-      "id": 202,
-      "image": "https://images.unsplash.com/photo-1515165562835-c11ef2c0f6c6?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3",
-      "link": "https://bakeshop.example",
-      "startDate": "2025-10-05",
-      "endDate": "2025-12-01",
-      "priority": 2
-    }
+    {"id":201,"image":"https://images.unsplash.com/photo-1562059390-a761a084768e?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3","link":"https://juicebar.example","startDate":"2025-10-01","endDate":"2026-01-01","priority":1},
+    {"id":202,"image":"https://images.unsplash.com/photo-1515165562835-c11ef2c0f6c6?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3","link":"https://bakery.example","startDate":"2025-10-05","endDate":"2025-12-01","priority":2}
   ],
-  "addresses": [
-    "Irene Residence",
-    "Metanoia Residence",
-    "Wilgenhof Residence",
-    "Rooiplein Market (Pickup)"
-  ]
+  "addresses":[ "Irene Residence", "Metanoia Residence", "Wilgenhof Residence", "Rooiplein Market (Pickup)" ]
 }

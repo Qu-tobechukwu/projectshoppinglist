@@ -1,41 +1,50 @@
 /* app.js — Golden Grove frontend
-   Mobile-first; reads /data/*.json; posts orders to Netlify function /.netlify/functions/order
+   Features:
+   - Loads /data/*.json
+   - Multi-flavour selection (choose multiple flavours + qty each)
+   - Per-product bulk discounts (display & apply)
+   - Pagination and scroll-to-top on page change
+   - Cart saved to localStorage (repeat/reset)
+   - Checkout posts to Netlify function (/.netlify/functions/order)
+   - PWA install prompt + mobile install banner
+   - Sponsors: right column (desktop) and mobile banners
 */
 
 const DATA_PRODUCTS = '/data/products.json';
 const DATA_MERCH = '/data/merch.json';
 const DATA_ADS = '/data/ads.json';
-const DATA_ORDERS = '/data/orders.json'; // sample admin demo
-const BACKEND_FN = '/.netlify/functions/order'; // Netlify function endpoint
+const DATA_ORDERS = '/data/orders.json'; // sample for admin
+const BACKEND_FN = '/.netlify/functions/order';
 
 let store = { food: [], merch: [], sponsors: [], addresses: [] };
 let cart = []; // { productId, itemName, type:'food'|'merch', flavour, qty, price }
 const PAGE_SIZE = 6;
 let currentPage = 1;
 
-/* PWA install prompt */
+/* PWA install */
 let deferredPrompt = null;
-const installBanner = document.getElementById('sw-banner');
-window.addEventListener('beforeinstallprompt', (e) => {
+window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
   deferredPrompt = e;
-  const banner = document.getElementById('sw-banner');
+  const banner = document.getElementById('install-banner');
   if (banner) banner.hidden = false;
   const footerBtn = document.getElementById('installFooter');
   if (footerBtn) footerBtn.hidden = false;
 });
-document.addEventListener('click', (e)=>{
-  if(e.target && e.target.id === 'installPromptBtn'){ doInstall(); }
-  if(e.target && e.target.id === 'dismissInstall'){ document.getElementById('sw-banner').hidden = true; }
+
+document.addEventListener('click', (e) => {
+  if (e.target && e.target.id === 'installPromptBtn') doInstall();
+  if (e.target && e.target.id === 'dismissInstall') document.getElementById('install-banner').hidden = true;
 });
 
 async function doInstall(){
-  if(!deferredPrompt) return;
+  if (!deferredPrompt) return;
   deferredPrompt.prompt();
   const choice = await deferredPrompt.userChoice;
   deferredPrompt = null;
-  document.getElementById('sw-banner').hidden = true;
+  document.getElementById('install-banner').hidden = true;
   document.getElementById('installFooter').hidden = true;
+  return choice;
 }
 
 /* helpers */
@@ -48,7 +57,6 @@ function loadLast(){ return JSON.parse(localStorage.getItem('gg_last') || '[]');
 function addPending(o){ const arr = JSON.parse(localStorage.getItem('gg_pending')||'[]'); arr.push(o); localStorage.setItem('gg_pending', JSON.stringify(arr)); }
 function genOrderNo(){ let n = Number(localStorage.getItem('gg_order_count')||0); n++; localStorage.setItem('gg_order_count', n); return 'GG-' + String(n).padStart(4,'0'); }
 
-/* fetch JSON */
 async function fetchJson(url){ try{ const r = await fetch(url); if(!r.ok) throw new Error('Fetch failed'); return await r.json(); } catch(e){ console.warn(e); return null; } }
 
 async function loadData(){
@@ -59,7 +67,7 @@ async function loadData(){
   store.addresses = (p && p.addresses) ? p.addresses : ["Irene Residence","Metanoia Residence","Wilgenhof Residence","Rooiplein Market (Pickup)"];
 }
 
-/* render sponsors: desktop column + mobile banners */
+/* sponsors */
 function renderSponsors(){
   const col = $('sponsorCol');
   const mobile = $('sponsorsMobile');
@@ -79,11 +87,11 @@ function renderSponsors(){
   });
 }
 
-/* pagination util */
+/* pagination helpers */
 function pageCount(arr){ return Math.max(1, Math.ceil((arr||[]).length / PAGE_SIZE)); }
 function paged(arr, page){ return (arr||[]).slice((page-1)*PAGE_SIZE, (page-1)*PAGE_SIZE + PAGE_SIZE); }
 
-/* render products (mobile-first) */
+/* render products */
 function renderProducts(page=1){
   currentPage = page;
   const wrap = $('products'); if(!wrap) return;
@@ -143,7 +151,7 @@ function renderProducts(page=1){
     }
   });
 
-  /* flavour checkbox & qty events */
+  /* flavour events */
   document.querySelectorAll('.flv-cb').forEach(cb => cb.addEventListener('change', ()=>{
     const id = Number(cb.dataset.id); const fl = cb.dataset.fl; const qtyEl = document.querySelector(`.flv-qty[data-id="${id}"][data-fl="${fl}"]`);
     const q = qtyEl ? Math.max(0, Number(qtyEl.value||0)) : 1;
@@ -177,7 +185,7 @@ function renderProducts(page=1){
   restoreUI(); updateTotals();
 }
 
-/* restore UI */
+/* restore UI from cart */
 function restoreUI(){
   loadCart();
   document.querySelectorAll('.card').forEach(card=>{
@@ -198,7 +206,7 @@ function restoreUI(){
   });
 }
 
-/* merch rendering */
+/* merch */
 function renderMerch(){
   const wrap = $('merchWrap'); if(!wrap) return;
   wrap.innerHTML = '';
@@ -266,7 +274,7 @@ async function checkoutInit(){
   if($('orderTotal')) $('orderTotal').textContent = fmt(totals.final);
   if($('orderTip')) $('orderTip').textContent = '0.00';
 
-  // addresses
+  // populate addresses
   const sel = $('delivery');
   if(sel){ sel.innerHTML = ''; (store.addresses||[]).forEach(a => { const opt=document.createElement('option'); opt.value=a; opt.textContent=a; sel.appendChild(opt); }); }
 
@@ -289,7 +297,6 @@ async function checkoutInit(){
       items: orderList, total: finalTotal, timestamp: (new Date()).toISOString()
     };
 
-    // POST to backend function
     try{
       const res = await fetch(BACKEND_FN, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
       const j = await res.json();
@@ -309,19 +316,13 @@ async function checkoutInit(){
   });
 }
 
-/* event bindings */
-document.addEventListener('click', e=>{
+/* events */
+document.addEventListener('click', (e)=>{
   if(e.target && e.target.id === 'nextPage'){ if(currentPage < pageCount(store.food)){ currentPage++; renderProducts(currentPage); window.scrollTo({top:0,behavior:'smooth'}); } }
   if(e.target && e.target.id === 'prevPage'){ if(currentPage > 1){ currentPage--; renderProducts(currentPage); window.scrollTo({top:0,behavior:'smooth'}); } }
   if(e.target && e.target.id === 'resetCart'){ if(confirm('Clear your cart?')){ cart=[]; saveCart(); updateTotals(); renderProducts(currentPage); } }
   if(e.target && e.target.id === 'repeatOrder'){ const last = loadLast(); if(!last || last.length===0){ alert('No previous order saved'); return; } cart = last; saveCart(); updateTotals(); renderProducts(currentPage); alert('Previous order restored'); }
   if(e.target && e.target.id === 'finishBtn'){ loadCart(); if(cart.length===0){ alert('Please choose something first'); return; } window.location.href = 'checkout.html'; }
-  if(e.target && e.target.classList && e.target.classList.contains('add-to-cart')) {
-    // support direct add-to-cart (if used elsewhere)
-    const pid = Number(e.target.dataset.id);
-    const p = store.food.find(x=>x.id===pid);
-    if(p){ cart.push({ productId:p.id, itemName:p.name, type:'food', flavour:'', qty:1, price:p.price }); saveCart(); updateTotals(); }
-  }
 });
 
 /* init */

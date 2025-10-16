@@ -1,71 +1,80 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Checkout — Stellies Dinner Packs</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js"></script>
 </head>
 <body>
-  <div class="container">
-    <header class="header centered">
-      <div class="logo-wrap"><a href="index.html"><img id="logoImg" src="assets/logo.png" alt="Stellies"></a></div>
-      <div class="center-title">
-        <div class="site-name">Stellies Dinner Packs</div>
-        <div class="tagline">Affordable campus treats, packed with love ❤️</div>
+  <header class="top-banner">
+    <div class="banner-inner">
+      <div class="logo-block">
+        <a href="index.html"><img src="assets/logo.png" alt="Stellies Dinner Packs" class="site-logo" /></a>
+        <div class="tagline">Good food, good friends, good vibes.</div>
       </div>
-      <div class="nav-wrap">
-        <nav class="top-menu">
-          <a href="index.html">Home</a>
-          <a href="merch.html">Merch</a>
-          <a href="checkout.html" class="active">Checkout</a>
-        </nav>
-        <div class="cart-pill">R <span id="total">0.00</span></div>
-      </div>
-    </header>
 
-    <main style="padding:12px">
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="merch.html" class="nav-link">Merch</a>
+        <a href="checkout.html" class="nav-link active">Checkout</a>
+        <a href="admin.html" class="nav-link">Admin</a>
+      </nav>
+
+      <div class="cart-pill">R <span id="topTotal3">0.00</span></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="checkout-grid">
       <div class="summary-card">
-        <div class="small">Order Number: <strong id="orderNumber"></strong></div>
-        <table class="summary-table">
+        <div class="muted">Order number</div>
+        <div class="order-number" id="orderNumber"></div>
+
+        <table class="order-table">
           <thead><tr><th>Item</th><th>Flavour</th><th>Qty</th><th>R</th></tr></thead>
           <tbody id="orderTable"></tbody>
         </table>
 
-        <div class="summary-total">Subtotal: R <span id="orderSubtotal">0.00</span></div>
-        <div id="discountBreakdown" class="small" style="white-space:pre-wrap; margin-top:8px;"></div>
-        <div style="margin-top:8px" class="small">Tip: R <span id="checkoutTip">0.00</span></div>
-        <div class="summary-total" style="margin-top:8px">Final total: R <span id="orderFinal">0.00</span></div>
+        <div class="summary-line">Subtotal: R <strong id="orderSubtotal">0.00</strong></div>
+        <div class="summary-line">Discounts: R <strong id="orderDiscount">0.00</strong></div>
+        <div class="summary-line">Tip: R <strong id="orderTip">0.00</strong></div>
+        <div class="summary-total">Total: R <strong id="orderTotal">0.00</strong></div>
       </div>
-
-      <div style="height:12px"></div>
 
       <div class="summary-card">
-        <label class="small">Full name</label><input id="name" type="text" placeholder="Thandi M." />
-        <label class="small" style="margin-top:8px;">Phone (WhatsApp)</label><input id="phone" type="tel" placeholder="0821234567" />
-        <label class="small" style="margin-top:8px;">Email (optional)</label><input id="email" type="email" placeholder="you@example.com" />
-        <label class="small" style="margin-top:8px;">Delivery address</label><select id="delivery"></select>
+        <h3 class="small">Delivery & contact</h3>
+        <label class="muted">Full name</label>
+        <input id="name" type="text" placeholder="Thandi M." />
 
-        <div class="form-row" style="margin-top:8px;">
-          <div class="form-col">
-            <label class="small">Tip (R)</label>
-            <input id="tip" type="number" min="0" value="0" />
-          </div>
-          <div class="form-col">
-            <label class="small">Notes (optional)</label>
-            <input id="notes" type="text" placeholder="e.g. Leave at reception"/>
-          </div>
-        </div>
+        <label class="muted">Phone (WhatsApp)</label>
+        <input id="phone" type="tel" placeholder="0821234567" />
 
-        <div style="margin-top:12px; display:flex; gap:10px;">
-          <button id="payButton" class="btn">Pay with Yoco</button>
-          <button id="editButton" class="btn ghost">Edit My Order</button>
+        <label class="muted">Delivery address</label>
+        <select id="delivery"></select>
+
+        <label class="muted">Tip (R)</label>
+        <input id="tip" type="number" min="0" value="0" />
+
+        <label class="muted">Notes (optional)</label>
+        <input id="notes" type="text" placeholder="e.g. Leave at reception" />
+
+        <div style="margin-top:12px">
+          <button id="payButton" class="btn primary">Pay with Yoco</button>
+          <button id="editButton" class="btn ghost">Edit order</button>
         </div>
       </div>
-    </main>
-  </div>
+    </section>
 
-  <script src="script.js"></script>
+    <footer class="site-footer">
+      <div>© <span id="year3"></span> Stellies Dinner Packs — Made in Stellenbosch ❤️</div>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+  <script>document.getElementById('year3').textContent = new Date().getFullYear();</script>
 </body>
 </html>

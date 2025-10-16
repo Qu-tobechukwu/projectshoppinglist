@@ -1,33 +1,47 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>Order Received — Stellies</title><link rel="stylesheet" href="style.css" /></head>
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thanks — Stellies</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
 <body>
-  <div class="container">
-    <header class="header centered">
-      <div class="logo-wrap"><a href="index.html"><img id="logoImg" src="assets/logo.png" alt="Stellies"></a></div>
-      <div class="center-title">
-        <div class="site-name">Stellies Dinner Packs</div>
-        <div class="tagline">Affordable campus treats, packed with love ❤️</div>
+  <header class="top-banner">
+    <div class="banner-inner">
+      <div class="logo-block">
+        <a href="index.html"><img src="assets/logo.png" alt="Stellies" class="site-logo" /></a>
+        <div class="tagline">Good food, good friends, good vibes.</div>
       </div>
-      <div class="nav-wrap"><nav class="top-menu"><a href="index.html">Home</a><a href="merch.html">Merch</a><a href="checkout.html">Checkout</a></nav></div>
-    </header>
+      <nav class="main-nav"><a href="index.html" class="nav-link">Home</a><a href="merch.html" class="nav-link">Merch</a><a href="checkout.html" class="nav-link">Checkout</a></nav>
+      <div class="cart-pill">R <span id="topTotal4">0.00</span></div>
+    </div>
+  </header>
 
-    <main style="padding:12px">
-      <div class="menu-card thanks">
-        <h2>🎉 Order Confirmed</h2>
-        <p class="small">Thanks — we received your order. We’ll message you when it’s ready.</p>
-        <p style="margin-top:8px;"><strong>Order number:</strong> <span id="finalOrder"></span></p>
-        <p><strong>Delivery:</strong> <span id="finalDelivery"></span></p>
-        <p><strong>Total Paid:</strong> R <span id="finalPaid"></span></p>
-        <div style="margin-top:14px;"><a href="index.html" class="btn">Place another order</a></div>
+  <main class="container">
+    <section class="menu-card">
+      <h2>🎉 Order confirmed</h2>
+      <p class="muted">Thanks — we received your order. We'll message you when it is ready.</p>
+
+      <p><strong>Order #</strong> <span id="finalOrder"></span></p>
+      <p><strong>Delivery</strong> <span id="finalDelivery"></span></p>
+      <p><strong>Total</strong> R <span id="finalTotal">0.00</span></p>
+
+      <div style="margin-top:12px">
+        <a href="index.html" class="btn">Place another order</a>
       </div>
-    </main>
-  </div>
+    </section>
+
+    <footer class="site-footer">
+      <div>© <span id="year4"></span> Stellies Dinner Packs — Made in Stellenbosch ❤️</div>
+    </footer>
+  </main>
 
   <script>
     document.getElementById('finalOrder').textContent = localStorage.getItem('orderNumber') || '';
     document.getElementById('finalDelivery').textContent = localStorage.getItem('delivery') || '';
-    document.getElementById('finalPaid').textContent = localStorage.getItem('finalTotal') || '0.00';
+    document.getElementById('finalTotal').textContent = localStorage.getItem('finalTotal') || '0.00';
+    document.getElementById('year4').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>

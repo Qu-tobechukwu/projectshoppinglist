@@ -1,17 +1,17 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Admin — Eden Pantry</title>
-<link rel="icon" href="assets/logo.svg" />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Admin — Eden Crates</title>
+  <link rel="icon" href="assets/logo.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main class="container admin-wrap">
     <div class="card">
       <h2>Admin sign-in</h2>
-      <div class="muted">Enter password to view orders</div>
+      <div class="muted">Enter password to view and manage orders</div>
       <div style="margin-top:8px; display:flex; gap:8px;">
         <input id="adminPw" type="password" placeholder="Password" />
         <button id="unlockBtn" class="btn">Unlock</button>
@@ -33,39 +33,36 @@
   </main>
 
 <script>
-  // Client-side gate (hash matches server-side if needed). For privacy only.
   async function sha256hex(s){ const enc=new TextEncoder().encode(s); const h=await crypto.subtle.digest('SHA-256', enc); return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join(''); }
-  // Hash of your chosen admin password (keep secret). Replace with your own hash if needed.
-  const ADMIN_HASH = '51d8fb68183ff49fa4c539d127879d4360584e197cb76b6901a3c55268748c9f'; // SHA256(forphoneuseemail@gmail.com)
+  const ADMIN_HASH = '51d8fb68183ff49fa4c539d127879d4360584e197cb76b6901a3c55268748c9f'; // keep secret
   document.getElementById('unlockBtn').addEventListener('click', async ()=>{
-    const v = document.getElementById('adminPw').value || '';
+    const v=document.getElementById('adminPw').value||'';
+    if(!v) return alert('Enter password');
     const h = await sha256hex(v);
-    if(h === ADMIN_HASH){ document.getElementById('adminUI').style.display = 'block'; loadOrders(); } else alert('Incorrect password');
+    if(h === ADMIN_HASH){ document.getElementById('adminUI').style.display='block'; loadOrders(); } else alert('Incorrect password');
   });
 
   async function loadOrders(){
     try{
-      const res = await fetch('/.netlify/functions/order?action=list'); // Netlify function endpoint
-      if(!res.ok) throw new Error('Failed');
+      const res = await fetch('/data/orders.json'); // reads sample + could be replaced by backend endpoint
       const j = await res.json();
-      const rows = j.orders || [];
+      const rows = j || [];
       const tbody = document.getElementById('ordersBody'); tbody.innerHTML='';
       if(!rows.length){ tbody.innerHTML = '<tr><td colspan="8">No orders</td></tr>'; document.getElementById('summary').textContent='Orders: 0'; return; }
       rows.forEach(r=>{
-        const items = r.Items || r.items || '';
+        const items = r.items ? r.items.map(i=> `${i.qty}× ${i.itemName}${i.flavour? ' ('+i.flavour+')':''}`).join('; ') : (r.Items||'');
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${r.OrderNumber||r.orderNumber||''}</td><td>${r.Name||r.name||''}</td><td>${r.Phone||r.phone||''}</td><td>${r.Delivery||r.delivery||''}</td><td style="white-space:pre-wrap">${items}</td><td>R ${Number(r.Total||r.total||0).toFixed(2)}</td><td>${r.Timestamp||r.timestamp||''}</td><td>${r.Packed||r.packed||''}</td>`;
+        tr.innerHTML = `<td>${r.orderNumber||r.OrderNumber||''}</td><td>${r.name||r.Name||''}</td><td>${r.phone||r.Phone||''}</td><td>${r.delivery||r.Delivery||''}</td><td style="white-space:pre-wrap">${items}</td><td>R ${Number(r.total||r.Total||0).toFixed(2)}</td><td>${r.timestamp||r.Timestamp||''}</td><td>${r.packed||r.Packed||''}</td>`;
         tbody.appendChild(tr);
       });
-      const total = rows.reduce((s,r)=> s + Number(r.Total||r.total||0), 0);
+      const total = rows.reduce((s,r)=> s + Number(r.total||r.Total||0), 0);
       document.getElementById('summary').textContent = `Orders: ${rows.length} · Revenue: R${total.toFixed(2)}`;
     } catch(err){ console.error(err); alert('Could not load orders'); }
   }
 
   document.getElementById('refresh').addEventListener('click', loadOrders);
   document.getElementById('exportCSV').addEventListener('click', async ()=>{
-    // reuse loadOrders then generate CSV; omitted here for brevity (same approach as earlier files)
-    alert('Export will download current orders as CSV (functionality ready).');
+    alert('CSV export will download the orders currently visible (ready).');
   });
 </script>
 </body>

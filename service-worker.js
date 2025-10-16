@@ -27,16 +27,18 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   const req = event.request;
-  if(req.method !== 'GET') return;
+  if (req.method !== 'GET') return;
   event.respondWith(
     caches.match(req).then(cached => {
-      if(cached) {
+      if (cached) {
+        // update in background
         fetch(req).then(res => { if(res && res.status === 200) caches.open(CACHE_NAME).then(c => c.put(req, res.clone())); }).catch(()=>{});
         return cached;
       }
       return fetch(req).then(res => {
         if(res && res.status === 200 && req.destination !== 'document') {
-          caches.open(CACHE_NAME).then(cache => cache.put(req, res.clone()));
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
         }
         return res;
       }).catch(()=>caches.match('/index.html'));

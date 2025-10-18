@@ -1,38 +1,72 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stellies Dinner Packs | Beautiful Meals, Made Easy</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stellies Dinner Packs — Delivery</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
-  <script defer src="script.js"></script>
 </head>
 <body>
-  <header>
-    <img src="assets/logo.svg" alt="Stellies Dinner Packs" class="logo" />
-    <h1>Beautiful Meals, Made Easy</h1>
+  <header class="top-banner">
+    <div class="banner-inner">
+      <div class="logo-block">
+        <a href="index.html"><img src="assets/logo.png" alt="Stellies Dinner Packs" class="site-logo" /></a>
+        <div class="tagline">Good food, good friends, good vibes.</div>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="merch.html" class="nav-link">Merch</a>
+        <a href="checkout.html" class="nav-link">Checkout</a>
+        <a href="admin.html" class="nav-link">Admin</a>
+      </nav>
+
+      <div class="cart-pill">R <span id="topTotal">0.00</span></div>
+    </div>
   </header>
 
-  <section class="hero">
-    <img src="assets/hero.jpg" alt="Dinner Packs" />
-    <div class="hero-text">
-      <h2>Curated meal packs for students who value good food & time.</h2>
-      <a href="merch.html" class="cta">Browse Packs</a>
-    </div>
-  </section>
+  <main class="container">
+    <section class="content-grid">
+      <section class="left-col">
+        <div class="controls-row">
+          <div>
+            <div class="muted">Cart total</div>
+            <div class="big-total">R <span id="total">0.00</span></div>
+          </div>
+          <div class="action-buttons">
+            <button id="finishBtn" class="btn primary">Finished → Checkout</button>
+            <button id="resetCart" class="btn ghost">Reset Cart</button>
+            <button id="repeatOrder" class="btn ghost">Repeat Last Order</button>
+          </div>
+        </div>
 
-  <section class="ads">
-    <div class="ad"><img src="assets/ad1.jpg" alt="Weekly Deals"></div>
-    <div class="ad"><img src="assets/ad2.jpg" alt="Meal Essentials"></div>
-  </section>
+        <div id="products" class="cards-wrap">
+          <!-- product cards injected here -->
+        </div>
 
-  <footer>
-    <p>✨ Stellies Dinner Packs — Affordable, delicious, delivered. ✨</p>
-    <button class="install-btn">📱 Install App</button>
-    <p class="mini-note">
-      Designed for mobile. <a href="#" id="desktopSplash">Continue to desktop site</a>.
-    </p>
-  </footer>
+        <div class="pagination-row">
+          <button id="prevPage" class="btn ghost">Previous</button>
+          <div class="page-info" id="pageInfo">Page 1</div>
+          <button id="nextPage" class="btn ghost">Next</button>
+        </div>
+      </section>
+
+      <aside class="right-col" id="sponsorCol">
+        <!-- sponsors injected here -->
+      </aside>
+    </section>
+
+    <footer class="site-footer">
+      <div>© <span id="year"></span> Stellies Dinner Packs — Made in Stellenbosch ❤️</div>
+      <div class="muted small">Designed with love • Wine-red luxury theme</div>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

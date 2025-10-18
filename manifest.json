@@ -1,12 +1,15 @@
 {
-  "short_name": "GoldenGrove",
-  "name": "Golden Grove — Beautiful meals, made easy",
-  "icons": [
-    { "src": "/assets/logo.svg", "sizes": "192x192", "type": "image/svg+xml" },
-    { "src": "/assets/logo.svg", "sizes": "512x512", "type": "image/svg+xml" }
-  ],
-  "start_url": "/index.html",
+  "name": "Stellies Dinner Packs",
+  "short_name": "Stellies",
+  "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#f9f8f4",
-  "theme_color": "#2f6f4e"
+  "background_color": "#fffaf5",
+  "theme_color": "#ac2a13",
+  "icons": [
+    {
+      "src": "assets/logo.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
 }

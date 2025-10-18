@@ -2,68 +2,139 @@
 <html>
 <head>
   <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Admin — Golden Grove</title>
-  <link rel="stylesheet" href="/style.css">
+  <title>Admin — Stellies</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .admin-wrap { max-width:1100px; margin:20px auto; }
+    .login-panel { margin-bottom:16px; }
+    .hidden { display:none; }
+    table{ width:100%; border-collapse:collapse; }
+    th,td{ padding:8px; border-bottom:1px solid rgba(255,255,255,0.06); text-align:left; color:#fff; }
+    .muted-light { color:rgba(255,255,255,0.75); }
+  </style>
 </head>
 <body>
-  <main class="container admin-wrap">
-    <div class="card">
-      <h2>Admin sign-in</h2>
-      <div class="muted">Enter password to view and manage orders</div>
-      <div style="margin-top:8px; display:flex; gap:8px;">
-        <input id="adminPw" type="password" placeholder="Password" />
-        <button id="unlockBtn" class="btn">Unlock</button>
+  <header class="top-banner">
+    <div class="banner-inner">
+      <div class="logo-block">
+        <a href="index.html"><img src="assets/logo.png" alt="Stellies" class="site-logo" /></a>
+        <div class="tagline">Admin (password required)</div>
       </div>
+
+      <nav class="main-nav"><a href="index.html" class="nav-link">Home</a><a href="merch.html" class="nav-link">Merch</a><a href="checkout.html" class="nav-link">Checkout</a></nav>
+      <div class="cart-pill">Admin</div>
+    </div>
+  </header>
+
+  <main class="container admin-wrap">
+    <div id="login" class="menu-card login-panel">
+      <div class="muted">Enter admin password to continue</div>
+      <div style="margin-top:8px; display:flex; gap:8px;">
+        <input id="pw" type="password" placeholder="Password" />
+        <button id="unlock" class="btn">Unlock</button>
+        <button id="clearPending" class="btn ghost">Clear local pending</button>
+      </div>
+      <div class="muted small" style="margin-top:8px">Client-side gate — for production use server auth (I can help).</div>
     </div>
 
-    <div id="adminUI" class="card" style="margin-top:12px; display:none">
-      <h3>Orders</h3>
-      <div id="summary" class="muted"></div>
+    <div id="adminUI" class="hidden">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
+        <button id="refresh" class="btn">Refresh</button>
+        <button id="export" class="btn ghost">Download CSV</button>
+        <label class="muted-light">Show:
+          <select id="filter">
+            <option value="all">All</option>
+            <option value="pending">Pending (local)</option>
+            <option value="static">Static (data/orders.json)</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="summary" class="muted-light"></div>
+
       <table id="ordersTable">
-        <thead><tr><th>Order #</th><th>Name</th><th>Phone</th><th>Delivery</th><th>Items</th><th>Total (R)</th><th>Date</th><th>Packed</th><th>Actions</th></tr></thead>
-        <tbody id="ordersBody"><tr><td colspan="9">Loading…</td></tr></tbody>
+        <thead><tr><th>Order #</th><th>Name</th><th>Phone</th><th>Delivery</th><th>Items</th><th>Total (R)</th><th>Date</th></tr></thead>
+        <tbody id="ordersBody"><tr><td colspan="7" class="muted-light">Loading…</td></tr></tbody>
       </table>
     </div>
   </main>
 
 <script>
-  async function sha256hex(s){ const enc=new TextEncoder().encode(s); const h=await crypto.subtle.digest('SHA-256', enc); return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join(''); }
-  // Hash for password 'forphoneuseemail@gmail.com' (so entering that will unlock)
-  const ADMIN_HASH = '51d8fb68183ff49fa4c539d127879d4360584e197cb76b6901a3c55268748c9f';
-  document.getElementById('unlockBtn').addEventListener('click', async ()=>{
-    const v=document.getElementById('adminPw').value||'';
-    if(!v) return alert('Enter password');
+  // simple SHA-256 helper
+  async function sha256hex(s){
+    const data = new TextEncoder().encode(s);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+
+  // password hash for 'stellieslux'
+  const ADMIN_HASH = 'd2540ec95092c538d6609cfeab564112b4e3dbe6123a24ce63c3e5a33ad9942b';
+
+  document.getElementById('unlock').addEventListener('click', async ()=>{
+    const v = document.getElementById('pw').value || '';
     const h = await sha256hex(v);
-    if(h === ADMIN_HASH){ document.getElementById('adminUI').style.display='block'; loadOrders(); } else alert('Incorrect password');
+    if(h === ADMIN_HASH){
+      document.getElementById('login').classList.add('hidden');
+      document.getElementById('adminUI').classList.remove('hidden');
+      loadAdmin();
+    } else { alert('Incorrect password'); }
   });
 
-  async function loadOrders(){
-    try {
-      const res = await fetch('/.netlify/functions/order?action=list');
-      const j = await res.json();
-      const rows = j.orders || [];
-      const tbody = document.getElementById('ordersBody'); tbody.innerHTML='';
-      if(!rows.length){ tbody.innerHTML='<tr><td colspan="9">No orders</td></tr>'; document.getElementById('summary').textContent='Orders: 0'; return; }
-      rows.forEach(r=>{
-        const items = r.Items || r.items || '';
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${r.OrderNumber||r.orderNumber||''}</td><td>${r.Name||r.name||''}</td><td>${r.Phone||r.phone||''}</td><td>${r.Delivery||r.delivery||''}</td><td style="white-space:pre-wrap">${items}</td><td>R ${Number(r.Total||r.total||0).toFixed(2)}</td><td>${r.Timestamp||r.timestamp||''}</td><td>${r.Packed||r.packed||''}</td><td><button class="btn small" onclick="markPacked('${r.OrderNumber||r.orderNumber||''}')">Mark packed</button></td>`;
-        tbody.appendChild(tr);
-      });
-      const total = rows.reduce((s,r)=> s + Number(r.Total||r.total||0), 0);
-      document.getElementById('summary').textContent = `Orders: ${rows.length} · Revenue: R${total.toFixed(2)}`;
-    } catch(err){ console.error(err); alert('Could not load orders'); }
+  document.getElementById('clearPending').addEventListener('click', ()=>{
+    if(confirm('Clear pending orders stored in this browser?')){ localStorage.removeItem('stellies_pending_orders'); alert('Cleared'); }
+  });
+
+  async function loadStatic(){
+    try { const r = await fetch('./data/orders.json'); if(!r.ok) return []; return await r.json(); } catch(e){ return []; }
+  }
+  function loadPending(){ return JSON.parse(localStorage.getItem('stellies_pending_orders')||'[]'); }
+
+  async function loadAdmin(){
+    const staticOrders = await loadStatic();
+    const pending = loadPending();
+    renderRows(staticOrders.concat(pending));
   }
 
-  async function markPacked(orderNumber){
-    if(!confirm('Mark order '+orderNumber+' as packed?')) return;
-    try {
-      const res = await fetch('/.netlify/functions/order', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'markPacked', orderNumber: orderNumber }) });
-      const j = await res.json();
-      if(j.success) alert('Marked packed'); loadOrders();
-      else alert('Error: '+(j.message||j.error));
-    } catch(e){ console.error(e); alert('Failed'); }
+  function renderRows(rows){
+    const body = document.getElementById('ordersBody'); body.innerHTML = '';
+    if(!rows || rows.length===0){ body.innerHTML = '<tr><td colspan="7" class="muted-light">No orders</td></tr>'; document.getElementById('summary').textContent='Orders: 0'; return; }
+    rows.forEach(o=>{
+      const items = (o.items||[]).map(it=> `${it.qty}× ${it.itemName}${it.flavour? ' ('+it.flavour+')':''}`).join('; ');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td style="font-weight:700">${o.orderNumber||o.id||''}</td>
+                      <td>${o.name||o.customerName||''}</td>
+                      <td>${o.phone||''}</td>
+                      <td>${o.delivery||''}</td>
+                      <td style="white-space:pre-wrap;max-width:360px;">${items}</td>
+                      <td>R ${Number(o.total||0).toFixed(2)}</td>
+                      <td>${o.timestamp? new Date(o.timestamp).toLocaleString(): (o.date? new Date(o.date).toLocaleString():'')}</td>`;
+      body.appendChild(tr);
+    });
+    const total = rows.reduce((s,r)=> s + Number(r.total||0), 0);
+    document.getElementById('summary').textContent = `Orders: ${rows.length} · Revenue: R${total.toFixed(2)}`;
   }
+
+  document.getElementById('refresh').addEventListener('click', loadAdmin);
+  document.getElementById('filter').addEventListener('change', async ()=>{
+    const f = document.getElementById('filter').value;
+    if(f==='all'){ loadAdmin(); return; }
+    const staticOrders = await loadStatic();
+    const pending = loadPending();
+    if(f==='static') renderRows(staticOrders);
+    if(f==='pending') renderRows(pending);
+  });
+
+  document.getElementById('export').addEventListener('click', async ()=>{
+    const staticOrders = await loadStatic(); const pending = loadPending();
+    const rows = staticOrders.concat(pending);
+    if(rows.length===0){ alert('No orders to export'); return; }
+    const keys = Object.keys(rows[0]);
+    const csv = [keys.join(',')];
+    rows.forEach(r => csv.push(keys.map(k=>`"${(r[k]||'').toString().replace(/"/g,'""')}"`).join(',')));
+    const uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv.join('\n'));
+    const a = document.createElement('a'); a.href = uri; a.download = 'stellies-orders.csv'; a.click();
+  });
 </script>
 </body>
 </html>

@@ -1,29 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Golden Grove — Merch</title>
-  <link rel="stylesheet" href="/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merch | Stellies Dinner Packs</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+  <link rel="icon" href="assets/logo.svg">
 </head>
 <body>
-  <header class="header">
-    <div class="header-inner container">
-      <a href="index.html" class="logo-link"><img src="assets/logo.svg" alt="Golden Grove" class="logo"></a>
-      <div class="brand">
-        <div class="brand-title">Golden Grove</div>
-        <div class="brand-tag">Beautiful meals, made easy</div>
-      </div>
-      <div class="header-right">
-        <div class="cart-pill">R <span id="topTotalM">0.00</span></div>
-      </div>
-    </div>
+  <header class="main-header">
+    <img src="assets/logo.svg" alt="Logo" class="logo">
+    <h1>Merch</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="merch.html" class="active">Merch</a>
+      <a href="checkout.html">Checkout</a>
+    </nav>
   </header>
 
-  <main class="container">
-    <section id="merchWrap" class="merch-grid"></section>
-    <div style="margin:18px 0"><a href="index.html" class="btn ghost">Back to Packs</a></div>
+  <main id="merch-container">
+    <h2>Shop Our Limited Merch</h2>
+    <div class="menu-grid" id="merch-list"></div>
   </main>
 
-  <script src="/app.js" defer></script>
+  <footer>
+    <button id="installAppBtn">📱 Install App</button>
+  </footer>
 </body>
 </html>

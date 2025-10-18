@@ -1,14 +1,24 @@
 [
   {
     "id": 101,
-    "name": "Stellies Apron",
+    "name": "Stellies T-shirt (Cream)",
     "price": 180,
-    "image": "https://images.unsplash.com/photo-1606813902911-3be6e91df04f"
+    "description": "Soft cotton tee in cream with red logo print.",
+    "sizes": ["S","M","L","XL"],
+    "image": "https://images.unsplash.com/photo-1520975910853-7b1b5a9f8e6a?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=abcdef1234567890abcdef1234567890"
   },
   {
     "id": 102,
-    "name": "Canvas Tote",
-    "price": 150,
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9"
+    "name": "Limited Tote Bag",
+    "price": 120,
+    "description": "Canvas tote with 'Scoop Local Love' embroidery.",
+    "image": "https://images.unsplash.com/photo-1495121605193-b116b5b09b3a?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=11111122222333334444555566667777"
+  },
+  {
+    "id": 103,
+    "name": "Red Beanie",
+    "price": 100,
+    "description": "Cozy winter beanie with embroidered ice-cream logo.",
+    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=99998888777766665555444433332222"
   }
 ]

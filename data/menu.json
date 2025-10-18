@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Pasta Night Pack",
+    "price": 120,
+    "discount": "Buy 3+ get 10% off",
+    "image": "https://images.unsplash.com/photo-1601924576014-27b11b0d3aa1",
+    "flavors": ["Creamy Alfredo", "Tomato Basil", "Mushroom Truffle"]
+  },
+  {
+    "id": 2,
+    "name": "Braai Lovers Box",
+    "price": 200,
+    "discount": "Buy 2+ get 5% off",
+    "image": "https://images.unsplash.com/photo-1565958011705-44e21141b6a5",
+    "flavors": ["Beef", "Chicken", "Vegan"]
+  }
+]

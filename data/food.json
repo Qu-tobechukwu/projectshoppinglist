@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Vanilla Dream",
+    "price": 45,
+    "description": "Smooth Madagascan vanilla with a creamy finish.",
+    "flavours": ["Original", "Caramel Swirl", "Berry Drizzle"],
+    "discountThreshold": 3,
+    "discountPercent": 10,
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=0c6f6e7f1b9a7d5b9e7b1f61f9b3d6f1"
+  },
+  {
+    "id": 2,
+    "name": "Chocolate Swirl",
+    "price": 50,
+    "description": "Rich Belgian cocoa ripple with chocolate chunks.",
+    "flavours": ["Classic", "Dark Choc", "Hazelnut"],
+    "discountThreshold": 3,
+    "discountPercent": 10,
+    "image": "https://images.unsplash.com/photo-1604908176932-1d0443a1c7b5?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=5b8b3cf097b8b2a8d5c8a4f5b1c8f9d3"
+  },
+  {
+    "id": 3,
+    "name": "Strawberry Bliss",
+    "price": 48,
+    "description": "Fresh local strawberries folded into velvety cream.",
+    "flavours": ["Classic", "Berry Burst", "Yoghurt Blend"],
+    "discountThreshold": 4,
+    "discountPercent": 15,
+    "image": "https://images.unsplash.com/photo-1563257767-9d41a0f6a2f3?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=1a7a87b7b0b5e6d03b9f7f2a7c8f0e2b"
+  },
+  {
+    "id": 4,
+    "name": "Salted Caramel",
+    "price": 49,
+    "description": "Buttery caramel with a hint of sea salt.",
+    "flavours": ["Classic", "With Nuts"],
+    "discountThreshold": 3,
+    "discountPercent": 8,
+    "image": "https://images.unsplash.com/photo-1543353071-087092ec393c?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f1b3e5d0b5e2f9b6a3f4c2d1e8b9c3a"
+  },
+  {
+    "id": 5,
+    "name": "Cookies & Cream",
+    "price": 52,
+    "description": "Cookie pieces mixed in dense cream — student favorite.",
+    "flavours": ["Classic"],
+    "discountThreshold": 2,
+    "discountPercent": 5,
+    "image": "https://images.unsplash.com/photo-1564758866811-6f3bc5f7d271?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=e2f9c2d1b6a4f7c3a8b9e6d2f4a0b3c1"
+  },
+  {
+    "id": 6,
+    "name": "Mango Tango",
+    "price": 46,
+    "description": "Sun-ripened mangoes blended into tropical cream.",
+    "flavours": ["Mango", "Chili Mango"],
+    "discountThreshold": 0,
+    "discountPercent": 0,
+    "image": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=4b3d8c2a1c9b7f6e5a4d3c2b1a8f7e6a"
+  },
+  {
+    "id": 7,
+    "name": "Mint Choc",
+    "price": 47,
+    "description": "Cool mint ice cream studded with dark chocolate.",
+    "flavours": ["Mint", "Double Choc"],
+    "discountThreshold": 0,
+    "discountPercent": 0,
+    "image": "https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=8b7a6c5d4e3f2a1b0c9d8e7f6a5b4c3d"
+  },
+  {
+    "id": 8,
+    "name": "Lemon Zing",
+    "price": 44,
+    "description": "Zesty lemon sorbet — light and refreshing.",
+    "flavours": ["Classic"],
+    "discountThreshold": 0,
+    "discountPercent": 0,
+    "image": "https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=3d2b1c0a9f8e7d6c5b4a392817263544"
+  }
+]

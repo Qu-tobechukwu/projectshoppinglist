@@ -1,5 +1,14 @@
 [
-  {"id":101,"name":"Golden Grove Tote","price":120,"description":"Canvas tote with subtle emblem.","image":"https://images.unsplash.com/photo-1542239867-25f6f3a8f2c8?q=80&w=1200&auto=format&fit=crop"},
-  {"id":102,"name":"Golden Grove Mug","price":80,"description":"Stoneware mug — elegant & warm.","image":"https://images.unsplash.com/photo-1526658796816-d1b29e12a9b5?q=80&w=1200&auto=format&fit=crop"},
-  {"id":103,"name":"Golden Grove Tee","price":180,"description":"Cream tee with embroidered mark.","sizes":["S","M","L","XL"],"image":"https://images.unsplash.com/photo-1520975910853-7b1b5a9f8e6a?q=80&w=1200&auto=format&fit=crop"}
+  {
+    "id": 101,
+    "name": "Stellies Apron",
+    "price": 180,
+    "image": "https://images.unsplash.com/photo-1606813902911-3be6e91df04f"
+  },
+  {
+    "id": 102,
+    "name": "Canvas Tote",
+    "price": 150,
+    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9"
+  }
 ]

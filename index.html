@@ -1,95 +1,38 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Golden Grove — Beautiful meals, made easy</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stellies Dinner Packs | Beautiful Meals, Made Easy</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <script defer src="app.js"></script>
   <link rel="icon" href="assets/logo.svg">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#2f6f4e">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <!-- PWA install banner (mobile) -->
-  <div id="install-banner" class="install-banner" hidden>
-    <div>Install Golden Grove for faster ordering</div>
-    <div>
-      <button id="installPromptBtn" class="btn primary small">Install</button>
-      <button id="dismissInstall" class="btn ghost small">Dismiss</button>
-    </div>
-  </div>
-
-  <header class="header">
-    <div class="header-inner container">
-      <a href="index.html" class="logo-link"><img src="assets/logo.svg" alt="Golden Grove" class="logo"></a>
-      <div class="brand">
-        <div class="brand-title">Golden Grove</div>
-        <div class="brand-tag">Beautiful meals, made easy</div>
-      </div>
-      <div class="header-right">
-        <div class="cart-pill">R <span id="topTotal">0.00</span></div>
-      </div>
-    </div>
+  <header class="main-header">
+    <img src="assets/logo.svg" alt="Stellies Dinner Packs Logo" class="logo">
+    <h1>Stellies Dinner Packs</h1>
+    <p class="tagline">Beautiful meals, made easy</p>
+    <nav>
+      <a href="index.html" class="active">Home</a>
+      <a href="merch.html">Merch</a>
+      <a href="checkout.html">Checkout</a>
+    </nav>
   </header>
 
-  <main class="container main">
-    <section class="hero">
-      <h1 class="hero-title">Meal packs & weekly essentials — curated for students</h1>
-      <p class="hero-sub">Freshly bundled, practical & elevated. Save time, eat beautifully.</p>
-      <div class="hero-actions">
-        <a class="btn primary" href="#products">Browse Packs</a>
-        <a class="btn ghost" href="merch.html">Merch</a>
-      </div>
-    </section>
-
-    <section class="controls">
-      <div class="cart-summary">
-        <div class="muted">Cart total</div>
-        <div class="grand">R <span id="total">0.00</span></div>
-      </div>
-
-      <div class="actions">
-        <button id="finishBtn" class="btn primary">Finished — Checkout</button>
-        <button id="resetCart" class="btn ghost">Reset</button>
-        <button id="repeatOrder" class="btn ghost">Repeat Last</button>
-      </div>
-    </section>
-
-    <section id="products" class="products-grid" aria-live="polite">
-      <!-- product cards injected by app.js -->
-    </section>
-
-    <div id="sponsorsMobile" class="sponsors-mobile" aria-hidden="false"></div>
-
-    <div class="pagination">
-      <button id="prevPage" class="btn ghost">Prev</button>
-      <div id="pageInfo" class="muted">Page 1</div>
-      <button id="nextPage" class="btn ghost">Next</button>
-    </div>
+  <main id="menu-container">
+    <h2>Weekly Meal Packs</h2>
+    <div class="menu-grid" id="menu-list"></div>
   </main>
 
-  <aside id="sponsorCol" class="sponsor-col" aria-hidden="true"></aside>
+  <aside class="ads-column" id="ads-column"></aside>
 
-  <footer class="footer container">
-    <div class="footer-left">
-      <div class="footer-brand">Golden Grove</div>
-      <div class="footer-explainer">Golden Grove curates meal boxes and weekly essentials so students can eat well, save time, and spend less — delivered with care and a gentle, elevated touch.</div>
-    </div>
-
-    <div class="footer-right">
-      <button id="installFooter" class="btn primary small" hidden>📱 Add Golden Grove to Home Screen</button>
-      <div class="muted small">© <span id="year"></span> Golden Grove</div>
-    </div>
+  <footer>
+    <p>Install the Stellies Dinner Packs App for a seamless experience.</p>
+    <button id="installAppBtn">📱 Install App</button>
+    <hr>
+    <p class="footer-note">We curate affordable, high-quality meal kits and essentials for Stellenbosch students — luxury made simple.</p>
   </footer>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js').then(()=>console.log('SW registered')).catch(e=>console.warn('SW failed',e));
-    }
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-
-  <script src="/app.js" defer></script>
 </body>
 </html>

@@ -1,63 +1,23 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Checkout — Golden Grove</title>
-  <link rel="stylesheet" href="/style.css">
-  <script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Stellies Dinner Packs</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+  <link rel="icon" href="assets/logo.svg">
 </head>
 <body>
-  <header class="header">
-    <div class="header-inner container">
-      <a href="index.html" class="logo-link"><img src="assets/logo.svg" alt="Golden Grove" class="logo"></a>
-      <div class="brand"><div class="brand-title">Golden Grove</div></div>
-      <div class="header-right"><div class="cart-pill">R <span id="topTotalC">0.00</span></div></div>
-    </div>
+  <header class="main-header">
+    <img src="assets/logo.svg" alt="Logo" class="logo">
+    <h1>Checkout</h1>
   </header>
 
-  <main class="container checkout">
-    <section class="summary">
-      <div class="muted">Order number</div>
-      <div class="order-no" id="orderNumber"></div>
+  <main id="checkout-container"></main>
 
-      <table class="order-table" aria-live="polite">
-        <thead><tr><th>Item</th><th>Flavour</th><th>Qty</th><th>R</th></tr></thead>
-        <tbody id="orderTable"></tbody>
-      </table>
-
-      <div class="summary-line">Subtotal: R <strong id="orderSubtotal">0.00</strong></div>
-      <div class="summary-line">Discounts: R <strong id="orderDiscount">0.00</strong></div>
-      <div class="summary-line">Tip: R <strong id="orderTip">0.00</strong></div>
-      <div class="summary-total">Total: R <strong id="orderTotal">0.00</strong></div>
-    </section>
-
-    <section class="details">
-      <h3>Delivery & contact</h3>
-      <label class="muted">Full name</label>
-      <input id="name" type="text" placeholder="Thandi M." required />
-
-      <label class="muted">Phone</label>
-      <input id="phone" type="tel" placeholder="0821234567" required />
-
-      <label class="muted">Email (optional)</label>
-      <input id="email" type="email" placeholder="you@example.com" />
-
-      <label class="muted">Delivery address</label>
-      <select id="delivery"></select>
-
-      <label class="muted">Tip (R)</label>
-      <input id="tip" type="number" min="0" value="0" />
-
-      <label class="muted">Notes</label>
-      <input id="notes" type="text" placeholder="Leave at reception" />
-
-      <div style="margin-top:12px">
-        <button id="payButton" class="btn primary">Pay & Place Order</button>
-        <button id="editButton" class="btn ghost">Edit Order</button>
-      </div>
-    </section>
-  </main>
-
-  <script src="/app.js" defer></script>
+  <footer>
+    <p>Thank you for choosing Stellies Dinner Packs 💛</p>
+  </footer>
 </body>
 </html>

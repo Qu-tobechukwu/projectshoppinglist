@@ -2,37 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Stellies Dinner Packs | Beautiful Meals, Made Easy</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="manifest" href="manifest.json">
-  <script defer src="app.js"></script>
-  <link rel="icon" href="assets/logo.svg">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <header class="main-header">
-    <img src="assets/logo.svg" alt="Stellies Dinner Packs Logo" class="logo">
-    <h1>Stellies Dinner Packs</h1>
-    <p class="tagline">Beautiful meals, made easy</p>
-    <nav>
-      <a href="index.html" class="active">Home</a>
-      <a href="merch.html">Merch</a>
-      <a href="checkout.html">Checkout</a>
-    </nav>
+  <header>
+    <img src="assets/logo.svg" alt="Stellies Dinner Packs" class="logo" />
+    <h1>Beautiful Meals, Made Easy</h1>
   </header>
 
-  <main id="menu-container">
-    <h2>Weekly Meal Packs</h2>
-    <div class="menu-grid" id="menu-list"></div>
-  </main>
+  <section class="hero">
+    <img src="assets/hero.jpg" alt="Dinner Packs" />
+    <div class="hero-text">
+      <h2>Curated meal packs for students who value good food & time.</h2>
+      <a href="merch.html" class="cta">Browse Packs</a>
+    </div>
+  </section>
 
-  <aside class="ads-column" id="ads-column"></aside>
+  <section class="ads">
+    <div class="ad"><img src="assets/ad1.jpg" alt="Weekly Deals"></div>
+    <div class="ad"><img src="assets/ad2.jpg" alt="Meal Essentials"></div>
+  </section>
 
   <footer>
-    <p>Install the Stellies Dinner Packs App for a seamless experience.</p>
-    <button id="installAppBtn">📱 Install App</button>
-    <hr>
-    <p class="footer-note">We curate affordable, high-quality meal kits and essentials for Stellenbosch students — luxury made simple.</p>
+    <p>✨ Stellies Dinner Packs — Affordable, delicious, delivered. ✨</p>
+    <button class="install-btn">📱 Install App</button>
+    <p class="mini-note">
+      Designed for mobile. <a href="#" id="desktopSplash">Continue to desktop site</a>.
+    </p>
   </footer>
 </body>
 </html>

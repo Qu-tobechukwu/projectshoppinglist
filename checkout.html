@@ -1,19 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Checkout — Stellies</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css" />
-<script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js"></script>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Checkout — Stellies</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="index.html"><img src="assets/logo.png" class="logo" alt="Stellies" /></a>
-        <div class="tagline">A Taste So Divine, It Must Be Heaven’s Kitchen.</div>
+        <a href="index.html"><img src="/assets/logo.svg" alt="Stellies Dinner Packs" class="logo" /></a>
+        <div class="tagline">Heavenly flavours, locally made.</div>
         <hr class="gold-divider" />
       </div>
       <nav class="nav-row">
@@ -21,7 +21,6 @@
           <a href="index.html" class="nav-link">Home</a>
           <a href="merch.html" class="nav-link">Merch</a>
           <a href="checkout.html" class="nav-link active">Checkout</a>
-          <a href="admin.html" class="nav-link">Admin</a>
         </div>
         <div class="cart-pill">R <span id="topTotalC">0.00</span></div>
       </nav>
@@ -46,28 +45,21 @@
 
     <section class="details">
       <h3>Delivery & contact</h3>
-      <label class="muted">Full name</label>
-      <input id="name" type="text" placeholder="Thandi M." />
+      <label class="muted">Full name</label><input id="name" type="text" placeholder="Thandi M." />
+      <label class="muted">Phone</label><input id="phone" type="tel" placeholder="0821234567" />
+      <label class="muted">Email (optional)</label><input id="email" type="email" placeholder="you@example.com" />
+      <label class="muted">Delivery address</label><select id="delivery"></select>
 
-      <label class="muted">Phone</label>
-      <input id="phone" type="tel" placeholder="0821234567" />
-
-      <label class="muted">Delivery address</label>
-      <select id="delivery"></select>
-
-      <label class="muted">Tip (R)</label>
-      <input id="tip" type="number" min="0" value="0" />
-
-      <label class="muted">Notes</label>
-      <input id="notes" type="text" placeholder="Leave at reception" />
+      <label class="muted">Tip (R)</label><input id="tip" type="number" min="0" value="0" />
+      <label class="muted">Notes</label><input id="notes" placeholder="Leave at reception" />
 
       <div style="margin-top:12px">
-        <button id="payButton" class="btn primary">Pay (Yoco)</button>
+        <button id="payButton" class="btn primary">Pay & Place Order</button>
         <button id="editButton" class="btn ghost">Edit Order</button>
       </div>
     </section>
   </main>
 
-<script src="script.js"></script>
+  <script src="/script.js"></script>
 </body>
 </html>

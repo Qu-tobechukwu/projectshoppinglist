@@ -1,33 +1,37 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Stellies Dinner Packs — Heavenly Menu</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stellies Dinner Packs — Heavenly Menu</title>
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
 
-<link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="index.html"><img src="assets/logo.png" alt="Stellies Dinner Packs" class="logo" /></a>
-        <div class="tagline">A Taste So Divine, It Must Be Heaven’s Kitchen.</div>
+        <a href="index.html"><img src="/assets/logo.svg" alt="Stellies Dinner Packs" class="logo" /></a>
+        <div class="tagline">Heavenly flavours, locally made.</div>
         <hr class="gold-divider" />
       </div>
 
       <nav class="nav-row">
-        <button class="nav-toggle" id="navToggle">☰</button>
-        <div class="nav-links" id="navLinks">
+        <div class="nav-links">
           <a href="index.html" class="nav-link active">Home</a>
           <a href="merch.html" class="nav-link">Merch</a>
           <a href="checkout.html" class="nav-link">Checkout</a>
-          <a href="admin.html" class="nav-link">Admin</a>
+          <!-- admin intentionally removed from nav -->
         </div>
-        <div class="cart-pill">R <span id="topTotal">0.00</span></div>
+
+        <div style="display:flex;gap:10px;align-items:center">
+          <button id="installBtn" class="btn ghost" style="display:none">Install App</button>
+          <div class="cart-pill">R <span id="topTotal">0.00</span></div>
+        </div>
       </nav>
     </div>
   </header>
@@ -47,7 +51,7 @@
     </section>
 
     <section id="products" class="products">
-      <!-- product cards injected here -->
+      <!-- product cards injected here (2-column on tablet/desktop) -->
     </section>
 
     <div class="pagination">
@@ -57,14 +61,21 @@
     </div>
   </main>
 
-  <aside id="sponsorCol" class="sponsors"></aside>
+  <aside id="sponsorCol" class="sponsors" aria-hidden="true"></aside>
 
   <footer class="footer">
     <div>© <span id="yr"></span> Stellies Dinner Packs — Made in Stellenbosch</div>
     <div class="muted small">Made with golden care ✨</div>
   </footer>
 
-<script src="script.js"></script>
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+  <script>
+    // Register service worker for PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+    }
+  </script>
+
+  <script src="/script.js"></script>
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>

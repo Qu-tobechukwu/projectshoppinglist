@@ -1,18 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Thanks — Stellies</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thanks — Stellies</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="index.html"><img src="assets/logo.png" class="logo" alt="Stellies" /></a>
-        <div class="tagline">A Taste So Divine, It Must Be Heaven’s Kitchen.</div>
+        <a href="index.html"><img src="/assets/logo.svg" alt="Stellies" class="logo" /></a>
+        <div class="tagline">Heavenly flavours, locally made.</div>
         <hr class="gold-divider" />
       </div>
     </div>
@@ -30,10 +31,10 @@
     </div>
   </main>
 
-<script>
-  document.getElementById('finalOrder').textContent = localStorage.getItem('orderNumber') || '';
-  document.getElementById('finalDelivery').textContent = localStorage.getItem('delivery') || '';
-  document.getElementById('finalTotal').textContent = localStorage.getItem('finalTotal') || '0.00';
-</script>
+  <script>
+    document.getElementById('finalOrder').textContent = localStorage.getItem('orderNumber') || '';
+    document.getElementById('finalDelivery').textContent = localStorage.getItem('delivery') || '';
+    document.getElementById('finalTotal').textContent = localStorage.getItem('finalTotal') || '0.00';
+  </script>
 </body>
 </html>

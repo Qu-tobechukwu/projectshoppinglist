@@ -1,113 +1,314 @@
-:root{
-  --ivory:#fffdf7;
-  --cloud:#f3f2ef;
-  --champagne:#d9c59d;
-  --rose:#ac2a13;      /* wine red primary */
-  --char:#1b1b1b;
-  --glass: rgba(0,0,0,0.04);
-  --radius:14px;
-  --gap:14px;
+/* ==============================
+   STELLIES DINNER PACKS THEME
+   Heavenly Cream + Gold Edition
+   ============================== */
+
+/* Fonts */
+body, button, input, select, textarea {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  color: #2c2c2c;
 }
 
-/* base */
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;background:var(--ivory);font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:var(--char);-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
-.container{padding:18px;max-width:1100px;margin:0 auto}
-
-/* top banner */
-.tb{background:linear-gradient(180deg,#fff7f3,#fff6f2);padding:18px 0;position:sticky;top:0;z-index:30}
-.tb-inner{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:10px}
-.logo{height:72px;display:block;border-radius:10px;transition:transform .28s ease}
-.logo:hover{transform:translateY(-3px)}
-.logo-area{display:flex;flex-direction:column;align-items:center;text-align:center}
-.tagline{font-family:"Cinzel",serif;color:var(--champagne);font-weight:600;margin-top:8px;letter-spacing:0.6px}
-.gold-divider{width:60%;height:1px;border:none;background:linear-gradient(90deg,transparent,var(--champagne),transparent);margin-top:10px;border-radius:6px}
-
-/* nav */
-.nav-row{display:flex;align-items:center;gap:12px;width:100%;max-width:1100px;justify-content:space-between;padding:0 18px}
-.nav-links{display:flex;gap:10px;align-items:center}
-.nav-link{padding:8px 10px;border-radius:8px;font-weight:700;color:var(--char);opacity:0.95}
-.nav-link.active{color:var(--rose);box-shadow:0 6px 18px rgba(172,42,19,0.06);border-radius:8px}
-
-/* cart pill */
-.cart-pill{background:linear-gradient(90deg, rgba(217,197,157,0.14), rgba(208,123,108,0.06));padding:6px 10px;border-radius:12px;font-weight:800;color:var(--champagne)}
-
-/* page layout */
-.page{padding:18px}
-.controls{display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
-.cart-summary{display:flex;flex-direction:column}
-.grand-total{font-weight:800;color:var(--champagne);font-size:1.15rem}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-
-/* product grid: 2 columns on >= 960px */
-.products{display:grid;grid-template-columns:1fr;gap:12px}
-@media(min-width:680px){ .products{grid-template-columns:repeat(2,1fr)} }
-
-/* card */
-.card{background:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.98));border-radius:12px;padding:0;overflow:hidden;border:1px solid rgba(0,0,0,0.03);box-shadow:0 8px 20px rgba(0,0,0,0.04);transition:transform .18s}
-.card:hover{transform:translateY(-6px)}
-.card-image{width:100%;height:180px;object-fit:cover;display:block}
-.card-body{padding:12px}
-.card-title{font-family:"Cinzel",serif;font-size:1.05rem;font-weight:700;color:var(--char)}
-.card-desc{color:rgba(0,0,0,0.65);margin-top:6px;font-size:0.95rem}
-.card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:8px}
-.price{font-weight:800;color:var(--rose)}
-
-/* flavour list */
-.flavour-list{margin-top:10px;padding-top:10px;border-top:1px dashed rgba(0,0,0,0.04)}
-.flavour-row{display:flex;gap:8px;align-items:center}
-.flv-qty{width:70px;padding:6px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)}
-
-/* merch grid */
-.merch-grid{display:grid;grid-template-columns:1fr;gap:12px}
-@media(min-width:680px){ .merch-grid{grid-template-columns:repeat(2,1fr)} }
-@media(min-width:1000px){ .merch-grid{grid-template-columns:repeat(3,1fr)} }
-
-/* checkout */
-.checkout{display:grid;grid-template-columns:1fr;gap:12px}
-@media(min-width:980px){ .checkout{grid-template-columns:1fr 360px} }
-.order-table{width:100%;border-collapse:collapse;margin-top:8px}
-.order-table th,.order-table td{padding:8px;border-bottom:1px solid rgba(0,0,0,0.04);text-align:left}
-
-/* buttons */
-.btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700;transition:transform .12s,box-shadow .12s}
-.btn.primary{background:linear-gradient(90deg,var(--champagne),#f1dcc0);color:var(--char)}
-.btn.ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);color:var(--char)}
-.btn:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,0.06)}
-
-/* pagination */
-.pagination{display:flex;justify-content:center;gap:12px;margin-top:14px}
-
-/* sponsors hidden on mobile, floating on desktop */
-.sponsors{display:none}
-@media(min-width:960px){
-  .sponsors{display:block;position:fixed;right:20px;top:140px;width:240px}
+/* Headings */
+h1, h2, h3, h4 {
+  font-family: 'Cinzel', serif;
+  color: #4b1e17; /* rich wine-red accent */
+  letter-spacing: 0.5px;
+  font-weight: 600;
 }
 
-/* footer */
-.footer{padding:18px;text-align:center;color:rgba(0,0,0,0.65);font-size:0.95rem}
+/* Base Colors */
+:root {
+  --cream: #fefaf3;
+  --wine-red: #6b1f14;
+  --gold: #d8b26e;
+  --gold-light: #f0d8aa;
+  --muted: #7a6e63;
+  --white: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
 
-/* Stellies toast (gold background, white text) */
-.stellies-toast{
-  position: fixed;
-  left: 50%;
-  bottom: 24px;
-  transform: translateX(-50%) translateY(12px);
-  background: linear-gradient(90deg, var(--champagne), #d3b66b);
-  color: white;
-  padding: 10px 18px;
-  border-radius: 999px;
+/* Body */
+body {
+  background-color: var(--cream);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Header Banner */
+.tb {
+  background: var(--wine-red);
+  color: var(--white);
+  padding: 1.5rem 1rem 0.5rem;
+  text-align: center;
+  box-shadow: 0 4px 12px var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.tb-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  width: 100px;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
+.tagline {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.gold-divider {
+  width: 100px;
+  border: none;
+  border-top: 2px solid var(--gold);
+  margin: 0.5rem 0 1rem;
+}
+
+/* Navigation */
+.nav-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.nav-link {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: color 0.3s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--gold);
+}
+
+/* Buttons */
+.btn {
+  border: none;
+  border-radius: 2rem;
+  padding: 0.6rem 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btn.primary {
+  background: var(--gold);
+  color: var(--white);
+  box-shadow: 0 3px 10px var(--shadow);
+}
+
+.btn.primary:hover {
+  background: #caa65a;
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
+}
+
+.btn.ghost:hover {
+  background: var(--gold);
+  color: var(--white);
+}
+
+/* Cart Pill */
+.cart-pill {
+  background: var(--gold);
+  color: var(--white);
+  border-radius: 2rem;
+  padding: 0.4rem 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Main Layout */
+.page.container {
+  padding: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Controls Section */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.cart-summary {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  color: var(--wine-red);
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.grand-total {
+  font-size: 1.6rem;
   font-weight: 700;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .28s ease, transform .28s cubic-bezier(.2,.9,.2,1);
-  z-index: 120;
-  font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-  letter-spacing: .2px;
+  color: var(--gold);
 }
-.stellies-toast.show{
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* Product Cards */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.2rem;
+}
+
+.product-card {
+  background: var(--white);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 3px 10px var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px var(--shadow);
+}
+
+.product-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.product-info {
+  text-align: center;
+}
+
+.product-title {
+  font-family: 'Cinzel', serif;
+  color: var(--wine-red);
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+}
+
+.product-price {
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.product-desc {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* Add to Cart */
+.add-btn {
+  width: 100%;
+  background: var(--gold);
+  color: var(--white);
+  font-weight: 600;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.6rem 1.2rem;
+  transition: background 0.3s;
+}
+
+.add-btn:hover {
+  background: #caa65a;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background: var(--wine-red);
+  color: var(--white);
+  font-size: 0.9rem;
+  margin-top: 2rem;
+  position: relative;
+}
+
+.footer .small {
+  font-size: 0.8rem;
+  color: var(--gold-light);
+}
+
+/* Install Button (Footer) */
+.footer .btn {
+  margin-top: 0.8rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .products {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .actions {
+    justify-content: center;
+  }
 }

@@ -1,40 +1,85 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Stellies Merch</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stellies Dinner Packs — Merch</title>
+
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="index.html"><img src="/assets/logo.svg" alt="Stellies Dinner Packs" class="logo" /></a>
+        <a href="index.html"><img src="assets/logo.svg" alt="Stellies Dinner Packs" class="logo" /></a>
         <div class="tagline">Heavenly flavours, locally made.</div>
         <hr class="gold-divider" />
       </div>
+
       <nav class="nav-row">
         <div class="nav-links">
           <a href="index.html" class="nav-link">Home</a>
           <a href="merch.html" class="nav-link active">Merch</a>
           <a href="checkout.html" class="nav-link">Checkout</a>
         </div>
-        <div class="cart-pill">R <span id="topTotalM">0.00</span></div>
+
+        <div style="display:flex;gap:10px;align-items:center">
+          <button id="installBtn" class="btn ghost" style="display:none">Install App</button>
+          <div class="cart-pill">R <span id="topTotal">0.00</span></div>
+        </div>
       </nav>
     </div>
   </header>
 
-  <main class="container">
-    <section class="merch-grid" id="merchWrap">
-      <!-- merch items injected -->
-    </section>
+  <main class="page container">
+    <h1 class="page-title">Merchandise</h1>
+    <p class="muted">Take a piece of heaven home with our exclusive Stellies Dinner Packs merch.</p>
 
-    <div style="margin:18px 0"><button class="btn" onclick="location.href='index.html'">Back to menu</button></div>
+    <section id="merchItems" class="products">
+      <!-- merch items dynamically loaded -->
+    </section>
   </main>
 
-  <script src="/script.js"></script>
+  <footer class="footer">
+    <div>© <span id="yr"></span> Stellies Dinner Packs — Made in Stellenbosch</div>
+    <div class="muted small">Made with golden care ✨</div>
+    <button id="installBtnFooter" class="btn gold">Install App</button>
+  </footer>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+    }
+
+    // PWA install logic (header + footer)
+    let deferredPrompt;
+    const headerInstallBtn = document.getElementById('installBtn');
+    const footerInstallBtn = document.getElementById('installBtnFooter');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (headerInstallBtn) headerInstallBtn.style.display = 'inline-block';
+      if (footerInstallBtn) footerInstallBtn.style.display = 'inline-block';
+    });
+
+    function triggerInstall() {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => (deferredPrompt = null));
+    }
+
+    if (headerInstallBtn) headerInstallBtn.addEventListener('click', triggerInstall);
+    if (footerInstallBtn) footerInstallBtn.addEventListener('click', triggerInstall);
+
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+
+  <script src="script.js"></script>
 </body>
 </html>

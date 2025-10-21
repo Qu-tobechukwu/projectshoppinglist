@@ -1,65 +1,96 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Checkout — Stellies</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stellies Dinner Packs — Checkout</title>
+
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="index.html"><img src="/assets/logo.svg" alt="Stellies Dinner Packs" class="logo" /></a>
+        <a href="index.html"><img src="assets/logo.svg" alt="Stellies Dinner Packs" class="logo" /></a>
         <div class="tagline">Heavenly flavours, locally made.</div>
         <hr class="gold-divider" />
       </div>
+
       <nav class="nav-row">
         <div class="nav-links">
           <a href="index.html" class="nav-link">Home</a>
           <a href="merch.html" class="nav-link">Merch</a>
           <a href="checkout.html" class="nav-link active">Checkout</a>
         </div>
-        <div class="cart-pill">R <span id="topTotalC">0.00</span></div>
+
+        <div style="display:flex;gap:10px;align-items:center">
+          <button id="installBtn" class="btn ghost" style="display:none">Install App</button>
+          <div class="cart-pill">R <span id="topTotal">0.00</span></div>
+        </div>
       </nav>
     </div>
   </header>
 
-  <main class="container checkout">
-    <section class="summary">
-      <div class="muted">Order number</div>
-      <div class="order-no" id="orderNumber"></div>
+  <main class="page container">
+    <h1 class="page-title">Checkout</h1>
+    <p class="muted">Please confirm your order details below:</p>
 
-      <table class="order-table">
-        <thead><tr><th>Item</th><th>Flavour</th><th>Qty</th><th>R</th></tr></thead>
-        <tbody id="orderTable"></tbody>
-      </table>
+    <form id="checkoutForm" class="checkout-form">
+      <label>Name <input type="text" id="name" required></label>
+      <label>Phone <input type="tel" id="phone" required></label>
+      <label>Email <input type="email" id="email"></label>
+      <label>Delivery Address <textarea id="delivery" required></textarea></label>
+      <label>Notes <textarea id="notes"></textarea></label>
+      <label>Tip (optional) <input type="number" id="tip" min="0" step="1" placeholder="0"></label>
 
-      <div class="summary-line">Subtotal: R <strong id="orderSubtotal">0.00</strong></div>
-      <div class="summary-line">Discounts: R <strong id="orderDiscount">0.00</strong></div>
-      <div class="summary-line">Tip: R <strong id="orderTip">0.00</strong></div>
-      <div class="summary-total">Total: R <strong id="orderTotal">0.00</strong></div>
-    </section>
-
-    <section class="details">
-      <h3>Delivery & contact</h3>
-      <label class="muted">Full name</label><input id="name" type="text" placeholder="Thandi M." />
-      <label class="muted">Phone</label><input id="phone" type="tel" placeholder="0821234567" />
-      <label class="muted">Email (optional)</label><input id="email" type="email" placeholder="you@example.com" />
-      <label class="muted">Delivery address</label><select id="delivery"></select>
-
-      <label class="muted">Tip (R)</label><input id="tip" type="number" min="0" value="0" />
-      <label class="muted">Notes</label><input id="notes" placeholder="Leave at reception" />
-
-      <div style="margin-top:12px">
-        <button id="payButton" class="btn primary">Pay & Place Order</button>
-        <button id="editButton" class="btn ghost">Edit Order</button>
+      <div class="checkout-summary">
+        <div>Subtotal: R <span id="subtotal">0.00</span></div>
+        <div>Total: <strong>R <span id="grandTotal">0.00</span></strong></div>
       </div>
-    </section>
+
+      <button id="placeOrder" class="btn primary">Place Order</button>
+    </form>
   </main>
 
-  <script src="/script.js"></script>
+  <footer class="footer">
+    <div>© <span id="yr"></span> Stellies Dinner Packs — Made in Stellenbosch</div>
+    <div class="muted small">Made with golden care ✨</div>
+    <button id="installBtnFooter" class="btn gold">Install App</button>
+  </footer>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+    }
+
+    let deferredPrompt;
+    const headerInstallBtn = document.getElementById('installBtn');
+    const footerInstallBtn = document.getElementById('installBtnFooter');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (headerInstallBtn) headerInstallBtn.style.display = 'inline-block';
+      if (footerInstallBtn) footerInstallBtn.style.display = 'inline-block';
+    });
+
+    function triggerInstall() {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => (deferredPrompt = null));
+    }
+
+    if (headerInstallBtn) headerInstallBtn.addEventListener('click', triggerInstall);
+    if (footerInstallBtn) footerInstallBtn.addEventListener('click', triggerInstall);
+
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+
+  <script src="script.js"></script>
 </body>
 </html>

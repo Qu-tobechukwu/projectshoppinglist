@@ -1,50 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Order Confirmation</title>
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
-      background: #f9f9f9;
-      text-align: center;
-    }
-    h2 {
-      color: #007bff;
-    }
-    .summary {
-      background: white;
-      border-radius: 8px;
-      padding: 15px;
-      margin-top: 15px;
-      text-align: left;
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stellies Dinner Packs — Confirmation</title>
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <h2>Order Confirmed 🎉</h2>
-  <p>Thank you for your order!</p>
+  <header class="tb">
+    <div class="tb-inner">
+      <div class="logo-area">
+        <a href="./index.html"><img src="./assets/logo.svg" alt="Stellies Dinner Packs" class="logo" /></a>
+        <div class="tagline">Heavenly flavours, locally made.</div>
+        <hr class="gold-divider" />
+      </div>
+    </div>
+  </header>
 
-  <div class="summary">
-    <p><strong>Order Number:</strong> <span id="orderNumber"></span></p>
-    <p><strong>Name:</strong> <span id="customerName"></span></p>
-    <p><strong>Phone:</strong> <span id="customerPhone"></span></p>
-    <p><strong>Delivery:</strong> <span id="delivery"></span></p>
-    <p><strong>Total Paid:</strong> R<span id="finalTotal"></span></p>
-  </div>
+  <main class="page container thanks">
+    <div class="card">
+      <h2>✨ Order Confirmed</h2>
+      <p class="muted">Thanks — we received your order. We'll message you once it's ready.</p>
+      <p><strong>Order #</strong> <span id="finalOrder"></span></p>
+      <p><strong>Delivery</strong> <span id="finalDelivery"></span></p>
+      <p><strong>Total</strong> R <span id="finalTotal">0.00</span></p>
 
-  <p>We’ll message you on WhatsApp when your order is ready! 💬</p>
+      <a href="./index.html" class="btn">Place another order</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div>© <span id="yr"></span> Stellies Dinner Packs — Made in Stellenbosch</div>
+    <div class="muted small">Made with golden care ✨</div>
+    <div style="margin-top:10px;">
+      <button id="installBtnFooter" class="btn" style="display:none">📱 Install Stellies App</button>
+    </div>
+  </footer>
 
   <script>
-    document.getElementById("orderNumber").textContent = localStorage.getItem("orderNumber");
-    document.getElementById("customerName").textContent = localStorage.getItem("customerName");
-    document.getElementById("customerPhone").textContent = localStorage.getItem("customerPhone");
-    document.getElementById("delivery").textContent = localStorage.getItem("delivery");
-    document.getElementById("finalTotal").textContent = localStorage.getItem("finalTotal");
+    document.getElementById('yr').textContent = new Date().getFullYear();
+    document.getElementById('finalOrder').textContent = localStorage.getItem('orderNumber') || '';
+    document.getElementById('finalDelivery').textContent = localStorage.getItem('delivery') || '';
+    document.getElementById('finalTotal').textContent = localStorage.getItem('finalTotal') || '0.00';
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+    }
   </script>
+
+  <script src="./install.js" defer></script>
+  <script src="./script.js" defer></script>
 </body>
 </html>

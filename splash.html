@@ -1,16 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Stellies Dinner Packs</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stellies — Welcome</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body class="splash">
-  <div class="splash-container">
-    <img src="assets/logo.svg" alt="Logo" class="logo">
-    <h1>Stellies Dinner Packs</h1>
-    <p>Best viewed on mobile for the full experience.</p>
-    <a href="index.html" class="btn">Continue to Mobile Site</a>
-  </div>
+  <main style="min-height:70vh;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+    <img src="./assets/logo.svg" alt="Stellies" style="width:140px;margin-bottom:18px" />
+    <h1 class="gold-title">Stellies Dinner Packs</h1>
+    <p class="muted">Heavenly flavours, locally made.</p>
+    <div style="margin-top:16px">
+      <a href="./index.html" class="btn primary">Enter</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div>© <span id="yr"></span> Stellies Dinner Packs</div>
+  </footer>
+
+  <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+  <script src="./install.js" defer></script>
+  <script src="./script.js" defer></script>
 </body>
 </html>

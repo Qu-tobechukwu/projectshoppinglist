@@ -1,17 +1,19 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Admin — Stellies</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css" />
   <style>.admin-wrap{max-width:1100px;margin:20px auto;padding:12px}.hidden{display:none}</style>
 </head>
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="index.html"><img src="/assets/logo.svg" alt="Stellies" class="logo" /></a>
+        <a href="./index.html"><img src="./assets/logo.svg" alt="Stellies" class="logo" /></a>
         <div class="tagline">Admin (private)</div>
         <hr class="gold-divider" />
       </div>
@@ -49,7 +51,9 @@
     const h = await crypto.subtle.digest('SHA-256', enc);
     return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('');
   }
-  const ADMIN_HASH = '51d8fb68183ff49fa4c539d127879d4360584e197cb76b6901a3c55268748c9f'; // sha256(forphoneuseemail@gmail.com)
+  // ADMIN_HASH is SHA-256 of your chosen admin password. Keep secret; this is client-side gate only.
+  const ADMIN_HASH = '51d8fb68183ff49fa4c539d127879d4360584e197cb76b6901a3c55268748c9f'; // example: sha256(forphoneuseemail@gmail.com)
+
   document.getElementById('unlockBtn').addEventListener('click', async ()=>{
     const v = document.getElementById('adminPw').value || '';
     const h = await sha256hex(v);
@@ -57,8 +61,7 @@
     else alert('Incorrect password');
   });
 
-  function loadOrders(){ // loads from Apps Script via BACKEND (optional)
-    // For now, pull pending local orders + static orders if any
+  function loadOrders(){
     const pending = JSON.parse(localStorage.getItem('stellies_pending_orders')||'[]');
     const body = document.getElementById('ordersBody'); body.innerHTML = '';
     if(pending.length===0){ body.innerHTML = '<tr><td colspan="8">No pending orders</td></tr>'; return; }
@@ -71,7 +74,7 @@
   }
 
   document.getElementById('clearPending').addEventListener('click', ()=>{ if(confirm('Clear pending?')){ localStorage.removeItem('stellies_pending_orders'); loadOrders(); }});
-  document.getElementById('exportCSV').addEventListener('click', ()=>{ /* export logic similar to earlier admin code */ alert('Export feature ready'); });
+  document.getElementById('exportCSV').addEventListener('click', ()=>{ alert('Export feature ready'); });
 </script>
 </body>
 </html>

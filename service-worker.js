@@ -1,15 +1,16 @@
-const CACHE_NAME = 'stellies-v1';
+const CACHE_NAME = 'eden-creates-v1';
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/merch.html',
-  '/checkout.html',
-  '/thankyou.html',
-  '/style.css',
-  '/script.js',
-  '/manifest.json',
-  '/assets/logo.svg',
-  '/data/products.json'
+  './',
+  './index.html',
+  './merch.html',
+  './checkout.html',
+  './thankyou.html',
+  './style.css',
+  './script.js',
+  './install.js',
+  './manifest.json',
+  './assets/logo.svg',
+  './data/products.json'
 ];
 
 self.addEventListener('install', event => {
@@ -25,12 +26,12 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   const req = event.request;
-  // try network for API / functions; otherwise prefer cache
+  // prefer network for dynamic endpoints; otherwise cache-first
   if(req.url.includes('/.netlify/functions/') || req.url.includes('script.google.com')){
     event.respondWith(fetch(req).catch(()=>caches.match(req)));
     return;
   }
   event.respondWith(
-    caches.match(req).then(resp => resp || fetch(req).catch(()=> caches.match('/index.html')))
+    caches.match(req).then(resp => resp || fetch(req).catch(()=> caches.match('./index.html')))
   );
 });

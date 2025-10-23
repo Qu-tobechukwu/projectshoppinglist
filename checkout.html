@@ -1,39 +1,112 @@
-<section class="checkout-form">
-  <h2>Checkout Details</h2>
-  <form id="checkoutForm" class="gold-form">
-    <label for="name">Name</label>
-    <input id="name" name="name" type="text" required>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Eden Creates — Checkout</title>
 
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email" required>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
 
-    <label for="address">Delivery Address</label>
-    <select id="address" name="address" required>
-      <option value="">Select your address...</option>
-    </select>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="tb">
+    <div class="tb-inner">
+      <div class="logo-area">
+        <a href="./index.html"><img src="./assets/logo.svg" alt="Eden Creates" class="logo" /></a>
+        <div class="tagline">crafted with care, kissed by heaven.</div>
+        <hr class="gold-divider" />
+      </div>
 
-    <label for="notes">Notes (optional)</label>
-    <textarea id="notes" name="notes" placeholder="Anything special we should know?"></textarea>
+      <nav class="nav-row">
+        <div class="nav-links">
+          <a href="./index.html" class="nav-link">Home</a>
+          <a href="./merch.html" class="nav-link">Merch</a>
+          <a href="./checkout.html" class="nav-link active">Checkout</a>
+        </div>
 
-    <button type="submit" class="btn primary full">Confirm Order</button>
-  </form>
-</section>
+        <div style="display:flex;gap:10px;align-items:center">
+          <button id="installBtnHeader" class="btn ghost" style="display:none">Install App</button>
+          <div class="cart-pill">R <span id="topTotalC">0.00</span></div>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-<script>
-// Fetch addresses from Google Sheet
-async function fetchAddresses() {
-  const sheetId = "1b6CkJ9OcvDKQpFpSO2VNxqi2ZAciezPWSrQBGE3n08M";
-  const url = `https://opensheet.elk.sh/${sheetId}/Addresses`;
-  const res = await fetch(url);
-  const data = await res.json();
+  <main class="page container checkout" aria-live="polite">
+    <!-- Left: Order summary -->
+    <section class="summary card" aria-labelledby="order-summary-title">
+      <h2 id="order-summary-title" class="card-title">Order summary</h2>
+      <div class="muted small">Order number</div>
+      <div class="order-no" id="orderNumber">—</div>
 
-  const sel = document.getElementById('address');
-  data.forEach(addr => {
-    const opt = document.createElement('option');
-    opt.value = addr.Address;
-    opt.textContent = addr.Address;
-    sel.appendChild(opt);
-  });
-}
-fetchAddresses();
-</script>
+      <table class="order-table" aria-live="polite">
+        <thead><tr><th>Item</th><th>Flavour</th><th>Qty</th><th>R</th></tr></thead>
+        <tbody id="orderTable">
+          <tr><td colspan="4" class="muted">Your cart is empty</td></tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top:12px">
+        <div class="summary-line">Subtotal: R <strong id="orderSubtotal">0.00</strong></div>
+        <div class="summary-line">Discounts: R <strong id="orderDiscount">0.00</strong></div>
+        <div class="summary-total">Total: R <strong id="orderTotal">0.00</strong></div>
+      </div>
+    </section>
+
+    <!-- Right: Contact & delivery form -->
+    <section class="details card" aria-labelledby="contact-title">
+      <h3 id="contact-title" class="card-title">Contact & delivery</h3>
+
+      <form id="checkoutForm" class="gold-form" autocomplete="on">
+        <label class="field">
+          <div class="field-label">Name</div>
+          <input id="name" class="input-rounded" type="text" placeholder="Thandi M." autocomplete="name" required />
+        </label>
+
+        <label class="field">
+          <div class="field-label">Email</div>
+          <input id="email" class="input-rounded" type="email" placeholder="you@edencreates.com" autocomplete="email" required />
+        </label>
+
+        <label class="field">
+          <div class="field-label">Delivery address</div>
+          <select id="delivery" class="input-rounded" required>
+            <option>Loading addresses…</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <div class="field-label">Notes (optional)</div>
+          <textarea id="notes" class="input-rounded notes" placeholder="Leave at reception or special instructions..."></textarea>
+        </label>
+
+        <div style="display:flex;gap:8px;margin-top:8px;align-items:center;justify-content:flex-end">
+          <button type="button" id="editButton" class="btn ghost">Edit Cart</button>
+          <button type="submit" id="payButton" class="btn primary">Place Order</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>© <span id="yr"></span> Eden Creates — Made in Stellenbosch</div>
+    <div class="muted small">Made with golden care ✨</div>
+    <div style="margin-top:10px;">
+      <button id="installBtnFooter" class="btn" style="display:none">📱 Install Eden App</button>
+    </div>
+  </footer>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+    }
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+
+  <script src="./script.js" defer></script>
+  <script src="./checkout.js" defer></script>
+</body>
+</html>

@@ -1,361 +1,96 @@
-/* ==============================
-   STELLIES / EDEN CREATES THEME
-   Cream + Gold Edition
-   ============================== */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View My Order – Eden Creates</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="tb">
+    <div class="tb-inner">
+      <div class="logo-area">
+        <img src="assets/logo.png" alt="Eden Creates Logo" class="logo">
+        <p class="tagline">Bespoke Cakes & Artisan Bakes</p>
+      </div>
+      <hr class="gold-divider" />
+      <div class="nav-row">
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="checkout.html" class="nav-link">Checkout</a>
+          <a href="order-status.html" class="nav-link active">Order Status</a>
+        </div>
+      </div>
+    </div>
+  </header>
 
-/* Fonts */
-body, button, input, select, textarea {
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 400;
-  color: #2c2c2c;
-}
+  <main class="page container">
+    <h1 class="cinzel">View My Order</h1>
+    <p class="muted">Enter your order number or email address to view the latest status of your Eden Creates order.</p>
 
-/* Headings */
-h1, h2, h3, h4 {
-  font-family: 'Cinzel', serif;
-  color: #4b1e17; /* rich wine-red accent */
-  letter-spacing: 0.5px;
-  font-weight: 600;
-}
+    <div class="card" style="max-width: 500px; margin: 1.5rem auto; text-align: center;">
+      <form id="orderLookupForm">
+        <input 
+          type="text" 
+          id="lookupValue" 
+          placeholder="Enter Order Number or Email" 
+          required
+          style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); margin-bottom: 12px;"
+        >
+        <button type="submit" class="btn primary" style="width: 100%;">Check Status</button>
+      </form>
+    </div>
 
-/* Base Colors */
-:root {
-  --cream: #fefaf3;
-  --wine-red: #6b1f14;
-  --gold: #d8b26e;
-  --gold-light: #f0d8aa;
-  --muted: #7a6e63;
-  --white: #ffffff;
-  --shadow: rgba(0, 0, 0, 0.08);
-}
+    <div id="orderResult" class="card" style="max-width: 700px; margin: 1.5rem auto; display: none;">
+      <h3 id="orderNumberDisplay" class="product-title"></h3>
+      <p id="orderStatus" class="muted"></p>
+      <table id="orderItemsTable" class="order-table"></table>
+      <p class="grand-total" id="orderTotal"></p>
+    </div>
+  </main>
 
-/* Body */
-body {
-  background-color: var(--cream);
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
+  <footer class="footer">
+    <p>&copy; 2025 Eden Creates</p>
+    <p class="small">Handcrafted with care in Stellenbosch</p>
+  </footer>
 
-/* Header Banner */
-.tb {
-  background: var(--wine-red);
-  color: var(--white);
-  padding: 1.5rem 1rem 0.6rem;
-  text-align: center;
-  box-shadow: 0 4px 12px var(--shadow);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
+  <script>
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbxPH86X_8TppHkQoyrbJyB4WjFW_vT6-71iFQsUUpgNYQXvj_TcxpAQjAft3NKHQxat/exec";
 
-.tb-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    document.getElementById("orderLookupForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const lookupValue = document.getElementById("lookupValue").value.trim();
+      const resultDiv = document.getElementById("orderResult");
 
-.logo-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+      try {
+        const res = await fetch(`${GAS_URL}?type=lookup&value=${encodeURIComponent(lookupValue)}`);
+        const data = await res.json();
 
-.logo {
-  width: 100px;
-  height: auto;
-  margin-bottom: 0.5rem;
-}
+        if (!data || !data.orderNumber) {
+          resultDiv.style.display = "block";
+          resultDiv.innerHTML = "<p>No matching order found.</p>";
+          return;
+        }
 
-.tagline {
-  font-family: 'Cinzel', serif;
-  font-size: 1.05rem;
-  font-style: italic;
-  color: var(--gold-light);
-  margin-bottom: 6px;
-}
+        document.getElementById("orderNumberDisplay").textContent = `Order #${data.orderNumber}`;
+        document.getElementById("orderStatus").textContent = `Status: ${data.status}`;
+        
+        const table = document.getElementById("orderItemsTable");
+        table.innerHTML = "<tr><th>Item</th><th>Qty</th><th>Price</th></tr>" +
+          data.items.map(i => `
+            <tr>
+              <td>${i.name}</td>
+              <td>${i.qty}</td>
+              <td>R${i.price}</td>
+            </tr>`).join("");
 
-.gold-divider {
-  width: 100px;
-  border: none;
-  border-top: 2px solid var(--gold);
-  margin: 0.25rem 0 0.9rem;
-}
-
-/* Navigation */
-.nav-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 1100px;
-  margin-top: 0.3rem;
-  flex-wrap: wrap;
-}
-
-.nav-links {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
-.nav-link {
-  color: var(--white);
-  text-decoration: none;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  transition: color 0.2s;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  color: var(--gold);
-}
-
-/* Buttons */
-.btn {
-  border: none;
-  border-radius: 2rem;
-  padding: 0.6rem 1.4rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.18s ease;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
-}
-
-.btn.primary {
-  background: var(--gold);
-  color: var(--white);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-}
-
-.btn.primary:hover {
-  background: #caa65a;
-  transform: translateY(-1px);
-}
-
-.btn.ghost {
-  background: transparent;
-  border: 1.5px solid var(--gold);
-  color: var(--gold);
-}
-
-.btn.ghost:hover {
-  background: var(--gold);
-  color: var(--white);
-}
-
-/* Cart Pill */
-.cart-pill {
-  background: var(--gold);
-  color: var(--white);
-  border-radius: 2rem;
-  padding: 0.4rem 1rem;
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-/* Main Layout */
-.page.container {
-  padding: 1.5rem;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-/* Controls Section */
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.cart-summary {
-  font-family: 'Cinzel', serif;
-  font-size: 1.2rem;
-  color: var(--wine-red);
-}
-
-.muted {
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-.grand-total {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--gold);
-}
-
-/* Actions */
-.actions {
-  display: flex;
-  gap: 0.8rem;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
-/* Product Cards */
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.2rem;
-}
-
-/* Cards */
-.card, .product-card {
-  background: var(--white);
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.04);
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
-}
-
-.card:hover, .product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-}
-
-.card-image, .product-img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 0.8rem;
-  margin-bottom: 0.8rem;
-}
-
-.card-body, .product-info {
-  text-align: center;
-}
-
-.card-title, .product-title {
-  font-family: 'Cinzel', serif;
-  color: var(--wine-red);
-  font-size: 1.1rem;
-  margin-bottom: 0.35rem;
-}
-
-.price, .product-price {
-  color: var(--gold);
-  font-weight: 600;
-  margin-bottom: 0.6rem;
-}
-
-.card-desc, .product-desc {
-  color: var(--muted);
-  font-size: 0.92rem;
-  margin-bottom: 1rem;
-}
-
-/* flavour list */
-.flavour-list{margin-top:10px;padding-top:10px;border-top:1px dashed rgba(0,0,0,0.04)}
-.flavour-row{display:flex;gap:8px;align-items:center}
-.flv-qty{width:70px;padding:6px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)}
-
-/* Add to Cart */
-.add-btn {
-  width: 100%;
-  background: var(--gold);
-  color: var(--white);
-  font-weight: 600;
-  border: none;
-  border-radius: 2rem;
-  padding: 0.6rem 1.2rem;
-  transition: background 0.3s;
-}
-
-.add-btn:hover {
-  background: #caa65a;
-}
-
-/* Pagination */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.8rem;
-  margin-top: 2rem;
-}
-
-/* Checkout layout */
-.checkout { display: grid; grid-template-columns: 1fr; gap: 16px; }
-@media(min-width:980px){ .checkout { grid-template-columns: 1fr 380px; } }
-
-/* Order table */
-.order-table { width:100%; border-collapse: collapse; margin-top:8px; }
-.order-table th, .order-table td { padding:10px 8px; border-bottom: 1px solid rgba(0,0,0,0.04); text-align:left; }
-
-/* ---- New checkout/input styles (neat, airy, rounded) ---- */
-.field { display:block; margin-bottom: 14px; }
-.field-label { font-family: 'Cinzel', serif; color: var(--wine-red); font-size: 0.85rem; margin-bottom: 6px; }
-.input-rounded {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.06);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
-  font-size: 1rem;
-  background: #fff;
-  outline: none;
-  transition: box-shadow .18s, transform .12s;
-}
-.input-rounded:focus { box-shadow: 0 10px 26px rgba(0,0,0,0.06); transform: translateY(-1px); border-color: rgba(0,0,0,0.08); }
-.details.card { display:flex; flex-direction:column; gap:10px; padding:20px; }
-.summary.card { padding:20px; }
-
-/* Notes box */
-.notes { min-height:140px; resize:vertical; padding-top:12px; }
-
-/* summary visuals */
-.summary-line { margin-top:8px; color:var(--muted); font-size:0.95rem; }
-.summary-total { margin-top:10px; font-size:1.08rem; color:var(--wine-red); font-weight:700; }
-
-/* Footer */
-.footer {
-  text-align: center;
-  padding: 1.5rem 1rem;
-  background: var(--wine-red);
-  color: var(--white);
-  font-size: 0.9rem;
-  margin-top: 2rem;
-  position: relative;
-}
-.footer .small { font-size: 0.8rem; color: var(--gold-light); }
-
-/* Toast */
-.stellies-toast{
-  position: fixed;
-  left: 50%;
-  bottom: 24px;
-  transform: translateX(-50%) translateY(12px);
-  background: linear-gradient(90deg, var(--gold), #d3b66b);
-  color: white;
-  padding: 10px 18px;
-  border-radius: 999px;
-  font-weight: 700;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .28s ease, transform .28s cubic-bezier(.2,.9,.2,1);
-  z-index: 120;
-  font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-  letter-spacing: .2px;
-}
-.stellies-toast.show{
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* Responsive tweaks */
-@media (max-width: 600px) {
-  .products { grid-template-columns: 1fr; }
-  .nav-row { flex-direction: column; gap: 0.5rem; }
-  .controls { flex-direction: column; gap: 1rem; align-items: stretch; }
-  .actions { justify-content: center; }
-  .details.card, .summary.card { padding:14px; }
-  .notes { min-height:110px; }
-}
+        document.getElementById("orderTotal").textContent = `Total: R${data.total}`;
+        resultDiv.style.display = "block";
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong while fetching your order.");
+      }
+    });
+  </script>
+</body>
+</html>

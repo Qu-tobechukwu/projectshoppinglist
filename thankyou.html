@@ -3,54 +3,37 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Thanks — Stellies</title>
-
-  <link rel="manifest" href="./manifest.json">
-  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+  <title>Thank You — Eden Creates</title>
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="./index.html"><img src="./assets/logo.svg" alt="Stellies" class="logo" /></a>
+        <a href="index.html"><img src="/assets/logo.svg" alt="Eden Creates" class="logo" /></a>
         <div class="tagline">Heavenly flavours, locally made.</div>
         <hr class="gold-divider" />
       </div>
     </div>
   </header>
 
-  <main class="container thanks">
-    <div class="card">
-      <h2>✨ Order Confirmed</h2>
-      <p class="muted">Thanks — we received your order. We'll message you once it's ready.</p>
-      <p><strong>Order #</strong> <span id="finalOrder"></span></p>
-      <p><strong>Total</strong> R <span id="finalTotal">0.00</span></p>
-
-      <a href="./index.html" class="btn">Place another order</a>
+  <main class="page container center-content">
+    <div class="thankyou-card">
+      <h1>✨ Thank You!</h1>
+      <p>Your order has been placed successfully.  
+      A confirmation has been sent to your email.</p>
+      <p class="muted">We’ll notify you when it’s packed and ready for delivery.</p>
+      <a href="index.html" class="btn primary">Return to Menu</a>
     </div>
   </main>
 
   <footer class="footer">
-    <div>© <span id="yr"></span> Stellies Dinner Packs — Made in Stellenbosch</div>
+    <div>© <span id="yr"></span> Eden Creates — Made in Stellenbosch</div>
     <div class="muted small">Made with golden care ✨</div>
-    <div style="margin-top:10px;">
-      <button id="installBtnFooter" class="btn" style="display:none">📱 Install Stellies App</button>
-    </div>
   </footer>
 
-  <script>
-    document.getElementById('yr').textContent = new Date().getFullYear();
-    document.getElementById('finalOrder').textContent = localStorage.getItem('orderNumber') || '';
-    document.getElementById('finalTotal').textContent = localStorage.getItem('finalTotal') || '0.00';
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
-    }
-  </script>
-
-  <script src="./install.js" defer></script>
-  <script src="./script.js" defer></script>
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>

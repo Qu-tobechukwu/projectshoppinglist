@@ -5,108 +5,118 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Eden Creates — Checkout</title>
 
-  <link rel="manifest" href="./manifest.json">
-  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
-
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="./index.html"><img src="./assets/logo.svg" alt="Eden Creates" class="logo" /></a>
-        <div class="tagline">crafted with care, kissed by heaven.</div>
+        <a href="index.html"><img src="/assets/logo.svg" alt="Eden Creates" class="logo" /></a>
+        <div class="tagline">Heavenly flavours, locally made.</div>
         <hr class="gold-divider" />
       </div>
-
       <nav class="nav-row">
         <div class="nav-links">
-          <a href="./index.html" class="nav-link">Home</a>
-          <a href="./merch.html" class="nav-link">Merch</a>
-          <a href="./checkout.html" class="nav-link active">Checkout</a>
-        </div>
-
-        <div style="display:flex;gap:10px;align-items:center">
-          <button id="installBtnHeader" class="btn ghost" style="display:none">Install App</button>
-          <div class="cart-pill">R <span id="topTotalC">0.00</span></div>
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="merch.html" class="nav-link">Merch</a>
+          <a href="checkout.html" class="nav-link active">Checkout</a>
         </div>
       </nav>
     </div>
   </header>
 
-  <main class="page container checkout" aria-live="polite">
-    <!-- Left: Order summary -->
-    <section class="summary card" aria-labelledby="order-summary-title">
-      <h2 id="order-summary-title" class="card-title">Order summary</h2>
-      <div class="muted small">Order number</div>
-      <div class="order-no" id="orderNumber">—</div>
+  <main class="page container">
+    <h1>Checkout</h1>
+    <p class="muted">Confirm your details to complete your heavenly order ✨</p>
 
-      <table class="order-table" aria-live="polite">
-        <thead><tr><th>Item</th><th>Flavour</th><th>Qty</th><th>R</th></tr></thead>
-        <tbody id="orderTable">
-          <tr><td colspan="4" class="muted">Your cart is empty</td></tr>
-        </tbody>
-      </table>
+    <form id="checkoutForm" class="checkout-form">
+      <div class="form-section">
+        <label>Name</label>
+        <input type="text" name="name" id="name" placeholder="Your name" required />
 
-      <div style="margin-top:12px">
-        <div class="summary-line">Subtotal: R <strong id="orderSubtotal">0.00</strong></div>
-        <div class="summary-line">Discounts: R <strong id="orderDiscount">0.00</strong></div>
-        <div class="summary-total">Total: R <strong id="orderTotal">0.00</strong></div>
+        <label>Email</label>
+        <input type="email" name="email" id="email" placeholder="you@example.com" required />
+
+        <label>Delivery Address</label>
+        <select id="delivery" name="delivery" required>
+          <option value="">Select delivery location...</option>
+        </select>
+
+        <label>Notes (optional)</label>
+        <textarea id="notes" name="notes" placeholder="Add any special requests or allergies..."></textarea>
       </div>
-    </section>
 
-    <!-- Right: Contact & delivery form -->
-    <section class="details card" aria-labelledby="contact-title">
-      <h3 id="contact-title" class="card-title">Contact & delivery</h3>
-
-      <form id="checkoutForm" class="gold-form" autocomplete="on">
-        <label class="field">
-          <div class="field-label">Name</div>
-          <input id="name" class="input-rounded" type="text" placeholder="Thandi M." autocomplete="name" required />
-        </label>
-
-        <label class="field">
-          <div class="field-label">Email</div>
-          <input id="email" class="input-rounded" type="email" placeholder="you@edencreates.com" autocomplete="email" required />
-        </label>
-
-        <label class="field">
-          <div class="field-label">Delivery address</div>
-          <select id="delivery" class="input-rounded" required>
-            <option>Loading addresses…</option>
-          </select>
-        </label>
-
-        <label class="field">
-          <div class="field-label">Notes (optional)</div>
-          <textarea id="notes" class="input-rounded notes" placeholder="Leave at reception or special instructions..."></textarea>
-        </label>
-
-        <div style="display:flex;gap:8px;margin-top:8px;align-items:center;justify-content:flex-end">
-          <button type="button" id="editButton" class="btn ghost">Edit Cart</button>
-          <button type="submit" id="payButton" class="btn primary">Place Order</button>
-        </div>
-      </form>
-    </section>
+      <div class="summary-section">
+        <h2>Your Order</h2>
+        <div id="orderSummary"></div>
+        <div class="grand-total">Total: R <span id="totalAmount">0.00</span></div>
+        <button type="submit" class="btn primary full">Place Order</button>
+      </div>
+    </form>
   </main>
 
   <footer class="footer">
-    <div>© <span id="yr"></span> Eden Creates — Made in Stellenbosch</div>
+    <div>© <span id="yr"></span> Eden Creates — Heavenly flavours, locally made</div>
     <div class="muted small">Made with golden care ✨</div>
-    <div style="margin-top:10px;">
-      <button id="installBtnFooter" class="btn" style="display:none">📱 Install Eden App</button>
-    </div>
   </footer>
 
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
-    }
     document.getElementById('yr').textContent = new Date().getFullYear();
-  </script>
 
-  <script src="./script.js" defer></script>
-  <script src="./checkout.js" defer></script>
+    // Fetch addresses from Google Sheet (Apps Script endpoint)
+    fetch('YOUR_DEPLOYED_APPS_SCRIPT_URL?type=addresses')
+      .then(res => res.json())
+      .then(addresses => {
+        const deliverySelect = document.getElementById('delivery');
+        addresses.forEach(addr => {
+          const opt = document.createElement('option');
+          opt.value = addr;
+          opt.textContent = addr;
+          deliverySelect.appendChild(opt);
+        });
+      })
+      .catch(() => console.warn('Could not load addresses'));
+
+    // Load order from localStorage
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+    document.getElementById('totalAmount').textContent = total.toFixed(2);
+
+    const summary = document.getElementById('orderSummary');
+    cart.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'summary-item';
+      div.innerHTML = `<strong>${item.name}</strong> × ${item.qty} — R${(item.price * item.qty).toFixed(2)}`;
+      summary.appendChild(div);
+    });
+
+    // Submit order to Apps Script
+    document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        delivery: document.getElementById('delivery').value.trim(),
+        notes: document.getElementById('notes').value.trim(),
+        items: cart,
+        total
+      };
+
+      const res = await fetch('YOUR_DEPLOYED_APPS_SCRIPT_URL', {
+        method: 'POST',
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        localStorage.removeItem('cart');
+        window.location.href = 'thankyou.html';
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    });
+  </script>
 </body>
 </html>

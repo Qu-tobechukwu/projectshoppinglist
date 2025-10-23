@@ -1,6 +1,9 @@
-[
-  "Irene Residence",
-  "Metanoia Residence",
-  "Wilgenhof Residence",
-  "Rooiplein Market (Pickup)"
-]
+{
+  "addresses": [
+    "Markotter Residence",
+    "Ons Dorp Residence",
+    "Kromme Rhee",
+    "Erasmus Hall",
+    "Rooiplein Market (Pickup)"
+  ]
+}

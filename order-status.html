@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View My Order – Eden Creates</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="tb">
+    <div class="tb-inner">
+      <div class="logo-area">
+        <img src="assets/logo.png" alt="Eden Creates Logo" class="logo">
+        <p class="tagline">Bespoke Cakes & Artisan Bakes</p>
+      </div>
+      <hr class="gold-divider" />
+      <div class="nav-row">
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="checkout.html" class="nav-link">Checkout</a>
+          <a href="order-status.html" class="nav-link active">Order Status</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page container">
+    <h1 class="cinzel">View My Order</h1>
+    <p class="muted">Enter your order number or email address to view the latest status of your Eden Creates order.</p>
+
+    <div class="card" style="max-width: 500px; margin: 1.5rem auto; text-align: center;">
+      <form id="orderLookupForm">
+        <input 
+          type="text" 
+          id="lookupValue" 
+          placeholder="Enter Order Number or Email" 
+          required
+          style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); margin-bottom: 12px;"
+        >
+        <button type="submit" class="btn primary" style="width: 100%;">Check Status</button>
+      </form>
+    </div>
+
+    <div id="orderResult" class="card" style="max-width: 700px; margin: 1.5rem auto; display: none;">
+      <h3 id="orderNumberDisplay" class="product-title"></h3>
+      <p id="orderStatus" class="muted"></p>
+      <table id="orderItemsTable" class="order-table"></table>
+      <p class="grand-total" id="orderTotal"></p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Eden Creates</p>
+    <p class="small">Handcrafted with care in Stellenbosch</p>
+  </footer>
+
+  <script>
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbxPH86X_8TppHkQoyrbJyB4WjFW_vT6-71iFQsUUpgNYQXvj_TcxpAQjAft3NKHQxat/exec";
+
+    document.getElementById("orderLookupForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const lookupValue = document.getElementById("lookupValue").value.trim();
+      const resultDiv = document.getElementById("orderResult");
+
+      try {
+        const res = await fetch(`${GAS_URL}?type=lookup&value=${encodeURIComponent(lookupValue)}`);
+        const data = await res.json();
+
+        if (!data || !data.orderNumber) {
+          resultDiv.style.display = "block";
+          resultDiv.innerHTML = "<p>No matching order found.</p>";
+          return;
+        }
+
+        document.getElementById("orderNumberDisplay").textContent = `Order #${data.orderNumber}`;
+        document.getElementById("orderStatus").textContent = `Status: ${data.status}`;
+        
+        const table = document.getElementById("orderItemsTable");
+        table.innerHTML = "<tr><th>Item</th><th>Qty</th><th>Price</th></tr>" +
+          data.items.map(i => `
+            <tr>
+              <td>${i.name}</td>
+              <td>${i.qty}</td>
+              <td>R${i.price}</td>
+            </tr>`).join("");
+
+        document.getElementById("orderTotal").textContent = `Total: R${data.total}`;
+        resultDiv.style.display = "block";
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong while fetching your order.");
+      }
+    });
+  </script>
+</body>
+</html>

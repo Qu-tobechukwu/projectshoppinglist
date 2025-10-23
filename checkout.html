@@ -36,34 +36,55 @@
   </header>
 
   <main class="page container checkout">
-    <section class="summary">
-      <div class="muted">Order number</div>
-      <div class="order-no" id="orderNumber"></div>
+    <!-- Left: Order summary -->
+    <section class="summary card" aria-labelledby="order-summary-title">
+      <h2 id="order-summary-title" class="card-title">Order summary</h2>
+      <div class="muted small">Order number</div>
+      <div class="order-no" id="orderNumber">—</div>
 
-      <table class="order-table">
+      <table class="order-table" aria-live="polite">
         <thead><tr><th>Item</th><th>Flavour</th><th>Qty</th><th>R</th></tr></thead>
-        <tbody id="orderTable"></tbody>
+        <tbody id="orderTable">
+          <tr><td colspan="4" class="muted">Your cart is empty</td></tr>
+        </tbody>
       </table>
 
-      <div class="summary-line">Subtotal: R <strong id="orderSubtotal">0.00</strong></div>
-      <div class="summary-line">Discounts: R <strong id="orderDiscount">0.00</strong></div>
-      <div class="summary-line">Tip: R <strong id="orderTip">0.00</strong></div>
-      <div class="summary-total">Total: R <strong id="orderTotal">0.00</strong></div>
+      <div style="margin-top:12px">
+        <div class="summary-line">Subtotal: R <strong id="orderSubtotal">0.00</strong></div>
+        <div class="summary-line">Discounts: R <strong id="orderDiscount">0.00</strong></div>
+        <div class="summary-total">Total: R <strong id="orderTotal">0.00</strong></div>
+      </div>
     </section>
 
-    <section class="details">
-      <h3>Delivery & contact</h3>
-      <label class="muted">Full name</label><input id="name" type="text" placeholder="Thandi M." />
-      <label class="muted">Phone</label><input id="phone" type="tel" placeholder="0821234567" />
-      <label class="muted">Email (optional)</label><input id="email" type="email" placeholder="you@example.com" />
-      <label class="muted">Delivery address</label><select id="delivery"></select>
+    <!-- Right: Contact & delivery form -->
+    <section class="details card" aria-labelledby="contact-title">
+      <h3 id="contact-title" class="card-title">Contact & delivery</h3>
 
-      <label class="muted">Tip (R)</label><input id="tip" type="number" min="0" value="0" />
-      <label class="muted">Notes</label><input id="notes" placeholder="Leave at reception" />
+      <label class="field">
+        <div class="field-label">Name</div>
+        <input id="name" class="input-rounded" type="text" placeholder="Thandi M." autocomplete="name" />
+      </label>
 
-      <div style="margin-top:12px">
-        <button id="payButton" class="btn primary">Pay & Place Order</button>
+      <label class="field">
+        <div class="field-label">Email</div>
+        <input id="email" class="input-rounded" type="email" placeholder="you@edencreates.com" autocomplete="email" />
+      </label>
+
+      <label class="field">
+        <div class="field-label">Delivery address</div>
+        <select id="delivery" class="input-rounded">
+          <option>Loading addresses…</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <div class="field-label">Notes (optional)</div>
+        <textarea id="notes" class="input-rounded notes" placeholder="Leave at reception or special instructions..."></textarea>
+      </label>
+
+      <div style="display:flex;gap:8px;margin-top:12px;align-items:center;justify-content:flex-end">
         <button id="editButton" class="btn ghost">Edit Order</button>
+        <button id="payButton" class="btn primary">Place Order</button>
       </div>
     </section>
   </main>
@@ -77,13 +98,15 @@
   </footer>
 
   <script>
+    // service worker - relative path
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
     }
     document.getElementById('yr').textContent = new Date().getFullYear();
   </script>
 
-  <script src="./install.js" defer></script>
+  <!-- Your global script (existing) + this page-specific script -->
   <script src="./script.js" defer></script>
+  <script src="./checkout.js" defer></script>
 </body>
 </html>

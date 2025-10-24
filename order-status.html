@@ -17,6 +17,18 @@
         <div class="tagline">Creating comfort, beauty, and belonging.</div>
         <hr class="gold-divider" />
       </div>
+
+      <nav class="nav-row">
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="merch.html" class="nav-link">Merch</a>
+          <a href="checkout.html" class="nav-link">Checkout</a>
+          <a href="order-status.html" class="nav-link active">Order Status</a>
+        </div>
+        <div class="nav-actions">
+          <button id="installBtn" class="btn gold" style="display:none">Install App</button>
+        </div>
+      </nav>
     </div>
   </header>
 
@@ -36,8 +48,8 @@
   </main>
 
   <footer class="footer">
-    <div>© <span id="yr"></span> Eden Creates</div>
-    <div class="muted small">Made with golden care ✨</div>
+    <div>© <span id="yr"></span> Eden Creates — Creating comfort, beauty, and belonging.</div>
+    <button id="installFooter" class="btn gold" style="display:none">Install App</button>
   </footer>
 
   <script>
@@ -45,13 +57,22 @@
       e.preventDefault();
       const email = document.getElementById('statusEmail').value;
       fetch("https://script.google.com/macros/s/AKfycbxPH86X_8TppHkQoyrbJyB4WjFW_vT6-71iFQsUUpgNYQXvj_TcxpAQjAft3NKHQxat/exec?email=" + encodeURIComponent(email))
-        .then(res => res.json())
-        .then(data => {
-          const box = document.getElementById("statusResult");
-          document.getElementById("statusMessage").textContent = data.status || "No order found for this email.";
-          box.style.display = "block";
-        })
-        .catch(()=> alert("Something went wrong."));
+        .then(r => r.json())
+        .then(d => {
+          document.getElementById('statusResult').style.display = 'block';
+          document.getElementById('statusMessage').textContent = d.status || "No order found for this email.";
+        });
+    });
+
+    // PWA install
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.querySelectorAll('#installBtn,#installFooter').forEach(b => b.style.display='inline-block');
+    });
+    document.querySelectorAll('#installBtn,#installFooter').forEach(b => {
+      b.addEventListener('click', ()=> deferredPrompt.prompt());
     });
     document.getElementById('yr').textContent = new Date().getFullYear();
   </script>

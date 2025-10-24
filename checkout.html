@@ -23,11 +23,10 @@
           <a href="index.html" class="nav-link">Home</a>
           <a href="merch.html" class="nav-link">Merch</a>
           <a href="checkout.html" class="nav-link active">Checkout</a>
-          <a href="order-status.html" class="nav-link">View Order</a>
+          <a href="order-status.html" class="nav-link">Order Status</a>
         </div>
-
-        <div style="display:flex;gap:10px;align-items:center">
-          <button id="installBtn" class="btn ghost" style="display:none">Install App</button>
+        <div class="nav-actions">
+          <button id="installBtn" class="btn gold" style="display:none">Install App</button>
           <div class="cart-pill">R <span id="topTotal">0.00</span></div>
         </div>
       </nav>
@@ -56,7 +55,7 @@
 
       <div class="form-group">
         <label>Order Notes</label>
-        <textarea id="notes" placeholder="Add special instructions..."></textarea>
+        <textarea id="notes" placeholder="Add any special instructions..."></textarea>
       </div>
 
       <button type="submit" class="btn primary wide">Place Order</button>
@@ -64,27 +63,39 @@
   </main>
 
   <footer class="footer">
-    <div>© <span id="yr"></span> Eden Creates</div>
-    <div class="muted small">Made with golden care ✨</div>
+    <div>© <span id="yr"></span> Eden Creates — Creating comfort, beauty, and belonging.</div>
+    <button id="installFooter" class="btn gold" style="display:none">Install App</button>
   </footer>
 
   <script>
-    // Load address options from Google Apps Script
+    // Load address list
     fetch("https://script.google.com/macros/s/AKfycbxPH86X_8TppHkQoyrbJyB4WjFW_vT6-71iFQsUUpgNYQXvj_TcxpAQjAft3NKHQxat/exec")
-      .then(res => res.json())
-      .then(data => {
-        const addressSelect = document.getElementById("address");
-        data.forEach(addr => {
-          const opt = document.createElement("option");
-          opt.value = addr;
-          opt.textContent = addr;
-          addressSelect.appendChild(opt);
+      .then(r => r.json())
+      .then(list => {
+        const sel = document.getElementById("address");
+        list.forEach(addr => {
+          const o = document.createElement("option");
+          o.textContent = addr;
+          o.value = addr;
+          sel.appendChild(o);
         });
       });
 
+    // Form
     document.getElementById("checkoutForm").addEventListener("submit", e => {
       e.preventDefault();
       window.location.href = "thankyou.html";
+    });
+
+    // Install PWA
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.querySelectorAll('#installBtn, #installFooter').forEach(b => b.style.display='inline-block');
+    });
+    document.querySelectorAll('#installBtn, #installFooter').forEach(btn => {
+      btn.addEventListener('click', () => deferredPrompt.prompt());
     });
 
     document.getElementById('yr').textContent = new Date().getFullYear();

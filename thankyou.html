@@ -1,37 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thank You | Stellies & Eden Creates</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thank You — Eden Creates</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-  <header class="tb">
-    <div class="tb-inner">
-      <div class="logo-area">
-        <img src="assets/logo.png" alt="Logo" class="logo">
-        <p class="tagline">“Made with love from Stellenbosch — where cream meets gold.”</p>
-        <hr class="gold-divider">
-      </div>
-    </div>
-  </header>
-
-  <main class="page container" style="text-align:center; margin-top:3rem;">
-    <h1>Thank You!</h1>
-    <p class="muted" style="max-width:480px; margin:1rem auto;">
-      Your order has been received and is being processed with care.  
-      We’ll contact you soon with collection or delivery details.
-    </p>
-    <img src="assets/thankyou-illustration.png" alt="Thank You" style="width:200px; margin:1rem auto;">
-    <p class="grand-total" style="margin-top:1.2rem;">Jesus bless your day 🤍</p>
-    <a href="index.html" class="btn primary" style="margin-top:2rem;">Return to Shop</a>
+  <main class="page container center">
+    <h1>Thank You ✨</h1>
+    <p>Your order has been received! You’ll get an email confirmation shortly.</p>
+    <a href="order-status.html" class="btn primary">View Order Status</a>
+    <a href="index.html" class="btn ghost">Return Home</a>
   </main>
 
   <footer class="footer">
-    <p>© 2025 Stellies & Eden Creates</p>
-    <p class="small">Cream + Gold Edition</p>
+    <div>© <span id="yr"></span> Eden Creates</div>
+    <div class="muted small">Made with golden care ✨</div>
   </footer>
+
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>

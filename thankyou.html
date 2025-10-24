@@ -10,18 +10,41 @@
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
+  <header class="tb">
+    <div class="tb-inner">
+      <div class="logo-area">
+        <a href="index.html"><img src="/assets/logo.svg" alt="Eden Creates" class="logo" /></a>
+        <div class="tagline">Creating comfort, beauty, and belonging.</div>
+        <hr class="gold-divider" />
+      </div>
+    </div>
+  </header>
+
   <main class="page container center">
     <h1>Thank You ✨</h1>
     <p>Your order has been received! You’ll get an email confirmation shortly.</p>
+    <p class="muted">You can view or track your order status anytime below.</p>
     <a href="order-status.html" class="btn primary">View Order Status</a>
     <a href="index.html" class="btn ghost">Return Home</a>
   </main>
 
   <footer class="footer">
-    <div>© <span id="yr"></span> Eden Creates</div>
-    <div class="muted small">Made with golden care ✨</div>
+    <div>© <span id="yr"></span> Eden Creates — Creating comfort, beauty, and belonging.</div>
+    <button id="installFooter" class="btn gold" style="display:none">Install App</button>
   </footer>
 
-  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+  <script>
+    // Install button logic (same as checkout)
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.querySelectorAll('#installFooter').forEach(b => b.style.display='inline-block');
+    });
+    document.querySelectorAll('#installFooter').forEach(btn => {
+      btn.addEventListener('click', () => deferredPrompt.prompt());
+    });
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

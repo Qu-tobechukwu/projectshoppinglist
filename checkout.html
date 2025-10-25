@@ -4,101 +4,94 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Checkout — Eden Creates</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
   <link rel="manifest" href="/manifest.json">
-  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="index.html"><img src="/assets/logo.svg" alt="Eden Creates" class="logo" /></a>
-        <div class="tagline">Creating comfort, beauty, and belonging.</div>
+        <a href="index.html"><img src="assets/logo.svg" alt="Eden Creates" class="logo"></a>
+        <div class="tagline">every idea deserves elegance</div>
         <hr class="gold-divider" />
       </div>
 
       <nav class="nav-row">
         <div class="nav-links">
           <a href="index.html" class="nav-link">Home</a>
-          <a href="merch.html" class="nav-link">Merch</a>
+          <a href="merch.html" class="nav-link">Shop</a>
           <a href="checkout.html" class="nav-link active">Checkout</a>
-          <a href="order-status.html" class="nav-link">Order Status</a>
+          <a href="order-status.html" class="nav-link">Order status</a>
         </div>
         <div class="nav-actions">
-          <button id="installBtn" class="btn gold" style="display:none">Install App</button>
-          <div class="cart-pill">R <span id="topTotal">0.00</span></div>
+          <button id="installTop3" class="btn ghost" style="display:none">Install App</button>
+          <div class="cart-pill">R <span id="topTotal3">0.00</span></div>
         </div>
       </nav>
     </div>
   </header>
 
-  <main class="page container checkout-page">
-    <h1>Checkout</h1>
-    <form id="checkoutForm" class="checkout-form">
-      <div class="form-group">
-        <label>Name</label>
-        <input type="text" id="name" required placeholder="Your name">
-      </div>
+  <main class="page container">
+    <h1 class="cinzel">checkout</h1>
+    <p class="muted">only a few details — then we’ll send your order to the studio.</p>
 
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="email" required placeholder="you@example.com">
-      </div>
+    <!-- FormSubmit.co form -->
+    <form id="orderForm" class="checkout gold-form" action="https://formsubmit.co/forhoneuseemail@gmail.com" method="POST">
+      <!-- FormSubmit redirect -->
+      <input type="hidden" name="_next" value="https://qu-tobechukwu.github.io/projectshoppinglist/thankyou.html">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="orderNumber" id="orderNumberInput" />
 
-      <div class="form-group">
-        <label>Delivery Address</label>
-        <select id="address" required>
-          <option value="">Select address...</option>
-        </select>
-      </div>
+      <label class="field">
+        <div class="field-label">Name</div>
+        <input class="input-rounded" type="text" name="name" id="custName" required>
+      </label>
 
-      <div class="form-group">
-        <label>Order Notes</label>
-        <textarea id="notes" placeholder="Add any special instructions..."></textarea>
-      </div>
+      <label class="field">
+        <div class="field-label">Email</div>
+        <input class="input-rounded" type="email" name="email" id="custEmail" required>
+      </label>
 
-      <button type="submit" class="btn primary wide">Place Order</button>
+      <label class="field">
+        <div class="field-label">Delivery address</div>
+        <input class="input-rounded" type="text" name="address" id="custAddress" placeholder="Residence / Rooiplein pickup" required>
+      </label>
+
+      <label class="field">
+        <div class="field-label">Notes (optional)</div>
+        <textarea name="notes" id="custNotes" class="input-rounded notes" placeholder="Any special requests?"></textarea>
+      </label>
+
+      <!-- populate order & total -->
+      <input type="hidden" name="total" id="orderTotalInput" />
+      <input type="hidden" name="order" id="orderInput" />
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+        <button type="submit" class="btn primary">Place Order</button>
+        <a href="merch.html" class="btn ghost">Edit Cart</a>
+      </div>
     </form>
+
+    <aside style="margin-top:18px;">
+      <div class="summary card">
+        <h3 class="card-title">order summary</h3>
+        <div id="checkoutSummary">Your cart is empty.</div>
+        <div class="summary-line">Total: R <strong id="checkoutTotal">0.00</strong></div>
+      </div>
+    </aside>
   </main>
 
   <footer class="footer">
-    <div>© <span id="yr"></span> Eden Creates — Creating comfort, beauty, and belonging.</div>
-    <button id="installFooter" class="btn gold" style="display:none">Install App</button>
+    <div>© <span id="yr3"></span> Eden Creates</div>
+    <div class="small muted">every idea deserves elegance</div>
+    <div style="margin-top:10px;">
+      <button id="installBottom3" class="btn primary" style="display:none">Install App</button>
+    </div>
   </footer>
 
-  <script>
-    // Load address list
-    fetch("https://script.google.com/macros/s/AKfycbxPH86X_8TppHkQoyrbJyB4WjFW_vT6-71iFQsUUpgNYQXvj_TcxpAQjAft3NKHQxat/exec")
-      .then(r => r.json())
-      .then(list => {
-        const sel = document.getElementById("address");
-        list.forEach(addr => {
-          const o = document.createElement("option");
-          o.textContent = addr;
-          o.value = addr;
-          sel.appendChild(o);
-        });
-      });
-
-    // Form
-    document.getElementById("checkoutForm").addEventListener("submit", e => {
-      e.preventDefault();
-      window.location.href = "thankyou.html";
-    });
-
-    // Install PWA
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', e => {
-      e.preventDefault();
-      deferredPrompt = e;
-      document.querySelectorAll('#installBtn, #installFooter').forEach(b => b.style.display='inline-block');
-    });
-    document.querySelectorAll('#installBtn, #installFooter').forEach(btn => {
-      btn.addEventListener('click', () => deferredPrompt.prompt());
-    });
-
-    document.getElementById('yr').textContent = new Date().getFullYear();
-  </script>
+  <script src="script.js" defer></script>
+  <script>document.getElementById('yr3').textContent = new Date().getFullYear();</script>
 </body>
 </html>

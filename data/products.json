@@ -1,53 +1,51 @@
-{
-  "products": [
-    {
-      "id": 1,
-      "name": "Handcrafted Clay Mug",
-      "price": 120,
-      "image": "images/mug.jpg",
-      "description": "A soft matte clay mug made by local artisans. Perfect for tea, coffee, or creativity breaks."
-    },
-    {
-      "id": 2,
-      "name": "Linen Market Tote",
-      "price": 250,
-      "image": "images/tote.jpg",
-      "description": "A minimalist linen tote with reinforced handles — ideal for market days or art supplies."
-    },
-    {
-      "id": 3,
-      "name": "Eco Sketchbook",
-      "price": 180,
-      "image": "images/sketchbook.jpg",
-      "description": "Recycled paper sketchbook bound in raw fiber cloth. Designed for artists and dreamers."
-    },
-    {
-      "id": 4,
-      "name": "Soy Candle – Bloom",
-      "price": 150,
-      "image": "images/candle.jpg",
-      "description": "A calming soy candle with notes of rose, vanilla, and warm amber — handmade in Eden."
-    },
-    {
-      "id": 5,
-      "name": "Ceramic Plant Pot",
-      "price": 200,
-      "image": "images/plantpot.jpg",
-      "description": "Smooth, minimalist ceramic pot for small indoor plants. Adds a gentle charm to any space."
-    },
-    {
-      "id": 6,
-      "name": "Embroidered Apron",
-      "price": 320,
-      "image": "images/apron.jpg",
-      "description": "Premium linen apron with soft embroidery. For cooking, crafting, and creating beauty."
-    },
-    {
-      "id": 7,
-      "name": "Stationery Set",
-      "price": 100,
-      "image": "images/stationery.jpg",
-      "description": "Includes notepad, stickers, and pen — all designed with a delicate Eden Creates aesthetic."
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "name": "Golden Morning Candle",
+    "description": "Hand-poured soy candle with a soft vanilla and honey aroma to brighten your mornings.",
+    "price": 120,
+    "image": "assets/images/1.png"
+  },
+  {
+    "id": 2,
+    "name": "Blush Linen Journal",
+    "description": "A linen-bound notebook with gold embossing — perfect for prayers, plans, and poetry.",
+    "price": 95,
+    "image": "assets/images/2.png"
+  },
+  {
+    "id": 3,
+    "name": "Serenity Mug",
+    "description": "Ceramic mug with elegant curves and a matte finish. Ideal for coffee, tea, or quiet reflection.",
+    "price": 150,
+    "image": "assets/images/3.png"
+  },
+  {
+    "id": 4,
+    "name": "Eden Tote",
+    "description": "Minimalist cotton tote bag for everyday errands, featuring the Eden Creates emblem in gold.",
+    "price": 180,
+    "image": "assets/images/4.png"
+  },
+  {
+    "id": 5,
+    "name": "Soft Grace Apron",
+    "description": "A beautiful cream apron with golden stitching — for creators who serve with love.",
+    "price": 210,
+    "image": "assets/images/1.png"
+  },
+  {
+    "id": 6,
+    "name": "Heavenly Scrubs Set",
+    "description": "Comfortable and flattering scrubs designed for grace and movement throughout your day.",
+    "price": 320,
+    "image": "assets/images/2.png"
+  },
+  {
+    "id": 7,
+    "name": "Artisan Pen",
+    "description": "Smooth-writing pen with gold accents — because every idea deserves a beautiful beginning.",
+    "price": 60,
+    "image": "assets/images/3.png"
+  }
+]

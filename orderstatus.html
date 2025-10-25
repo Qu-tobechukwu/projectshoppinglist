@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Status | Eden Creates</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <img src="images/logo.png" alt="Eden Creates Logo" class="logo" />
+    <h1>Eden Creates</h1>
+    <p class="tagline">Made to bring beauty to your everyday.</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="merch.html">Merch</a>
+      <a href="checkout.html">Checkout</a>
+      <a href="orderstatus.html">Order Status</a>
+    </nav>
+  </header>
+
+  <main class="order-status">
+    <h2>Track Your Order</h2>
+    <p>Enter your email to see your current order status:</p>
+    <form id="statusForm">
+      <input type="email" id="statusEmail" placeholder="Enter your email" required />
+      <button type="submit">Check Status</button>
+    </form>
+    <div id="orderResult"></div>
+  </main>
+
+  <hr class="divider" />
+
+  <footer>
+    <p>&copy; 2025 Eden Creates. Made to bring beauty to your everyday.</p>
+    <button class="install-btn" id="installButton">Install App</button>
+  </footer>
+
+  <script>
+    const appScriptURL = "https://script.google.com/macros/s/AKfycbxPH86X_8TppHkQoyrbJyB4WjFW_vT6-71iFQsUUpgNYQXvj_TcxpAQjAft3NKHQxat/exec";
+
+    document.getElementById("statusForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("statusEmail").value;
+      const resultDiv = document.getElementById("orderResult");
+      resultDiv.innerHTML = "Fetching status...";
+      try {
+        const res = await fetch(`${appScriptURL}?action=getOrderStatus&email=${email}`);
+        const data = await res.json();
+        if (data.status === "Not Found") {
+          resultDiv.innerHTML = `<p>No order found for ${email}</p>`;
+        } else {
+          resultDiv.innerHTML = `<p><strong>Status:</strong> ${data.status}</p>
+                                 <p><strong>Notes:</strong> ${data.notes || "None"}</p>`;
+        }
+      } catch (err) {
+        resultDiv.innerHTML = "<p>Something went wrong. Please try again later.</p>";
+      }
+    });
+  </script>
+</body>
+</html>

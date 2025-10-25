@@ -1,246 +1,213 @@
-/* ================================
-   🌿 Eden Creates — style.css
-   ================================ */
-
-/* Global Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+:root {
+  --soft-cream: #fffaf4;
+  --gold: #d4af37;
+  --gold-light: #f3e5ab;
+  --wine-red: #803737;
+  --deep-green: #2e4631;
+  --charcoal: #444;
+  --radius: 12px;
+  --font-body: "DM Sans", sans-serif;
 }
 
+/* ====== BASE ====== */
 body {
-  background-color: #fffaf4;
-  color: #3a2c1a;
-  line-height: 1.7;
-  overflow-x: hidden;
+  margin: 0;
+  font-family: var(--font-body);
+  background-color: var(--soft-cream);
+  color: var(--charcoal);
 }
 
-/* Header */
-header {
+/* ====== HEADER ====== */
+.site-header {
+  background: var(--deep-green);
+  color: white;
   text-align: center;
-  padding: 40px 20px 20px;
-  border-bottom: 1px solid #e6d8c2;
+  padding: 1.5rem;
 }
-
-header img.logo {
-  width: 100px;
-  margin-bottom: 10px;
+.site-header .logo {
+  width: 60px;
+  border-radius: 50%;
 }
-
-header h1 {
-  font-family: "Playfair Display", serif;
-  font-size: 2.5rem;
-  letter-spacing: 1px;
-  color: #b38b3c;
-  margin-bottom: 5px;
+.site-header .brand-title {
+  margin: 0.5rem 0 0;
+  font-size: 1.8rem;
+  font-weight: 600;
 }
-
-header .tagline {
-  color: #b38b3c;
-  font-size: 1.1rem;
+.site-header .tagline {
+  font-size: 1rem;
+  margin-bottom: 1rem;
   font-style: italic;
+  color: var(--gold-light);
 }
-
-/* Navigation */
-nav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 20px;
-  gap: 15px;
-}
-
-nav a {
+.nav a {
+  color: white;
+  margin: 0 0.75rem;
   text-decoration: none;
-  color: #3a2c1a;
   font-weight: 500;
-  padding: 10px 18px;
-  border-radius: 30px;
-  border: 1px solid transparent;
-  transition: 0.3s ease;
+}
+.nav a:hover {
+  color: var(--gold);
 }
 
-nav a:hover {
-  color: #b38b3c;
-  border-color: #b38b3c;
-}
-
-/* Divider */
-.divider {
-  border: none;
-  height: 1px;
-  background: linear-gradient(to right, transparent, #b38b3c, transparent);
-  margin: 40px auto;
-  width: 80%;
-}
-
-/* Products Grid */
+/* ====== PRODUCTS ====== */
 .products {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-  padding: 40px 10%;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
 }
-
 .product-card {
-  background: #fffdf8;
-  border: 1px solid #f2e7d5;
-  border-radius: 18px;
-  box-shadow: 0 2px 8px rgba(179, 139, 60, 0.15);
-  transition: 0.3s ease;
-  text-align: center;
-  padding: 20px;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.2s;
 }
-
 .product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 15px rgba(179, 139, 60, 0.25);
+  transform: translateY(-3px);
 }
-
-.product-card img {
+.product-img {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
-  border-radius: 14px;
 }
-
-.product-card h3 {
-  font-size: 1.3rem;
-  color: #3a2c1a;
-  margin: 15px 0 5px;
+.product-info {
+  padding: 1rem;
 }
-
-.product-card p {
-  color: #6b5b3d;
-  font-size: 0.95rem;
-  margin-bottom: 10px;
+.product-info h3 {
+  margin: 0.2rem 0;
+  color: var(--deep-green);
 }
-
-.product-card button {
-  background: #b38b3c;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: 0.3s ease;
+.product-desc {
+  font-size: 0.9rem;
+  color: #555;
 }
-
-.product-card button:hover {
-  background: #d1aa5f;
+.product-price {
+  color: var(--wine-red);
+  font-weight: bold;
+  margin: 0.5rem 0;
 }
-
-/* Checkout Form */
-.checkout-container {
-  max-width: 600px;
-  margin: 50px auto;
-  background: #fffdf8;
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 4px 20px rgba(179, 139, 60, 0.15);
-}
-
-.checkout-container h2 {
-  text-align: center;
-  color: #b38b3c;
-  font-family: "Playfair Display", serif;
-  margin-bottom: 20px;
-}
-
-.checkout-container form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.checkout-container label {
-  font-weight: 600;
-  color: #3a2c1a;
-}
-
-.checkout-container input,
-.checkout-container select,
-.checkout-container textarea {
+.add-btn {
   width: 100%;
-  padding: 12px 15px;
-  border-radius: 10px;
-  border: 1px solid #e6d8c2;
-  background-color: #fffaf4;
-  font-size: 1rem;
-  color: #3a2c1a;
-}
-
-.checkout-container textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-
-.checkout-container button {
-  background: #b38b3c;
-  color: white;
+  padding: 0.7rem;
   border: none;
-  padding: 12px;
-  border-radius: 30px;
-  cursor: pointer;
+  border-radius: var(--radius);
+  background: var(--deep-green);
+  color: white;
   font-weight: 600;
-  transition: 0.3s ease;
-}
-
-.checkout-container button:hover {
-  background: #d1aa5f;
-}
-
-/* Thank You + Order Status Pages */
-.thankyou,
-.order-status {
-  max-width: 700px;
-  margin: 60px auto;
-  text-align: center;
-  padding: 40px;
-}
-
-.thankyou h2,
-.order-status h2 {
-  font-family: "Playfair Display", serif;
-  color: #b38b3c;
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-.thankyou p,
-.order-status p {
-  color: #6b5b3d;
-  font-size: 1.1rem;
-}
-
-/* Footer */
-footer {
-  margin-top: 80px;
-  text-align: center;
-  padding: 40px 20px;
-  border-top: 1px solid #e6d8c2;
-  background-color: #fffaf4;
-}
-
-footer p {
-  color: #6b5b3d;
-  font-size: 0.95rem;
-  margin-bottom: 15px;
-}
-
-footer button.install-btn {
-  background-color: #b38b3c;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 25px;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: background 0.2s;
+}
+.add-btn:hover {
+  background: var(--wine-red);
 }
 
-footer button.install-btn:hover {
-  background-color: #d1aa5f;
+/* ====== CHECKOUT ====== */
+.checkout-form {
+  max-width: 600px;
+  margin: 3rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.checkout-form h2 {
+  text-align: center;
+  color: var(--deep-green);
+  margin-bottom: 1rem;
+}
+.checkout-form label {
+  display: block;
+  font-weight: 500;
+  margin: 1rem 0 0.3rem;
+}
+.checkout-form input,
+.checkout-form textarea,
+.checkout-form select {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: var(--radius);
+  border: 1px solid #ccc;
+  font-family: var(--font-body);
+  margin-bottom: 0.5rem;
+}
+.checkout-form textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+.checkout-form button {
+  width: 100%;
+  background: var(--deep-green);
+  color: white;
+  padding: 0.9rem;
+  border-radius: var(--radius);
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.checkout-form button:hover {
+  background: var(--wine-red);
+}
+
+/* ====== TOAST ====== */
+.stellies-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--deep-green);
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  animation: toast-in 0.3s forwards;
+}
+@keyframes toast-in {
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* ====== LOADING ====== */
+.loading, .error {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--wine-red);
+  font-family: var(--font-body);
+}
+.loader {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--gold-light);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ====== FOOTER ====== */
+.site-footer {
+  text-align: center;
+  background: var(--deep-green);
+  color: white;
+  padding: 1.2rem;
+}
+.install-btn {
+  margin-top: 0.5rem;
+  background: var(--gold);
+  color: var(--deep-green);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+.install-btn:hover {
+  background: var(--gold-light);
 }

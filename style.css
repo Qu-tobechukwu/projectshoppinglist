@@ -1,213 +1,111 @@
-:root {
-  --soft-cream: #fffaf4;
-  --gold: #d4af37;
-  --gold-light: #f3e5ab;
-  --wine-red: #803737;
-  --deep-green: #2e4631;
-  --charcoal: #444;
+/* ==============================
+   EDEN CREATES — Newspaper Edit
+   muted gray + gold accents
+   ============================== */
+
+/* fonts + base */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=DM+Sans:wght@300;400;700&display=swap');
+
+:root{
+  --bg: #ececec;           /* muted light gray - newspapery */
+  --accent: #222222;       /* deep text / headings */
+  --gold: #d8b26e;         /* shimmering gold */
+  --gold-dark: #b9964a;
+  --muted: #6b6b6b;
+  --white: #ffffff;
   --radius: 12px;
-  --font-body: "DM Sans", sans-serif;
+  --shadow: rgba(0,0,0,0.06);
 }
 
-/* ====== BASE ====== */
-body {
-  margin: 0;
-  font-family: var(--font-body);
-  background-color: var(--soft-cream);
-  color: var(--charcoal);
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.5;
 }
 
-/* ====== HEADER ====== */
-.site-header {
-  background: var(--deep-green);
-  color: white;
-  text-align: center;
-  padding: 1.5rem;
+/* Header Banner */
+.tb{
+  background:var(--white);
+  color:var(--accent);
+  padding:18px 12px;
+  box-shadow:0 4px 18px var(--shadow);
+  position:sticky;
+  top:0;
+  z-index:1000;
 }
-.site-header .logo {
-  width: 60px;
-  border-radius: 50%;
-}
-.site-header .brand-title {
-  margin: 0.5rem 0 0;
-  font-size: 1.8rem;
-  font-weight: 600;
-}
-.site-header .tagline {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  font-style: italic;
-  color: var(--gold-light);
-}
-.nav a {
-  color: white;
-  margin: 0 0.75rem;
-  text-decoration: none;
-  font-weight: 500;
-}
-.nav a:hover {
-  color: var(--gold);
+.tb-inner{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;align-items:center}
+.logo-area{display:flex;flex-direction:column;align-items:center}
+.logo{width:92px;height:auto;margin-bottom:6px;filter: none}
+.tagline{font-family:'Cinzel',serif;font-size:1rem;color:var(--muted);font-style:italic}
+.gold-divider{width:100px;border:none;border-top:2px solid var(--gold);margin:8px 0}
+
+/* nav */
+.nav-row{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:1100px;margin-top:8px;gap:12px;flex-wrap:wrap}
+.nav-links{display:flex;gap:14px;align-items:center}
+.nav-link{color:var(--accent);text-decoration:none;font-weight:600;letter-spacing:0.3px}
+.nav-link.active{color:var(--gold-dark)}
+
+/* buttons */
+.btn{border:none;border-radius:24px;padding:8px 14px;font-weight:600;cursor:pointer;transition:all .18s}
+.btn.primary{background:linear-gradient(90deg,var(--gold),var(--gold-dark));color:var(--white)}
+.btn.ghost{background:transparent;border:1px solid var(--gold);color:var(--gold)}
+.btn.ghost:hover{background:var(--gold);color:var(--white)}
+
+/* cart pill */
+.cart-pill{background:var(--gold);color:var(--white);padding:6px 12px;border-radius:999px;font-weight:700;display:inline-block}
+
+/* page container */
+.page.container{max-width:1100px;margin:28px auto;padding:0 16px}
+
+/* headings */
+.cinzel,h1,h2,h3{font-family:'Cinzel',serif;color:var(--accent);margin:0 0 8px}
+.muted{color:var(--muted);font-size:0.95rem}
+
+/* product grid */
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:18px}
+.product-card{background:var(--white);border-radius:14px;padding:14px;box-shadow:0 6px 20px var(--shadow);display:flex;flex-direction:column;gap:12px;transition:transform .18s}
+.product-card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(0,0,0,0.08)}
+.product-img{width:100%;height:180px;object-fit:cover;border-radius:10px}
+.product-title{font-size:1.05rem;color:var(--accent);margin-bottom:4px}
+.product-desc{color:var(--muted);font-size:0.92rem}
+.product-price{color:var(--gold-dark);font-weight:700}
+
+/* add button */
+.add-btn{margin-top:auto;padding:10px;border-radius:999px;background:linear-gradient(90deg,var(--gold),var(--gold-dark));color:var(--white);border:none;cursor:pointer;font-weight:700}
+.add-btn:hover{transform:translateY(-2px)}
+
+/* card variants */
+.card{background:var(--white);border-radius:12px;padding:14px;box-shadow:0 6px 18px var(--shadow)}
+.summary.card{padding:16px}
+
+/* checkout form elements */
+.gold-form{background:var(--white);padding:18px;border-radius:12px;box-shadow:0 8px 26px var(--shadow);display:flex;flex-direction:column;gap:12px}
+.field-label{font-family:'Cinzel',serif;color:var(--accent);font-size:0.85rem}
+.input-rounded{padding:12px 14px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);font-size:1rem;background:#fff;outline:none}
+.input-rounded:focus{box-shadow:0 10px 26px rgba(0,0,0,0.06);transform:translateY(-1px)}
+.notes{min-height:120px;resize:vertical;padding-top:8px}
+
+/* order summary table */
+.order-table{width:100%;border-collapse:collapse}
+.order-table th,.order-table td{padding:10px;border-bottom:1px solid rgba(0,0,0,0.04);text-align:left}
+
+/* small components */
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:linear-gradient(90deg,var(--gold),var(--gold-dark));color:white;padding:8px 14px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,0.12);z-index:120;opacity:0;transition:opacity .2s}
+.toast.show{opacity:1}
+
+/* responsive */
+@media(max-width:700px){
+  .nav-row{flex-direction:column;align-items:center}
+  .products{grid-template-columns:1fr}
+  .tb-inner{padding-bottom:6px}
 }
 
-/* ====== PRODUCTS ====== */
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-}
-.product-card {
-  background: white;
-  border-radius: var(--radius);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  transition: transform 0.2s;
-}
-.product-card:hover {
-  transform: translateY(-3px);
-}
-.product-img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-}
-.product-info {
-  padding: 1rem;
-}
-.product-info h3 {
-  margin: 0.2rem 0;
-  color: var(--deep-green);
-}
-.product-desc {
-  font-size: 0.9rem;
-  color: #555;
-}
-.product-price {
-  color: var(--wine-red);
-  font-weight: bold;
-  margin: 0.5rem 0;
-}
-.add-btn {
-  width: 100%;
-  padding: 0.7rem;
-  border: none;
-  border-radius: var(--radius);
-  background: var(--deep-green);
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.add-btn:hover {
-  background: var(--wine-red);
-}
-
-/* ====== CHECKOUT ====== */
-.checkout-form {
-  max-width: 600px;
-  margin: 3rem auto;
-  background: white;
-  padding: 2rem;
-  border-radius: var(--radius);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-.checkout-form h2 {
-  text-align: center;
-  color: var(--deep-green);
-  margin-bottom: 1rem;
-}
-.checkout-form label {
-  display: block;
-  font-weight: 500;
-  margin: 1rem 0 0.3rem;
-}
-.checkout-form input,
-.checkout-form textarea,
-.checkout-form select {
-  width: 100%;
-  padding: 0.8rem;
-  border-radius: var(--radius);
-  border: 1px solid #ccc;
-  font-family: var(--font-body);
-  margin-bottom: 0.5rem;
-}
-.checkout-form textarea {
-  min-height: 90px;
-  resize: vertical;
-}
-.checkout-form button {
-  width: 100%;
-  background: var(--deep-green);
-  color: white;
-  padding: 0.9rem;
-  border-radius: var(--radius);
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-}
-.checkout-form button:hover {
-  background: var(--wine-red);
-}
-
-/* ====== TOAST ====== */
-.stellies-toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--deep-green);
-  color: #fff;
-  padding: 0.8rem 1.5rem;
-  border-radius: var(--radius);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  animation: toast-in 0.3s forwards;
-}
-@keyframes toast-in {
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-}
-
-/* ====== LOADING ====== */
-.loading, .error {
-  text-align: center;
-  padding: 3rem 1rem;
-  color: var(--wine-red);
-  font-family: var(--font-body);
-}
-.loader {
-  width: 36px;
-  height: 36px;
-  border: 3px solid var(--gold-light);
-  border-top-color: var(--gold);
-  border-radius: 50%;
-  margin: 0 auto 1rem;
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* ====== FOOTER ====== */
-.site-footer {
-  text-align: center;
-  background: var(--deep-green);
-  color: white;
-  padding: 1.2rem;
-}
-.install-btn {
-  margin-top: 0.5rem;
-  background: var(--gold);
-  color: var(--deep-green);
-  border: none;
-  border-radius: var(--radius);
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-}
-.install-btn:hover {
-  background: var(--gold-light);
-}
+/* small helpers */
+.center-content{display:flex;align-items:center;justify-content:center;min-height:50vh}
+.thankyou-card{background:var(--white);padding:28px;border-radius:12px;box-shadow:0 8px 26px var(--shadow);text-align:center}

@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Eden Creates — every idea deserves elegance</title>
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-  <link rel="manifest" href="/manifest.json">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -25,6 +24,7 @@
           <a href="checkout.html" class="nav-link">Checkout</a>
           <a href="order-status.html" class="nav-link">Order status</a>
         </div>
+
         <div class="nav-actions">
           <button id="installTop" class="btn ghost" style="display:none">Install App</button>
           <div class="cart-pill">R <span id="topTotal">0.00</span></div>
@@ -40,14 +40,8 @@
     </section>
 
     <section class="products" id="products">
-      <!-- Products render here -->
+      <!-- products injected by script.js -->
     </section>
-
-    <div class="pagination" style="display:none;">
-      <button id="prevPage" class="btn ghost">Prev</button>
-      <div id="pageInfo" class="muted">Page 1</div>
-      <button id="nextPage" class="btn ghost">Next</button>
-    </div>
   </main>
 
   <footer class="footer">

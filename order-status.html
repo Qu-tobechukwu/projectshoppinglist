@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Order status — Eden Creates</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="tb">
+    <div class="tb-inner">
+      <div class="logo-area">
+        <a href="index.html"><img src="assets/logo.svg" alt="Eden Creates" class="logo"></a>
+        <div class="tagline">every idea deserves elegance</div>
+        <hr class="gold-divider" />
+      </div>
+
+      <nav class="nav-row">
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="merch.html" class="nav-link">Shop</a>
+          <a href="checkout.html" class="nav-link">Checkout</a>
+          <a href="order-status.html" class="nav-link active">Order status</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page container">
+    <h1 class="cinzel">view my order</h1>
+    <p class="muted">enter your order number or email to find your most recent order (stored locally).</p>
+
+    <div class="card" style="max-width:520px;margin:1.5rem auto">
+      <form id="lookupForm">
+        <input id="lookupValue" class="input-rounded" placeholder="Order number (e.g. EC-159...) or email" required>
+        <div style="margin-top:12px; display:flex; gap:10px;">
+          <button class="btn primary">Find</button>
+          <button type="button" id="showLatest" class="btn ghost">Show my last</button>
+        </div>
+      </form>
+
+      <div id="lookupResult" style="margin-top:14px;display:none"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div>© <span id="yr5"></span> Eden Creates</div>
+    <div class="small muted">every idea deserves elegance</div>
+  </footer>
+
+  <script src="script.js" defer></script>
+  <script>document.getElementById('yr5').textContent = new Date().getFullYear();</script>
+</body>
+</html>

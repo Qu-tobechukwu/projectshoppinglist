@@ -4,25 +4,26 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Shop — Eden Creates</title>
-  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.json">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="index.html"><img src="assets/logo.svg" alt="Eden Creates" class="logo"></a>
+        <a href="./index.html"><img src="./assets/logo.svg" alt="Eden Creates" class="logo"></a>
         <div class="tagline">every idea deserves elegance</div>
         <hr class="gold-divider" />
       </div>
 
       <nav class="nav-row">
         <div class="nav-links">
-          <a href="index.html" class="nav-link">Home</a>
-          <a href="merch.html" class="nav-link active">Shop</a>
-          <a href="checkout.html" class="nav-link">Checkout</a>
-          <a href="order-status.html" class="nav-link">Order status</a>
+          <a href="./index.html" class="nav-link">Home</a>
+          <a href="./merch.html" class="nav-link active">Shop</a>
+          <a href="./checkout.html" class="nav-link">Checkout</a>
+          <a href="./order-status.html" class="nav-link">Order status</a>
         </div>
         <div class="nav-actions">
           <button id="installTop2" class="btn ghost" style="display:none">Install App</button>
@@ -36,8 +37,8 @@
     <h1 class="cinzel">the collection</h1>
     <p class="muted">muted, considered pieces for everyday rituals.</p>
 
-    <section class="products" id="productsList">
-      <!-- product cards injected by script.js -->
+    <section id="productsList" class="products" aria-live="polite">
+      <!-- catalog injected by script.js (same markup as index) -->
     </section>
   </main>
 
@@ -49,7 +50,7 @@
     </div>
   </footer>
 
-  <script src="script.js" defer></script>
+  <script src="./script.js" defer></script>
   <script>document.getElementById('yr2').textContent = new Date().getFullYear();</script>
 </body>
 </html>

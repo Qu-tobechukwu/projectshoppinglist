@@ -3,63 +3,54 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Eden Creates — Merch</title>
-
-  <link rel="manifest" href="./manifest.json">
-  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
-
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css" />
+  <title>Shop — Eden Creates</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="./index.html"><img src="./assets/logo.svg" alt="Eden Creates" class="logo" /></a>
-        <div class="tagline">crafted with care, kissed by heaven.</div>
+        <a href="index.html"><img src="assets/logo.svg" alt="Eden Creates" class="logo"></a>
+        <div class="tagline">every idea deserves elegance</div>
         <hr class="gold-divider" />
       </div>
 
       <nav class="nav-row">
         <div class="nav-links">
-          <a href="./index.html" class="nav-link">Home</a>
-          <a href="./merch.html" class="nav-link active">Merch</a>
-          <a href="./checkout.html" class="nav-link">Checkout</a>
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="merch.html" class="nav-link active">Shop</a>
+          <a href="checkout.html" class="nav-link">Checkout</a>
+          <a href="order-status.html" class="nav-link">Order status</a>
         </div>
-
-        <div style="display:flex;gap:10px;align-items:center">
-          <button id="installBtnHeader" class="btn ghost" style="display:none">Install App</button>
-          <div class="cart-pill">R <span id="topTotalM">0.00</span></div>
+        <div class="nav-actions">
+          <button id="installTop2" class="btn ghost" style="display:none">Install App</button>
+          <div class="cart-pill">R <span id="topTotal2">0.00</span></div>
         </div>
       </nav>
     </div>
   </header>
 
   <main class="page container">
-    <h1 class="page-title">Merch</h1>
-    <p class="muted">Lovely merch you can take home.</p>
+    <h1 class="cinzel">the collection</h1>
+    <p class="muted">muted, considered pieces for everyday rituals.</p>
 
-    <section id="merchItems" class="products">
-      <!-- merch items injected here by script.js (reads ./data/products.json) -->
+    <section class="products" id="productsList">
+      <!-- product cards injected by script.js -->
     </section>
   </main>
 
   <footer class="footer">
-    <div>© <span id="yr"></span> Eden Creates — Made in Stellenbosch</div>
-    <div class="muted small">Made with golden care ✨</div>
+    <div>© <span id="yr2"></span> Eden Creates</div>
+    <div class="small muted">every idea deserves elegance</div>
     <div style="margin-top:10px;">
-      <button id="installBtnFooter" class="btn" style="display:none">📱 Install Eden App</button>
+      <button id="installBottom2" class="btn primary" style="display:none">Install App</button>
     </div>
   </footer>
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
-    }
-    document.getElementById('yr').textContent = new Date().getFullYear();
-  </script>
-
-  <script src="./install.js" defer></script>
-  <script src="./script.js" defer></script>
+  <script src="script.js" defer></script>
+  <script>document.getElementById('yr2').textContent = new Date().getFullYear();</script>
 </body>
 </html>

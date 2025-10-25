@@ -3,32 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Eden Creates — Heavenly Menu</title>
-
-  <link rel="manifest" href="./manifest.json">
-  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
-
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css" />
+  <title>Eden Creates — every idea deserves elegance</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="./index.html"><img src="./assets/logo.svg" alt="Eden Creates" class="logo" /></a>
-        <div class="tagline">crafted with care, kissed by heaven.</div>
+        <a href="index.html"><img src="assets/logo.svg" alt="Eden Creates" class="logo"></a>
+        <div class="tagline">every idea deserves elegance</div>
         <hr class="gold-divider" />
       </div>
 
       <nav class="nav-row">
         <div class="nav-links">
-          <a href="./index.html" class="nav-link active">Home</a>
-          <a href="./merch.html" class="nav-link">Merch</a>
-          <a href="./checkout.html" class="nav-link">Checkout</a>
+          <a href="index.html" class="nav-link active">Home</a>
+          <a href="merch.html" class="nav-link">Shop</a>
+          <a href="checkout.html" class="nav-link">Checkout</a>
+          <a href="order-status.html" class="nav-link">Order status</a>
         </div>
-
-        <div style="display:flex;gap:10px;align-items:center">
-          <button id="installBtnHeader" class="btn ghost" style="display:none">Install App</button>
+        <div class="nav-actions">
+          <button id="installTop" class="btn ghost" style="display:none">Install App</button>
           <div class="cart-pill">R <span id="topTotal">0.00</span></div>
         </div>
       </nav>
@@ -36,24 +34,16 @@
   </header>
 
   <main class="page container">
-    <section class="controls">
-      <div class="cart-summary">
-        <div class="muted">Cart total</div>
-        <div class="grand-total">R <span id="total">0.00</span></div>
-      </div>
-
-      <div class="actions">
-        <button id="finishBtn" class="btn primary">Finished — Checkout</button>
-        <button id="resetCart" class="btn ghost">Reset</button>
-        <button id="repeatOrder" class="btn ghost">Repeat Last</button>
-      </div>
+    <section class="intro">
+      <h1 class="cinzel">editor's picks</h1>
+      <p class="muted">a curated edit of small beautiful objects — muted tones, gilded hints.</p>
     </section>
 
-    <section id="products" class="products">
-      <!-- product cards injected here -->
+    <section class="products" id="products">
+      <!-- Products render here -->
     </section>
 
-    <div class="pagination">
+    <div class="pagination" style="display:none;">
       <button id="prevPage" class="btn ghost">Prev</button>
       <div id="pageInfo" class="muted">Page 1</div>
       <button id="nextPage" class="btn ghost">Next</button>
@@ -61,22 +51,14 @@
   </main>
 
   <footer class="footer">
-    <div>© <span id="yr"></span> Eden Creates — Made in Stellenbosch</div>
-    <div class="muted small">Made with golden care ✨</div>
+    <div>© <span id="yr"></span> Eden Creates</div>
+    <div class="small muted">every idea deserves elegance</div>
     <div style="margin-top:10px;">
-      <button id="installBtnFooter" class="btn" style="display:none">📱 Install Eden App</button>
+      <button id="installBottom" class="btn primary" style="display:none">Install App</button>
     </div>
   </footer>
 
-  <script>
-    // register SW (relative path)
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
-    }
-    document.getElementById('yr').textContent = new Date().getFullYear();
-  </script>
-
-  <script src="./install.js" defer></script>
-  <script src="./script.js" defer></script>
+  <script src="script.js" defer></script>
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>

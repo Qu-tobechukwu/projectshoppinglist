@@ -4,25 +4,26 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Checkout — Eden Creates</title>
-  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.json">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   <header class="tb">
     <div class="tb-inner">
       <div class="logo-area">
-        <a href="index.html"><img src="assets/logo.svg" alt="Eden Creates" class="logo"></a>
+        <a href="./index.html"><img src="./assets/logo.svg" alt="Eden Creates" class="logo"></a>
         <div class="tagline">every idea deserves elegance</div>
         <hr class="gold-divider" />
       </div>
 
       <nav class="nav-row">
         <div class="nav-links">
-          <a href="index.html" class="nav-link">Home</a>
-          <a href="merch.html" class="nav-link">Shop</a>
-          <a href="checkout.html" class="nav-link active">Checkout</a>
-          <a href="order-status.html" class="nav-link">Order status</a>
+          <a href="./index.html" class="nav-link">Home</a>
+          <a href="./merch.html" class="nav-link">Shop</a>
+          <a href="./checkout.html" class="nav-link active">Checkout</a>
+          <a href="./order-status.html" class="nav-link">Order status</a>
         </div>
         <div class="nav-actions">
           <button id="installTop3" class="btn ghost" style="display:none">Install App</button>
@@ -33,49 +34,53 @@
   </header>
 
   <main class="page container">
-    <h1 class="cinzel">checkout</h1>
-    <p class="muted">Only a few details — then we’ll send your order to the studio.</p>
+    <div class="main-grid">
+      <section>
+        <h1 class="cinzel">checkout</h1>
+        <p class="muted">Only a few details — then we’ll send your order to the studio.</p>
 
-    <form id="orderForm" class="gold-form" action="https://formsubmit.co/forhoneuseemail@gmail.com" method="POST">
-      <input type="hidden" name="_next" value="https://qu-tobechukwu.github.io/projectshoppinglist/thankyou.html">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="orderNumber" id="orderNumberInput">
-      <input type="hidden" name="total" id="orderTotalInput">
-      <input type="hidden" name="order" id="orderInput">
+        <form id="orderForm" class="gold-form" method="POST" action="https://formsubmit.co/forphoneuseemail@gmail.com">
+          <input type="hidden" name="_next" value="./thankyou.html">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="orderNumber" id="orderNumberInput">
+          <input type="hidden" name="total" id="orderTotalInput">
+          <input type="hidden" name="order" id="orderInput">
 
-      <label class="field">
-        <div class="field-label">Name</div>
-        <input class="input-rounded" type="text" name="name" id="custName" required>
-      </label>
+          <label class="field">
+            <div class="field-label">Name</div>
+            <input class="input-rounded" type="text" name="name" id="custName" required>
+          </label>
 
-      <label class="field">
-        <div class="field-label">Email</div>
-        <input class="input-rounded" type="email" name="email" id="custEmail" required>
-      </label>
+          <label class="field">
+            <div class="field-label">Email</div>
+            <input class="input-rounded" type="email" name="email" id="custEmail" required>
+          </label>
 
-      <label class="field">
-        <div class="field-label">Delivery address</div>
-        <input class="input-rounded" type="text" name="address" id="custAddress" placeholder="e.g. Rooiplein pickup / Residence" required>
-      </label>
+          <label class="field">
+            <div class="field-label">Delivery address</div>
+            <input class="input-rounded" type="text" name="address" id="custAddress" placeholder="e.g. Rooiplein pickup / Residence" required>
+          </label>
 
-      <label class="field">
-        <div class="field-label">Notes (optional)</div>
-        <textarea name="notes" id="custNotes" class="input-rounded notes" placeholder="Any special requests?"></textarea>
-      </label>
+          <label class="field">
+            <div class="field-label">Notes (optional)</div>
+            <textarea name="notes" id="custNotes" class="input-rounded notes" placeholder="Any special requests?"></textarea>
+          </label>
 
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
-        <button type="submit" class="btn primary">Place Order</button>
-        <a href="merch.html" class="btn ghost">Edit Cart</a>
-      </div>
-    </form>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+            <button type="submit" class="btn primary">Place Order</button>
+            <a href="./merch.html" class="btn ghost">Edit Cart</a>
+          </div>
+        </form>
+      </section>
 
-    <aside style="margin-top:18px;">
-      <div class="summary card">
-        <h3 class="product-title">order summary</h3>
-        <div id="checkoutSummary">Your cart is empty.</div>
-        <div class="summary-line">Total: R <strong id="checkoutTotal">0.00</strong></div>
-      </div>
-    </aside>
+      <aside>
+        <div class="summary card">
+          <h3 class="product-title">order summary</h3>
+          <div id="checkoutSummary">Your cart is empty.</div>
+          <div class="summary-line" style="margin-top:10px">Total: R <strong id="checkoutTotal">0.00</strong></div>
+        </div>
+      </aside>
+    </div>
   </main>
 
   <footer class="footer">
@@ -86,7 +91,7 @@
     </div>
   </footer>
 
-  <script src="script.js" defer></script>
+  <script src="./script.js" defer></script>
   <script>document.getElementById('yr3').textContent = new Date().getFullYear();</script>
 </body>
 </html>

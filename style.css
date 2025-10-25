@@ -3,15 +3,15 @@
    muted gray + gold accents
    ============================== */
 
-/* fonts + base */
+/* fonts */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=DM+Sans:wght@300;400;700&display=swap');
 
 :root{
-  --bg: #ececec;           /* muted light gray - newspapery */
-  --accent: #222222;       /* deep text / headings */
+  --bg: #f4f4f4;           /* muted light gray */
+  --ink: #222222;          /* deep text / headings */
   --gold: #d8b26e;         /* shimmering gold */
   --gold-dark: #b9964a;
-  --muted: #6b6b6b;
+  --muted: #666666;
   --white: #ffffff;
   --radius: 12px;
   --shadow: rgba(0,0,0,0.06);
@@ -22,17 +22,18 @@ html,body{height:100%}
 body{
   margin:0;
   background:var(--bg);
-  color:var(--accent);
+  color:var(--ink);
   font-family:'DM Sans',sans-serif;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   line-height:1.5;
+  -webkit-font-variant-ligatures: contextual;
 }
 
 /* Header Banner */
 .tb{
   background:var(--white);
-  color:var(--accent);
+  color:var(--ink);
   padding:18px 12px;
   box-shadow:0 4px 18px var(--shadow);
   position:sticky;
@@ -41,15 +42,16 @@ body{
 }
 .tb-inner{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;align-items:center}
 .logo-area{display:flex;flex-direction:column;align-items:center}
-.logo{width:92px;height:auto;margin-bottom:6px;filter: none}
+.logo{width:92px;height:auto;margin-bottom:6px}
 .tagline{font-family:'Cinzel',serif;font-size:1rem;color:var(--muted);font-style:italic}
 .gold-divider{width:100px;border:none;border-top:2px solid var(--gold);margin:8px 0}
 
 /* nav */
 .nav-row{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:1100px;margin-top:8px;gap:12px;flex-wrap:wrap}
 .nav-links{display:flex;gap:14px;align-items:center}
-.nav-link{color:var(--accent);text-decoration:none;font-weight:600;letter-spacing:0.3px}
+.nav-link{color:var(--ink);text-decoration:none;font-weight:600;letter-spacing:0.3px}
 .nav-link.active{color:var(--gold-dark)}
+.nav-actions{display:flex;gap:12px;align-items:center}
 
 /* buttons */
 .btn{border:none;border-radius:24px;padding:8px 14px;font-weight:600;cursor:pointer;transition:all .18s}
@@ -64,7 +66,7 @@ body{
 .page.container{max-width:1100px;margin:28px auto;padding:0 16px}
 
 /* headings */
-.cinzel,h1,h2,h3{font-family:'Cinzel',serif;color:var(--accent);margin:0 0 8px}
+.cinzel,h1,h2,h3{font-family:'Cinzel',serif;color:var(--ink);margin:0 0 8px}
 .muted{color:var(--muted);font-size:0.95rem}
 
 /* product grid */
@@ -72,7 +74,7 @@ body{
 .product-card{background:var(--white);border-radius:14px;padding:14px;box-shadow:0 6px 20px var(--shadow);display:flex;flex-direction:column;gap:12px;transition:transform .18s}
 .product-card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(0,0,0,0.08)}
 .product-img{width:100%;height:180px;object-fit:cover;border-radius:10px}
-.product-title{font-size:1.05rem;color:var(--accent);margin-bottom:4px}
+.product-title{font-size:1.05rem;color:var(--ink);margin-bottom:4px}
 .product-desc{color:var(--muted);font-size:0.92rem}
 .product-price{color:var(--gold-dark);font-weight:700}
 
@@ -86,7 +88,7 @@ body{
 
 /* checkout form elements */
 .gold-form{background:var(--white);padding:18px;border-radius:12px;box-shadow:0 8px 26px var(--shadow);display:flex;flex-direction:column;gap:12px}
-.field-label{font-family:'Cinzel',serif;color:var(--accent);font-size:0.85rem}
+.field-label{font-family:'Cinzel',serif;color:var(--ink);font-size:0.85rem}
 .input-rounded{padding:12px 14px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);font-size:1rem;background:#fff;outline:none}
 .input-rounded:focus{box-shadow:0 10px 26px rgba(0,0,0,0.06);transform:translateY(-1px)}
 .notes{min-height:120px;resize:vertical;padding-top:8px}
@@ -95,9 +97,13 @@ body{
 .order-table{width:100%;border-collapse:collapse}
 .order-table th,.order-table td{padding:10px;border-bottom:1px solid rgba(0,0,0,0.04);text-align:left}
 
-/* small components */
+/* toast */
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:linear-gradient(90deg,var(--gold),var(--gold-dark));color:white;padding:8px 14px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,0.12);z-index:120;opacity:0;transition:opacity .2s}
 .toast.show{opacity:1}
+
+/* small helpers */
+.center-content{display:flex;align-items:center;justify-content:center;min-height:50vh}
+.thankyou-card{background:var(--white);padding:28px;border-radius:12px;box-shadow:0 8px 26px var(--shadow);text-align:center}
 
 /* responsive */
 @media(max-width:700px){
@@ -105,7 +111,3 @@ body{
   .products{grid-template-columns:1fr}
   .tb-inner{padding-bottom:6px}
 }
-
-/* small helpers */
-.center-content{display:flex;align-items:center;justify-content:center;min-height:50vh}
-.thankyou-card{background:var(--white);padding:28px;border-radius:12px;box-shadow:0 8px 26px var(--shadow);text-align:center}

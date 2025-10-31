@@ -4,8 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Eden Creates — every idea deserves elegance</title>
-  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+
   <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
 </head>
@@ -21,40 +22,182 @@
       <nav class="nav-row">
         <div class="nav-links">
           <a href="./index.html" class="nav-link active">Home</a>
-          <a href="./merch.html" class="nav-link">Shop</a>
-          <a href="./checkout.html" class="nav-link">Checkout</a>
-          <a href="./order-status.html" class="nav-link">Order status</a>
+          <a href="./flipbooks.html" class="nav-link">FlipBooks</a>
+          <a href="./books.html" class="nav-link">Books</a>
+          <a href="./posters.html" class="nav-link">Posters</a>
+          <a href="./collections.html" class="nav-link">Collections</a>
+          <a href="./podcast.html" class="nav-link">Podcast</a>
         </div>
 
         <div class="nav-actions">
           <button id="installTop" class="btn ghost" style="display:none">Install App</button>
-          <div class="cart-pill">R <span id="topTotal">0.00</span></div>
         </div>
       </nav>
     </div>
   </header>
 
   <main class="page container">
-    <div class="main-grid">
-      <section>
-        <h1 class="cinzel">editor's picks</h1>
-        <p class="muted">a curated edit of small beautiful objects — muted tones, gilded hints.</p>
+    <!-- Hero / Story -->
+    <section class="card" style="margin-bottom:20px">
+      <h1 class="cinzel">Heart Behind It</h1>
+      <p class="muted">A note on why Eden Creates exists — a gentle, handcrafted approach to storytelling in a noisy digital world.</p>
 
-        <section id="products" aria-live="polite">
-          <!-- catalog (categories) injected by script.js -->
-        </section>
-      </section>
+      <article class="story">
+        <p><strong>International Inspiration:</strong> I draw from art, poetry, and gentle design — names like Morgan Harper Nichols inspire the tenderness I aim for. But I bring a distinct South African warmth: handwritten intimacy, tactile pages, and slow, prayerful craft.</p>
 
-      <aside class="summary card" aria-hidden="true" style="height:fit-content">
-        <h3 class="product-title">cart quick view</h3>
-        <div id="checkoutSummary">Your cart is empty.</div>
-        <div style="margin-top:10px">Total: R <strong id="checkoutTotal">0.00</strong></div>
-        <div style="margin-top:12px">
-          <a href="./checkout.html" class="btn primary">Finished — Checkout</a>
-          <button id="resetCart" class="btn ghost" style="margin-left:8px">Reset</button>
+        <p><strong>What I make:</strong> flipbooks & poems, posters with short messages, curated collections, books that read like letters, podcasts that feel like sitting with a friend. I pair visual design with words so each piece comforts, encourages, and connects.</p>
+
+        <p><strong>Why analog matters:</strong> Not everything should bend to instant digital consumption. Some stories need to be held, unfolded, and passed on. The Lord has placed a love for the tangible in this work — letters that take someone on a journey, books that keep their breath, art that ages like a memory.</p>
+
+        <p style="margin-top:12px; font-style:italic; color:var(--muted)">“You make art prints, poems, and letters that speak life.”</p>
+      </article>
+
+      <div style="margin-top:16px">
+        <a href="#branches" class="btn primary">Start Exploring</a>
+      </div>
+    </section>
+
+    <!-- Branches -->
+    <section id="branches">
+      <h2 class="cinzel" style="margin-bottom:8px">Branches of Storytelling</h2>
+      <p class="muted" style="margin-bottom:16px">Choose a branch to open a small sample. Sections are collapsed by default — click the header to expand.</p>
+
+      <!-- FlipBooks -->
+      <div class="category-card">
+        <div class="category-head">
+          <div>
+            <div class="category-title">FlipBooks</div>
+            <div class="muted">Short, tactile animations — little stories you can hold.</div>
+          </div>
+          <div>
+            <button class="category-toggle" data-target="cat-flip">Show</button>
+          </div>
         </div>
-      </aside>
-    </div>
+
+        <div id="cat-flip" class="items-grid collapse">
+          <div class="product-card" data-id="fb-1" id="prod-fb-1">
+            <img class="product-img" src="./assets/images/1.png" alt="FlipBook: Morning Letters" onerror="this.src='./assets/images/1.png'">
+            <div>
+              <div class="product-title">FlipBook — Morning Letters (sample)</div>
+              <div class="product-desc muted">A 12-page flipbook that moves like a short prayer.</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+                <div class="product-price">sample</div>
+                <button class="add-btn" data-id="fb-1">select</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Books -->
+      <div class="category-card">
+        <div class="category-head">
+          <div>
+            <div class="category-title">Books</div>
+            <div class="muted">Poetry & small books — tactile reading experiences.</div>
+          </div>
+          <div>
+            <button class="category-toggle" data-target="cat-books">Show</button>
+          </div>
+        </div>
+
+        <div id="cat-books" class="items-grid collapse">
+          <div class="product-card" data-id="bk-1" id="prod-bk-1">
+            <img class="product-img" src="./assets/images/2.png" alt="Book: Letters from Stellenbosch" onerror="this.src='./assets/images/2.png'">
+            <div>
+              <div class="product-title">Letters from Stellenbosch (sample)</div>
+              <div class="product-desc muted">A short collection of diary-poems & small essays.</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+                <div class="product-price">sample</div>
+                <button class="add-btn" data-id="bk-1">select</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Posters -->
+      <div class="category-card">
+        <div class="category-head">
+          <div>
+            <div class="category-title">Posters</div>
+            <div class="muted">Poems & art for your wall — print-ready.</div>
+          </div>
+          <div>
+            <button class="category-toggle" data-target="cat-posters">Show</button>
+          </div>
+        </div>
+
+        <div id="cat-posters" class="items-grid collapse">
+          <div class="product-card" data-id="ps-1" id="prod-ps-1">
+            <img class="product-img" src="./assets/images/3.png" alt="Poster: soft evening" onerror="this.src='./assets/images/3.png'">
+            <div>
+              <div class="product-title">Poster — soft evening (sample)</div>
+              <div class="product-desc muted">A small poetic print with a short verse.</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+                <div class="product-price">sample</div>
+                <button class="add-btn" data-id="ps-1">select</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Collections -->
+      <div class="category-card">
+        <div class="category-head">
+          <div>
+            <div class="category-title">Collections</div>
+            <div class="muted">Grouped works — a cohesive reading experience.</div>
+          </div>
+          <div>
+            <button class="category-toggle" data-target="cat-collections">Show</button>
+          </div>
+        </div>
+
+        <div id="cat-collections" class="items-grid collapse">
+          <div class="product-card" data-id="col-1" id="prod-col-1">
+            <img class="product-img" src="./assets/images/4.png" alt="Collection: seasons" onerror="this.src='./assets/images/4.png'">
+            <div>
+              <div class="product-title">Collection — Seasons (sample)</div>
+              <div class="product-desc muted">A themed set of poems & prints.</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+                <div class="product-price">sample</div>
+                <button class="add-btn" data-id="col-1">select</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Podcast -->
+      <div class="category-card">
+        <div class="category-head">
+          <div>
+            <div class="category-title">Podcast</div>
+            <div class="muted">Listen to spoken letters, songs, and conversations.</div>
+          </div>
+          <div>
+            <button class="category-toggle" data-target="cat-podcast">Show</button>
+          </div>
+        </div>
+
+        <div id="cat-podcast" class="items-grid collapse">
+          <div class="product-card" data-id="pd-1" id="prod-pd-1">
+            <img class="product-img" src="./assets/images/1.png" alt="Podcast: Ep.1" onerror="this.src='./assets/images/1.png'">
+            <div>
+              <div class="product-title">Podcast — Episode 1 (sample)</div>
+              <div class="product-desc muted">A short listening piece — poetry & reflection.</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+                <div class="product-price">sample</div>
+                <button class="add-btn" data-id="pd-1">select</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
   </main>
 
   <footer class="footer">
@@ -67,16 +210,5 @@
 
   <script src="./script.js" defer></script>
   <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
-  <script>
-    // reset cart
-    document.addEventListener('DOMContentLoaded', ()=> {
-      const reset = document.getElementById('resetCart');
-      if(reset) reset.addEventListener('click', ()=> { if(confirm('Clear your cart?')){ localStorage.removeItem('eden_cart_ec_v1'); location.reload(); }});
-      // repeat last: optional
-      if(window.location.search.includes('repeat')) {
-        // nothing required here — cart persists in localStorage by default
-      }
-    });
-  </script>
 </body>
 </html>

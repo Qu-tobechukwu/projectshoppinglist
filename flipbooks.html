@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FlipBooks — Eden Creates</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="tb">
+    <div class="tb-inner">
+      <div class="logo-area">
+        <a href="./index.html"><img src="./assets/logo.svg" alt="Eden Creates" class="logo"></a>
+        <div class="tagline">every idea deserves elegance</div>
+        <hr class="gold-divider" />
+      </div>
+      <nav class="nav-row">
+        <div class="nav-links">
+          <a href="./index.html" class="nav-link">Home</a>
+          <a href="./flipbooks.html" class="nav-link active">FlipBooks</a>
+          <a href="./books.html" class="nav-link">Books</a>
+          <a href="./posters.html" class="nav-link">Posters</a>
+          <a href="./collections.html" class="nav-link">Collections</a>
+          <a href="./podcast.html" class="nav-link">Podcast</a>
+        </div>
+        <div class="nav-actions">
+          <button id="installTop2" class="btn ghost" style="display:none">Install App</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page container">
+    <section class="card">
+      <h1 class="cinzel">FlipBooks</h1>
+      <p class="muted">Hand-bound flipbooks — short visual poems in motion.</p>
+
+      <div class="category-card" style="margin-top:14px">
+        <div class="category-head">
+          <div>
+            <div class="category-title">Sample FlipBook</div>
+            <div class="muted">“Morning Letters” — a 12-frame flipbook sample.</div>
+          </div>
+          <div><button class="category-toggle" data-target="fb-sample">Show</button></div>
+        </div>
+
+        <div id="fb-sample" class="items-grid collapse" style="margin-top:12px">
+          <div class="product-card" data-id="fb-1" id="prod-fb-1">
+            <img class="product-img" src="./assets/images/1.png" alt="FlipBook sample" onerror="this.src='./assets/images/1.png'">
+            <div>
+              <div class="product-title">Morning Letters (sample)</div>
+              <div class="product-desc muted">A tactile flipbook that reads like a short prayer.</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+                <button class="add-btn" data-id="fb-1">select</button>
+                <a class="btn ghost" href="#" onclick="alert('Preview placeholder — insert flipbook preview here');return false">Preview</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>© <span id="yr2"></span> Eden Creates</div>
+    <div class="small muted">every idea deserves elegance</div>
+    <div style="margin-top:10px;"><button id="installBottom2" class="btn primary" style="display:none">Install App</button></div>
+  </footer>
+
+  <script src="./script.js" defer></script>
+  <script>document.getElementById('yr2').textContent = new Date().getFullYear();</script>
+</body>
+</html>
